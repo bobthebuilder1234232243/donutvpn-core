@@ -33,6 +33,7 @@ jobs:
       - name: Calculate singbox version
         run: |
           cd donutvpn-sing-box
+          go mod tidy
           go run -v ./cmd/internal/read_tag --ci --nightly
       - name: Set outputs
         id: outputs
@@ -53,6 +54,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
       - name: Build Linux amd64
+        run: go mod tidy
         run: make linux-amd64
         env:
           CODE_VERSION: "-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.hiddify_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
