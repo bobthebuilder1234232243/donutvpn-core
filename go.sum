@@ -394,8 +394,8 @@ github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb h1:PGufWXXDq9yaev6x
 github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb/go.mod h1:QiyDdbZLaJ/mZP4Zwc9g2QsfaEA4o7XvvgZegSci5/E=
 github.com/donutvpn/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c h1:9Zc0hJ14G+SNJvGxtaSCSsvGB/RdLltrgjgR//9zgTQ=
 github.com/donutvpn/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c/go.mod h1:LI/1qA7FDU3MumegfyFOHGZCXcOw6rjIk7NPXga3/pQ=
-github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261102140835-c5fc975e975c h1:TPGcW5M0UxiWLyNd44Pl9Pl9WHKFqjCxsqztjZMWvOc=
-github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261102140835-c5fc975e975c/go.mod h1:7u9Ece+I3gvMFzcpqhROWaykNUyoE21g/fYQMBasAWY=
+github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c h1:TPGcW5M0UxiWLyNd44Pl9Pl9WHKFqjCxsqztjZMWvOc=
+github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c/go.mod h1:7u9Ece+I3gvMFzcpqhROWaykNUyoE21g/fYQMBasAWY=
 github.com/donutvpn/vaydns v0.0.0-20260401180616-890dc987a6a9 h1:KXnaABX8hHmkcL0jbL769hEIGI5+z/DajCrlO+Bkzcc=
 github.com/donutvpn/vaydns v0.0.0-20260401180616-890dc987a6a9/go.mod h1:+8kEfQsZJn7/4aIppVekrSuqhrKjGBIgnacTJkdAlS8=
 github.com/donutvpn/warp-plus v0.0.0-20240717223357-4f3122e0d11d h1:vRGKh9ou+/vQGfVYa8MczhbIVjHxlP52OWwrDWO77RA=
