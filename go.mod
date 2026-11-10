@@ -363,3 +363,7 @@ replace masterdnsvpn-go => ./donutvpn-sing-box/replace/MasterDnsVPN
 replace github.com/getlantern/soar => ./donutvpn-sing-box/replace/soar
 
 replace github.com/sagernet/sing => ./donutvpn-sing-box/replace/sing
+
+replace github.com/net2share/vaydns => github.com/bobthebuilder1234232243/donutvpn-vaydns v0.0.0-20260401180616-890dc987a6a9
+replace github.com/kianmhz/GooseRelayVPN => github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c
+replace github.com/bepass-org/warp-plus => github.com/bobthebuilder1234232243/donutvpn-warp-plus v0.0.0-20240717223357-4f3122e0d11d
