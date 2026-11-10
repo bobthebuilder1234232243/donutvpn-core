@@ -1,4 +1,3 @@
-module github.com/bobthebuilder1234232243/donutvpn-core
 
 go 1.27.3
 
@@ -10,7 +9,6 @@ require (
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb
-	github.com/bobthebuilder1234232243/donutvpn-ray2sing v0.0.0-20260209214534-63c82f8c23a6
 	github.com/improbable-eng/grpc-web v0.15.0
 	github.com/jellydator/validation v1.1.0
 	github.com/kardianos/service v1.2.2
@@ -128,7 +126,6 @@ require (
 	github.com/grafov/m3u8 v0.0.0-20171211212457-6ab8f28ed427 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/hdevalence/ed25519consensus v0.2.0 // indirect
-	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c // indirect
 	github.com/huin/goupnp v1.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20260220084031-5adc3eb26f91 // indirect
@@ -327,16 +324,13 @@ require (
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
 )
 
-// replace github.com/sagernet/sing-box => github.com/bobthebuilder1234232243/donutvpn-donutvpn-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
 
-// replace github.com/xtls/xray-core => github.com/bobthebuilder1234232243/donutvpn-xray-core v0.0.0-20260124181826-59e6569c13e9
 
 
 replace github.com/sagernet/sing-dns => github.com/shtorm-7/sing-dns v0.4.6-extended-1.0.0
 
 replace github.com/ameshkov/dnscrypt/v2 => github.com/shtorm-7/dnscrypt/v2 v2.4.0-extended-1.0.0
 
-replace github.com/bobthebuilder1234232243/donutvpn-ray2sing => ./ray2sing
 
 replace github.com/sagernet/sing-box => ./donutvpn-sing-box
 
@@ -350,9 +344,7 @@ replace github.com/Psiphon-Labs/quic-go => ./donutvpn-sing-box/replace/psiphon-q
 
 replace github.com/Psiphon-Labs/psiphon-tls => ./donutvpn-sing-box/replace/psiphon-tls
 
-replace github.com/net2share/vaydns => github.com/bobthebuilder1234232243/donutvpn-vaydns v0.0.0-20260401180616-890dc987a6a9
 
-replace github.com/kianmhz/GooseRelayVPN => github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c
 
 replace github.com/Diniboy1123/connect-ip-go => github.com/shtorm-7/connect-ip-go v1.0.0-extended-1.1.1
 
