@@ -18,11 +18,13 @@ jobs:
           
       - name: Update dependencies to latest commit
         run: |
-          go get github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
+          # Remove the old checksum so it grabs the new commit
+          go clean -modcache
           cd donutvpn-sing-box
-          go get github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
+          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
           go mod tidy
           cd ..
+          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
           go mod tidy
           
       - name: Build Linux amd64
