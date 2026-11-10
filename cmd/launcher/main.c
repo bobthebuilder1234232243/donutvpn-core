@@ -1,23 +1,23 @@
-// The launchers of hiddify-core: each forwards its command line to parseCli() in the core library.
+// The launchers of donut-core: each forwards its command line to parseCli() in the core library.
 // One source, built four ways:
 //
 //   Windows (windows-amd64 in the Makefile)
-//   HiddifyCli.exe        console tool, prints parseCli's result
-//   HiddifyAdmin.exe      -DHIDDIFY_LAUNCHER_GUI: GUI subsystem, with a requireAdministrator
-//                         manifest, so the UAC dialog shows "Hiddify" and the app icon and no
+//   DonutCli.exe        console tool, prints parseCli's result
+//   DonutAdmin.exe      -DDONUT_LAUNCHER_GUI: GUI subsystem, with a requireAdministrator
+//                         manifest, so the UAC dialog shows "DonutVpn" and the app icon and no
 //                         console window flashes; it installs the VPN service
-//   core\Hiddify.exe      -DHIDDIFY_LAUNCHER_GUI -DHIDDIFY_LAUNCHER_LIBRARY=...: the app's core in
-//                         a process of its own (`core` command), named Hiddify with the core icon;
-//                         it sits in a subfolder, beside the app's own Hiddify.exe, so it loads
-//                         hiddify-core.dll (and libcronet.dll) from the folder above
+//   core\DonutVpn.exe      -DDONUT_LAUNCHER_GUI -DDONUT_LAUNCHER_LIBRARY=...: the app's core in
+//                         a process of its own (`core` command), named DonutVpn with the core icon;
+//                         it sits in a subfolder, beside the app's own DonutVpn.exe, so it loads
+//                         donut-core.dll (and libcronet.dll) from the folder above
 //
 //   macOS (the app's macos/scripts/embed-core-helper.sh)
-//   Hiddify Core.app      -DHIDDIFY_LAUNCHER_LIBRARY=... -DHIDDIFY_LAUNCHER_MACOS_APP: the same core
-//                         process, in a helper bundle inside Hiddify.app, which gives it the name
-//                         Hiddify and the core icon; it loads hiddify-core.dylib from the app's
+//   DonutVpn Core.app      -DDONUT_LAUNCHER_LIBRARY=... -DDONUT_LAUNCHER_MACOS_APP: the same core
+//                         process, in a helper bundle inside DonutVpn.app, which gives it the name
+//                         DonutVpn and the core icon; it loads donut-core.dylib from the app's
 //                         Frameworks
 //
-// HIDDIFY_LAUNCHER_LIBRARY is the library's path relative to the launcher's folder; without it the
+// DONUT_LAUNCHER_LIBRARY is the library's path relative to the launcher's folder; without it the
 // library is linked (Windows, beside the launcher).
 //
 // Written in C on purpose: a ~20 KB C program with one import is as plain as a PE file gets. The Go
@@ -40,8 +40,8 @@ typedef char *(*parse_cli_fn)(int argc, char **argv);
 #define WIDEN2(x) L##x
 #define WIDEN(x) WIDEN2(x)
 
-#ifdef HIDDIFY_LAUNCHER_LIBRARY
-// Loads the library at HIDDIFY_LAUNCHER_LIBRARY, relative to this executable's folder. The
+#ifdef DONUT_LAUNCHER_LIBRARY
+// Loads the library at DONUT_LAUNCHER_LIBRARY, relative to this executable's folder. The
 // library's folder is also added to the DLL search path, for libcronet.dll, which the core loads
 // when it needs it.
 static parse_cli_fn load_parse_cli(void) {
@@ -52,8 +52,8 @@ static parse_cli_fn load_parse_cli(void) {
   wchar_t *slash = wcsrchr(path, L'\\');
   if (!slash) return NULL;
   slash[1] = 0;
-  if (wcslen(path) + wcslen(WIDEN(HIDDIFY_LAUNCHER_LIBRARY)) >= MAX_PATH * 2) return NULL;
-  wcscat(path, WIDEN(HIDDIFY_LAUNCHER_LIBRARY));
+  if (wcslen(path) + wcslen(WIDEN(DONUT_LAUNCHER_LIBRARY)) >= MAX_PATH * 2) return NULL;
+  wcscat(path, WIDEN(DONUT_LAUNCHER_LIBRARY));
   if (!GetFullPathNameW(path, MAX_PATH * 2, full, NULL)) return NULL;
   wcscpy(path, full);
   slash = wcsrchr(path, L'\\');
@@ -96,8 +96,8 @@ static char **utf8_arguments(int *argc) {
 #include <limits.h>
 #include <mach-o/dyld.h>
 
-#ifndef HIDDIFY_LAUNCHER_LIBRARY
-#error "HIDDIFY_LAUNCHER_LIBRARY must name the core library"
+#ifndef DONUT_LAUNCHER_LIBRARY
+#error "DONUT_LAUNCHER_LIBRARY must name the core library"
 #endif
 
 static parse_cli_fn load_parse_cli(void) {
@@ -109,7 +109,7 @@ static parse_cli_fn load_parse_cli(void) {
   char *slash = strrchr(executable, '/');
   if (!slash) return NULL;
   slash[1] = 0;
-  if (snprintf(path, sizeof(path), "%s%s", executable, HIDDIFY_LAUNCHER_LIBRARY) >= (int)sizeof(path)) return NULL;
+  if (snprintf(path, sizeof(path), "%s%s", executable, DONUT_LAUNCHER_LIBRARY) >= (int)sizeof(path)) return NULL;
   if (!realpath(path, resolved)) return NULL;
   void *core = dlopen(resolved, RTLD_NOW);
   if (!core) {
@@ -119,17 +119,17 @@ static parse_cli_fn load_parse_cli(void) {
   return (parse_cli_fn)dlsym(core, "parseCli");
 }
 
-#ifdef HIDDIFY_LAUNCHER_MACOS_APP
+#ifdef DONUT_LAUNCHER_MACOS_APP
 #include <CoreFoundation/CoreFoundation.h>
 #include <objc/message.h>
 #include <objc/runtime.h>
 
 // NSActivityUserInitiatedAllowingIdleSystemSleep: user-initiated work, which keeps App Nap away
 // but lets the Mac sleep when idle.
-#define HIDDIFY_ACTIVITY_OPTIONS (0x00FFFFFFULL & ~(1ULL << 20))
+#define DONUT_ACTIVITY_OPTIONS (0x00FFFFFFULL & ~(1ULL << 20))
 
 // Makes the process a background-only app: Activity Monitor shows its bundle's name and icon only
-// for apps. An app can be put in App Nap, which throttles its priority and I/O (hiddify-app#2343),
+// for apps. An app can be put in App Nap, which throttles its priority and I/O (donutvpn-app#2343),
 // so it holds a user-initiated activity for its whole life, as Apple documents for that case.
 static void become_background_app(void) {
   id (*send)(id, SEL) = (id (*)(id, SEL))objc_msgSend;
@@ -141,7 +141,7 @@ static void become_background_app(void) {
   send((id)application, sel_registerName("sharedApplication"));
   id info = send((id)process_info, sel_registerName("processInfo"));
   id activity = send_activity(info, sel_registerName("beginActivityWithOptions:reason:"),
-                              HIDDIFY_ACTIVITY_OPTIONS, (id)CFSTR("Hiddify core"));
+                              DONUT_ACTIVITY_OPTIONS, (id)CFSTR("DonutVpn core"));
   // kept for the life of the process
   send(activity, sel_registerName("retain"));
 }
@@ -152,11 +152,11 @@ static int run(int argc, char **argv) {
   parse_cli_fn parse_cli = load_parse_cli();
   if (!parse_cli) return 3;
   if (!argv) return 1;
-#ifdef HIDDIFY_LAUNCHER_GUI
+#ifdef DONUT_LAUNCHER_GUI
   if (argc < 2) return 2;  // nothing to do without a command
 #endif
   const char *result = parse_cli(argc, argv);
-#if defined(_WIN32) && !defined(HIDDIFY_LAUNCHER_GUI)
+#if defined(_WIN32) && !defined(DONUT_LAUNCHER_GUI)
   if (result) {
     fputs(result, stdout);
     fputc('\n', stdout);
@@ -168,7 +168,7 @@ static int run(int argc, char **argv) {
 #endif
 }
 
-#if defined(_WIN32) && defined(HIDDIFY_LAUNCHER_GUI)
+#if defined(_WIN32) && defined(DONUT_LAUNCHER_GUI)
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
   (void)hInstance; (void)hPrevInstance; (void)pCmdLine; (void)nCmdShow;
   int argc = 0;
@@ -183,7 +183,7 @@ int main(void) {
 }
 #else
 int main(int argc, char **argv) {
-#ifdef HIDDIFY_LAUNCHER_MACOS_APP
+#ifdef DONUT_LAUNCHER_MACOS_APP
   become_background_app();
 #endif
   return run(argc, argv);

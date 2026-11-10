@@ -22,4 +22,4 @@ node_modules
 !/release/winres/*.json
 
 # the old WRT hash job committed the downloaded release tarball; never again
-/hiddify-core.tar.gz
+/donutvpn-core.tar.gz

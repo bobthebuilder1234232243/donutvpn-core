@@ -16,16 +16,16 @@ var commandInstance = &cobra.Command{
 	Short: "instance",
 	Args:  cobra.OnlyValidArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		hiddifySetting := defaultConfigs
-		if hiddifySettingPath != "" {
-			hiddifySetting2, err := hcore.ReadHiddifyOptionsAt(hiddifySettingPath)
+		donutvpnSetting := defaultConfigs
+		if donutvpnSettingPath != "" {
+			donutvpnSetting2, err := hcore.ReadDonutOptionsAt(donutvpnSettingPath)
 			if err != nil {
 				log.Fatal(err)
 			}
-			hiddifySetting = *hiddifySetting2
+			donutvpnSetting = *donutvpnSetting2
 		}
 		ctx := libbox.BaseContext(nil)
-		instance, err := hcore.RunInstanceString(ctx, &hiddifySetting, configPath)
+		instance, err := hcore.RunInstanceString(ctx, &donutvpnSetting, configPath)
 		if err != nil {
 			log.Fatal(err)
 		}

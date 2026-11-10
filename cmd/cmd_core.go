@@ -20,15 +20,15 @@ import (
 // library into the UI process. The app reads one line from stdout: CoreReadyPrefix followed by the
 // gRPC server certificate (base64 PEM, empty without TLS), or CoreErrorPrefix followed by the reason.
 const (
-	CoreReadyPrefix = "HIDDIFY_CORE_READY "
-	CoreErrorPrefix = "HIDDIFY_CORE_ERROR "
+	CoreReadyPrefix = "DONUT_CORE_READY "
+	CoreErrorPrefix = "DONUT_CORE_ERROR "
 	// CoreSecretEnv carries the setup secret, so it never shows in the process list.
-	CoreSecretEnv = "HIDDIFY_CORE_SECRET"
+	CoreSecretEnv = "DONUT_CORE_SECRET"
 	// coreStopTimeout bounds the graceful stop: the system proxy is restored by it.
 	coreStopTimeout = 8 * time.Second
 	// coreProcessName is what htop and top show for the core on Linux, where the app and the core
 	// cannot be told apart by their icon as on Windows and macOS.
-	coreProcessName = "hiddify-core"
+	coreProcessName = "donut-core"
 )
 
 var coreOptions struct {
@@ -89,7 +89,7 @@ func runCore() int {
 	hprocess.DetachStdio()
 
 	reason := waitForCoreEnd(bufio.NewReader(os.Stdin), coreOptions.ownerPID)
-	fmt.Fprintf(os.Stderr, "hiddify core: stopping (%s)\n", reason)
+	fmt.Fprintf(os.Stderr, "donutvpn core: stopping (%s)\n", reason)
 	stopped := make(chan struct{})
 	go func() {
 		hcore.Close(mode)
@@ -98,7 +98,7 @@ func runCore() int {
 	select {
 	case <-stopped:
 	case <-time.After(coreStopTimeout):
-		fmt.Fprintln(os.Stderr, "hiddify core: the stop did not finish in time")
+		fmt.Fprintln(os.Stderr, "donutvpn core: the stop did not finish in time")
 	}
 	return 0
 }

@@ -20,7 +20,7 @@ func buildStampPath() string {
 func WriteRunningBinaryStamp() error {
 	id := buildid.Get()
 	if !buildid.IsSet() {
-		return fmt.Errorf("tunnel service was built without a build id; rebuild hiddify-core so its Makefile embeds one")
+		return fmt.Errorf("tunnel service was built without a build id; rebuild donut-core so its Makefile embeds one")
 	}
 	if err := os.MkdirAll(filepath.Dir(buildStampPath()), 0o755); err != nil {
 		return err

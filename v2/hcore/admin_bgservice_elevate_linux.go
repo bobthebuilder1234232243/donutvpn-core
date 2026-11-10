@@ -22,14 +22,14 @@ func elevateAdminBgInstall(cliPath, owner string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = io.MultiWriter(os.Stderr, &stderr)
 	if owner != "" {
-		cmd.Env = append(os.Environ(), "HIDDIFY_TUNNEL_OWNER="+owner)
+		cmd.Env = append(os.Environ(), "DONUT_TUNNEL_OWNER="+owner)
 	}
 	err := cmd.Run()
 	if err == nil {
 		return nil
 	}
 	// pkexec exits 126 when the prompt was dismissed, and 127 both when authorization failed and when
-	// the program could not run (a missing library, hiddify-app#2461): its stderr tells them apart.
+	// the program could not run (a missing library, donutvpn-app#2461): its stderr tells them apart.
 	var exitErr *exec.ExitError
 	if errors.As(err, &exitErr) && exitErr.ExitCode() == 126 {
 		return fmt.Errorf("could not install the VPN service; allow the administrator prompt and try again")

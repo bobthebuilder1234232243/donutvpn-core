@@ -36,7 +36,7 @@ func queueRestartLocked(ctx context.Context, in *StartRequest) <-chan operationR
 		if response, err := stopLocked(); err != nil {
 			return response, err
 		}
-		if C.IsAndroid && static.HiddifyOptions.EnableTun {
+		if C.IsAndroid && static.DonutOptions.EnableTun {
 			sleepContext(ctx, time.Second)
 		}
 		if err := contextErr(ctx); err != nil {

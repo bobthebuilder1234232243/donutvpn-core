@@ -1,21 +1,21 @@
 -s dir
---name hiddify-core
+--name donutvpn-core
 --category net
 --license GPL-3.0-or-later
 --description "The universal proxy platform."
---url "https://hiddify.com/"
---maintainer "hiddify <core@hiddify.com>"
+--url "https://donutvpn.com/"
+--maintainer "donutvpn <core@donutvpn.com>"
 --deb-field "Bug: https://github.com/bobthebuilder1234232243/donutvpn-core/issues"
 --no-deb-generate-changes
---config-files /etc/hiddify-core/config.json
---after-install release/config/hiddify-core.postinst
+--config-files /etc/donutvpn-core/config.json
+--after-install release/config/donutvpn-core.postinst
 
-release/config/config.json=/etc/hiddify-core/config.json
+release/config/config.json=/etc/donutvpn-core/config.json
 
-release/config/hiddify-core.service=/usr/lib/systemd/system/hiddify-core.service
-release/config/hiddify-core@.service=/usr/lib/systemd/system/hiddify-core@.service
-release/config/hiddify-core.sysusers=/usr/lib/sysusers.d/hiddify-core.conf
-release/config/hiddify-core.rules=usr/share/polkit-1/rules.d/hiddify-core.rules
-release/config/hiddify-core-split-dns.xml=/usr/share/dbus-1/system.d/hiddify-core-split-dns.conf
+release/config/donutvpn-core.service=/usr/lib/systemd/system/donutvpn-core.service
+release/config/donutvpn-core@.service=/usr/lib/systemd/system/donutvpn-core@.service
+release/config/donutvpn-core.sysusers=/usr/lib/sysusers.d/donutvpn-core.conf
+release/config/donutvpn-core.rules=usr/share/polkit-1/rules.d/donutvpn-core.rules
+release/config/donutvpn-core-split-dns.xml=/usr/share/dbus-1/system.d/donutvpn-core-split-dns.conf
 
-LICENSE.md=/usr/share/licenses/hiddify-core/LICENSE.md
+LICENSE.md=/usr/share/licenses/donutvpn-core/LICENSE.md

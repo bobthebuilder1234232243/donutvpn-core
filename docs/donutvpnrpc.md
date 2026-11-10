@@ -26,7 +26,7 @@
   
 - [v2/hcore/hcore.proto](#v2_hcore_hcore-proto)
     - [AdminNeededProxy](#hcore-AdminNeededProxy)
-    - [ChangeHiddifySettingsRequest](#hcore-ChangeHiddifySettingsRequest)
+    - [ChangeDonutVpnSettingsRequest](#hcore-ChangeDonutVpnSettingsRequest)
     - [CloseRequest](#hcore-CloseRequest)
     - [CoreInfoResponse](#hcore-CoreInfoResponse)
     - [CrashReport](#hcore-CrashReport)
@@ -79,28 +79,28 @@
     - [Core](#hcore-Core)
   
 - [v2/hcore/adminbgservice/admin_bg_service.proto](#v2_hcore_adminbgservice_admin_bg_service-proto)
-    - [HiddifyAdminBG](#adminbgservice-HiddifyAdminBG)
+    - [DonutVpnAdminBG](#adminbgservice-DonutVpnAdminBG)
   
 - [v2/hcore/adminbgservice/admin_bg.proto](#v2_hcore_adminbgservice_admin_bg-proto)
     - [AdminBgResponse](#adminbgservice-AdminBgResponse)
     - [AdminBgStartRequest](#adminbgservice-AdminBgStartRequest)
     - [AdminBgStartRequest.ResourcesEntry](#adminbgservice-AdminBgStartRequest-ResourcesEntry)
   
-- [v2/hiddifyoptions/hiddify_options.proto](#v2_hiddifyoptions_hiddify_options-proto)
-    - [DNSOptions](#hiddifyoptions-DNSOptions)
-    - [HiddifyOptions](#hiddifyoptions-HiddifyOptions)
-    - [InboundOptions](#hiddifyoptions-InboundOptions)
-    - [IntRange](#hiddifyoptions-IntRange)
-    - [MuxOptions](#hiddifyoptions-MuxOptions)
-    - [RouteOptions](#hiddifyoptions-RouteOptions)
-    - [Rule](#hiddifyoptions-Rule)
-    - [TLSTricks](#hiddifyoptions-TLSTricks)
-    - [URLTestOptions](#hiddifyoptions-URLTestOptions)
-    - [WarpAccount](#hiddifyoptions-WarpAccount)
-    - [WarpOptions](#hiddifyoptions-WarpOptions)
-    - [WarpWireguardConfig](#hiddifyoptions-WarpWireguardConfig)
+- [v2/donutvpnoptions/donutvpn_options.proto](#v2_donutvpnoptions_donutvpn_options-proto)
+    - [DNSOptions](#donutvpnoptions-DNSOptions)
+    - [DonutVpnOptions](#donutvpnoptions-DonutVpnOptions)
+    - [InboundOptions](#donutvpnoptions-InboundOptions)
+    - [IntRange](#donutvpnoptions-IntRange)
+    - [MuxOptions](#donutvpnoptions-MuxOptions)
+    - [RouteOptions](#donutvpnoptions-RouteOptions)
+    - [Rule](#donutvpnoptions-Rule)
+    - [TLSTricks](#donutvpnoptions-TLSTricks)
+    - [URLTestOptions](#donutvpnoptions-URLTestOptions)
+    - [WarpAccount](#donutvpnoptions-WarpAccount)
+    - [WarpOptions](#donutvpnoptions-WarpOptions)
+    - [WarpWireguardConfig](#donutvpnoptions-WarpWireguardConfig)
   
-    - [DomainStrategy](#hiddifyoptions-DomainStrategy)
+    - [DomainStrategy](#donutvpnoptions-DomainStrategy)
   
 - [v2/profile/profile_service.proto](#v2_profile_profile_service-proto)
     - [AddProfileRequest](#profile-AddProfileRequest)
@@ -463,15 +463,15 @@ translate.goog domain front so it reaches users behind GFW-style filters.
 
 
 
-<a name="hcore-ChangeHiddifySettingsRequest"></a>
+<a name="hcore-ChangeDonutVpnSettingsRequest"></a>
 
-### ChangeHiddifySettingsRequest
+### ChangeDonutVpnSettingsRequest
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| hiddify_settings_json | [string](#string) |  |  |
+| donutvpn_settings_json | [string](#string) |  |  |
 
 
 
@@ -574,7 +574,7 @@ translate.goog domain front so it reaches users behind GFW-style filters.
 | resources | [EnsureAdminBgServiceRequest.ResourcesEntry](#hcore-EnsureAdminBgServiceRequest-ResourcesEntry) | repeated |  |
 | disable_memory_limit | [bool](#bool) |  |  |
 | owner_pid | [int32](#int32) |  |  |
-| cli_path | [string](#string) |  | Absolute path to this app&#39;s HiddifyCli / HiddifyCli.exe (used for elevate install). |
+| cli_path | [string](#string) |  | Absolute path to this app&#39;s DonutVpnCli / DonutVpnCli.exe (used for elevate install). |
 | owner_user | [string](#string) |  |  |
 | proxy_only | [bool](#bool) |  | Runs the engine without its TUN: a proxy mode whose profile needs administrator rights. |
 
@@ -793,7 +793,7 @@ translate.goog domain front so it reaches users behind GFW-style filters.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | service_mode | [string](#string) |  | proxy | system-proxy | vpn |
-| hiddify_settings_json | [string](#string) |  |  |
+| donutvpn_settings_json | [string](#string) |  |  |
 | admin_preference | [AdminPreference](#hcore-AdminPreference) |  |  |
 | privilege_error_remembered | [bool](#bool) |  | True after an in-process start failed with a privilege error. |
 
@@ -1324,7 +1324,7 @@ Connection state of an outbound or endpoint (mirrors adapter.Status).
 | GetSystemInfoStream | [.hcommon.Empty](#hcommon-Empty) | [SystemInfo](#hcore-SystemInfo) stream |  |
 | Setup | [SetupRequest](#hcore-SetupRequest) | [.hcommon.Response](#hcommon-Response) |  |
 | Parse | [ParseRequest](#hcore-ParseRequest) | [ParseResponse](#hcore-ParseResponse) |  |
-| ChangeHiddifySettings | [ChangeHiddifySettingsRequest](#hcore-ChangeHiddifySettingsRequest) | [CoreInfoResponse](#hcore-CoreInfoResponse) |  |
+| ChangeDonutVpnSettings | [ChangeDonutVpnSettingsRequest](#hcore-ChangeDonutVpnSettingsRequest) | [CoreInfoResponse](#hcore-CoreInfoResponse) |  |
 | StartService | [StartRequest](#hcore-StartRequest) | [CoreInfoResponse](#hcore-CoreInfoResponse) | rpc GenerateConfig (GenerateConfigRequest) returns (GenerateConfigResponse); |
 | Stop | [.hcommon.Empty](#hcommon-Empty) | [CoreInfoResponse](#hcore-CoreInfoResponse) |  |
 | Restart | [StartRequest](#hcore-StartRequest) | [CoreInfoResponse](#hcore-CoreInfoResponse) |  |
@@ -1364,9 +1364,9 @@ Connection state of an outbound or endpoint (mirrors adapter.Status).
  
 
 
-<a name="adminbgservice-HiddifyAdminBG"></a>
+<a name="adminbgservice-DonutVpnAdminBG"></a>
 
-### HiddifyAdminBG
+### DonutVpnAdminBG
 Elevated background core control API (Windows/Linux OS service, macOS root daemon).
 
 | Method Name | Request Type | Response Type | Description |
@@ -1459,14 +1459,14 @@ Elevated background core control API (Windows/Linux OS service, macOS root daemo
 
 
 
-<a name="v2_hiddifyoptions_hiddify_options-proto"></a>
+<a name="v2_donutvpnoptions_donutvpn_options-proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## v2/hiddifyoptions/hiddify_options.proto
+## v2/donutvpnoptions/donutvpn_options.proto
 
 
 
-<a name="hiddifyoptions-DNSOptions"></a>
+<a name="donutvpnoptions-DNSOptions"></a>
 
 ### DNSOptions
 DNSOptions defines DNS-related configuration options.
@@ -1475,9 +1475,9 @@ DNSOptions defines DNS-related configuration options.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | remote_dns_address | [string](#string) |  | Remote DNS server address. |
-| remote_dns_domain_strategy | [DomainStrategy](#hiddifyoptions-DomainStrategy) |  | Strategy for resolving domains with remote DNS. |
+| remote_dns_domain_strategy | [DomainStrategy](#donutvpnoptions-DomainStrategy) |  | Strategy for resolving domains with remote DNS. |
 | direct_dns_address | [string](#string) |  | Direct DNS server address. |
-| direct_dns_domain_strategy | [DomainStrategy](#hiddifyoptions-DomainStrategy) |  | Strategy for resolving domains with direct DNS. |
+| direct_dns_domain_strategy | [DomainStrategy](#donutvpnoptions-DomainStrategy) |  | Strategy for resolving domains with direct DNS. |
 | independent_dns_cache | [bool](#bool) |  | If true, enables independent DNS caching. |
 | enable_fake_dns | [bool](#bool) |  | If true, enables fake DNS responses. |
 | enable_dns_routing | [bool](#bool) |  | If true, enables DNS routing. |
@@ -1487,10 +1487,10 @@ DNSOptions defines DNS-related configuration options.
 
 
 
-<a name="hiddifyoptions-HiddifyOptions"></a>
+<a name="donutvpnoptions-DonutVpnOptions"></a>
 
-### HiddifyOptions
-HiddifyOptions defines the configuration options for the Hiddify application.
+### DonutVpnOptions
+DonutVpnOptions defines the configuration options for the DonutVpn application.
 
 
 | Field | Type | Label | Description |
@@ -1504,22 +1504,22 @@ HiddifyOptions defines the configuration options for the Hiddify application.
 | region | [string](#string) |  | Region for the application. |
 | block_ads | [bool](#bool) |  | If true, blocks ads. |
 | use_xray_core_when_possible | [bool](#bool) |  | If true, use XRay core when possible. |
-| rules | [Rule](#hiddifyoptions-Rule) | repeated | List of routing rules for traffic management. |
-| warp | [WarpOptions](#hiddifyoptions-WarpOptions) |  | Configuration options for Warp. |
-| warp2 | [WarpOptions](#hiddifyoptions-WarpOptions) |  | Additional configuration options for a second Warp instance. |
-| mux | [MuxOptions](#hiddifyoptions-MuxOptions) |  | Configuration options for multiplexing. |
-| tls_tricks | [TLSTricks](#hiddifyoptions-TLSTricks) |  | Options for TLS tricks. |
-| dns_options | [DNSOptions](#hiddifyoptions-DNSOptions) |  | DNS-related options. |
-| inbound_options | [InboundOptions](#hiddifyoptions-InboundOptions) |  | Inbound connection options. |
-| url_test_options | [URLTestOptions](#hiddifyoptions-URLTestOptions) |  | URL test configuration options. |
-| route_options | [RouteOptions](#hiddifyoptions-RouteOptions) |  | Routing-related options. |
+| rules | [Rule](#donutvpnoptions-Rule) | repeated | List of routing rules for traffic management. |
+| warp | [WarpOptions](#donutvpnoptions-WarpOptions) |  | Configuration options for Warp. |
+| warp2 | [WarpOptions](#donutvpnoptions-WarpOptions) |  | Additional configuration options for a second Warp instance. |
+| mux | [MuxOptions](#donutvpnoptions-MuxOptions) |  | Configuration options for multiplexing. |
+| tls_tricks | [TLSTricks](#donutvpnoptions-TLSTricks) |  | Options for TLS tricks. |
+| dns_options | [DNSOptions](#donutvpnoptions-DNSOptions) |  | DNS-related options. |
+| inbound_options | [InboundOptions](#donutvpnoptions-InboundOptions) |  | Inbound connection options. |
+| url_test_options | [URLTestOptions](#donutvpnoptions-URLTestOptions) |  | URL test configuration options. |
+| route_options | [RouteOptions](#donutvpnoptions-RouteOptions) |  | Routing-related options. |
 
 
 
 
 
 
-<a name="hiddifyoptions-InboundOptions"></a>
+<a name="donutvpnoptions-InboundOptions"></a>
 
 ### InboundOptions
 InboundOptions defines the configuration options for inbound connections.
@@ -1543,7 +1543,7 @@ InboundOptions defines the configuration options for inbound connections.
 
 
 
-<a name="hiddifyoptions-IntRange"></a>
+<a name="donutvpnoptions-IntRange"></a>
 
 ### IntRange
 IntRange defines a range of integers for various configurations.
@@ -1560,7 +1560,7 @@ It includes the starting and ending values of the range.
 
 
 
-<a name="hiddifyoptions-MuxOptions"></a>
+<a name="donutvpnoptions-MuxOptions"></a>
 
 ### MuxOptions
 MuxOptions defines options for multiplexing connections.
@@ -1578,7 +1578,7 @@ MuxOptions defines options for multiplexing connections.
 
 
 
-<a name="hiddifyoptions-RouteOptions"></a>
+<a name="donutvpnoptions-RouteOptions"></a>
 
 ### RouteOptions
 RouteOptions defines options related to traffic routing.
@@ -1587,7 +1587,7 @@ RouteOptions defines options related to traffic routing.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | resolve_destination | [bool](#bool) |  | If true, resolves the destination address. |
-| ipv6_mode | [DomainStrategy](#hiddifyoptions-DomainStrategy) |  | Strategy for handling IPv6 addresses. |
+| ipv6_mode | [DomainStrategy](#donutvpnoptions-DomainStrategy) |  | Strategy for handling IPv6 addresses. |
 | bypass_lan | [bool](#bool) |  | If true, bypasses LAN connections. |
 | allow_connection_from_lan | [bool](#bool) |  | If true, allows connections from LAN. |
 
@@ -1596,7 +1596,7 @@ RouteOptions defines options related to traffic routing.
 
 
 
-<a name="hiddifyoptions-Rule"></a>
+<a name="donutvpnoptions-Rule"></a>
 
 ### Rule
 Rule defines routing rules for managing traffic.
@@ -1617,7 +1617,7 @@ Rule defines routing rules for managing traffic.
 
 
 
-<a name="hiddifyoptions-TLSTricks"></a>
+<a name="donutvpnoptions-TLSTricks"></a>
 
 ### TLSTricks
 TLSTricks defines options for TLS tricks to obfuscate traffic.
@@ -1626,18 +1626,18 @@ TLSTricks defines options for TLS tricks to obfuscate traffic.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | enable_fragment | [bool](#bool) |  | If true, enables fragmentation of packets. |
-| fragment_size | [IntRange](#hiddifyoptions-IntRange) |  | Size of fragments to be used. |
-| fragment_sleep | [IntRange](#hiddifyoptions-IntRange) |  | Sleep time between fragments. |
+| fragment_size | [IntRange](#donutvpnoptions-IntRange) |  | Size of fragments to be used. |
+| fragment_sleep | [IntRange](#donutvpnoptions-IntRange) |  | Sleep time between fragments. |
 | mixed_sni_case | [bool](#bool) |  | If true, enables mixed SNI case for obfuscation. |
 | enable_padding | [bool](#bool) |  | If true, enables padding of packets. |
-| padding_size | [IntRange](#hiddifyoptions-IntRange) |  | Size of padding to be used. |
+| padding_size | [IntRange](#donutvpnoptions-IntRange) |  | Size of padding to be used. |
 
 
 
 
 
 
-<a name="hiddifyoptions-URLTestOptions"></a>
+<a name="donutvpnoptions-URLTestOptions"></a>
 
 ### URLTestOptions
 URLTestOptions defines the configuration options for URL testing.
@@ -1653,7 +1653,7 @@ URLTestOptions defines the configuration options for URL testing.
 
 
 
-<a name="hiddifyoptions-WarpAccount"></a>
+<a name="donutvpnoptions-WarpAccount"></a>
 
 ### WarpAccount
 WarpAccount defines account details for Warp.
@@ -1669,7 +1669,7 @@ WarpAccount defines account details for Warp.
 
 
 
-<a name="hiddifyoptions-WarpOptions"></a>
+<a name="donutvpnoptions-WarpOptions"></a>
 
 ### WarpOptions
 WarpOptions defines configuration options for Warp.
@@ -1680,21 +1680,21 @@ WarpOptions defines configuration options for Warp.
 | id | [string](#string) |  | Unique identifier for the Warp configuration. |
 | enable_warp | [bool](#bool) |  | If true, enables Warp functionality. |
 | mode | [string](#string) |  | Operating mode for Warp. |
-| wireguard_config | [WarpWireguardConfig](#hiddifyoptions-WarpWireguardConfig) |  | Configuration for WireGuard (defined elsewhere). |
+| wireguard_config | [WarpWireguardConfig](#donutvpnoptions-WarpWireguardConfig) |  | Configuration for WireGuard (defined elsewhere). |
 | fake_packets | [string](#string) |  | Fake packet configuration. |
-| fake_packet_size | [IntRange](#hiddifyoptions-IntRange) |  | Size of fake packets. |
-| fake_packet_delay | [IntRange](#hiddifyoptions-IntRange) |  | Delay for sending fake packets. |
+| fake_packet_size | [IntRange](#donutvpnoptions-IntRange) |  | Size of fake packets. |
+| fake_packet_delay | [IntRange](#donutvpnoptions-IntRange) |  | Delay for sending fake packets. |
 | fake_packet_mode | [string](#string) |  | Mode for sending fake packets. |
 | clean_ip | [string](#string) |  | Clean IP address to use. |
 | clean_port | [uint32](#uint32) |  | Port for clean traffic (using uint32 for compatibility). |
-| account | [WarpAccount](#hiddifyoptions-WarpAccount) |  | Account details for Warp (defined elsewhere). |
+| account | [WarpAccount](#donutvpnoptions-WarpAccount) |  | Account details for Warp (defined elsewhere). |
 
 
 
 
 
 
-<a name="hiddifyoptions-WarpWireguardConfig"></a>
+<a name="donutvpnoptions-WarpWireguardConfig"></a>
 
 ### WarpWireguardConfig
 WarpWireguardConfig defines the configuration details for WireGuard.
@@ -1715,7 +1715,7 @@ WarpWireguardConfig defines the configuration details for WireGuard.
  
 
 
-<a name="hiddifyoptions-DomainStrategy"></a>
+<a name="donutvpnoptions-DomainStrategy"></a>
 
 ### DomainStrategy
 DomainStrategy defines the strategies for IP address preference when resolving domain names.
@@ -1863,7 +1863,7 @@ Name of the profile. |
 | last_update | [int64](#int64) |  | Last update time in milliseconds of the profile. |
 | options | [ProfileOptions](#profile-ProfileOptions) |  | Options associated with the profile. |
 | sub_info | [SubscriptionInfo](#profile-SubscriptionInfo) |  | Subscription-related information. |
-| override_hiddify_options | [hiddifyoptions.HiddifyOptions](#hiddifyoptions-HiddifyOptions) |  | Override Hiddify options. |
+| override_donutvpn_options | [donutvpnoptions.DonutVpnOptions](#donutvpnoptions-DonutVpnOptions) |  | Override DonutVpn options. |
 
 
 

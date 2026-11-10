@@ -4,7 +4,7 @@ import "google/protobuf/timestamp.proto";
 
 package hcore;
 option go_package = "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore";
-option java_package = "com.hiddify.core.api.v2.hcore";
+option java_package = "com.donutvpn.core.api.v2.hcore";
 
 
 // The lifecycle is owned by the core: STOPPED -> STARTING -> WAITING -> STARTED, and STOPPING
@@ -207,8 +207,8 @@ message ParseResponse {
   string message = 3;
 }
 
-message ChangeHiddifySettingsRequest {
-  string hiddify_settings_json = 1;
+message ChangeDonutSettingsRequest {
+  string donutvpn_settings_json = 1;
 }
 
 message GenerateConfigRequest {
@@ -341,7 +341,7 @@ message AdminNeededProxy {
 message NeedAdminBgServiceRequest {
   // proxy | system-proxy | vpn
   string service_mode = 1;
-  string hiddify_settings_json = 2;
+  string donutvpn_settings_json = 2;
   AdminPreference admin_preference = 3;
   // True after an in-process start failed with a privilege error.
   bool privilege_error_remembered = 4;
@@ -359,7 +359,7 @@ message EnsureAdminBgServiceRequest {
   map<string, bytes> resources = 4;
   bool disable_memory_limit = 5;
   int32 owner_pid = 6;
-  // Absolute path to this app's HiddifyCli / HiddifyCli.exe (used for elevate install).
+  // Absolute path to this app's DonutCli / DonutCli.exe (used for elevate install).
   string cli_path = 7;
   string owner_user = 8;
   // Runs the engine without its TUN: a proxy mode whose profile needs administrator rights.

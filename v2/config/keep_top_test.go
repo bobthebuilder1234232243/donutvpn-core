@@ -96,7 +96,7 @@ func TestChosenProxiesAreTheProfilesOnly(t *testing.T) {
 }
 
 func TestKeepTagsReadFromTheSettings(t *testing.T) {
-	var options HiddifyOptions
+	var options DonutOptions
 	if err := json.Unmarshal([]byte(`{"keep-tags":["a","b"],"keep-top":5}`), &options); err != nil {
 		t.Fatal(err)
 	}

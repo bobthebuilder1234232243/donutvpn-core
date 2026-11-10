@@ -3,7 +3,7 @@ import "v2/hcommon/common.proto";
 package hcore;
 
 option go_package = "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore";
-option java_package = "com.hiddify.core.api.v2.hcore";
+option java_package = "com.donutvpn.core.api.v2.hcore";
 import "v2/hcore/hcore.proto";
 
 service Core {
@@ -15,7 +15,7 @@ service Core {
   rpc GetSystemInfoStream (hcommon.Empty) returns (stream SystemInfo);
   rpc Setup (SetupRequest) returns (hcommon.Response);
   rpc Parse (ParseRequest) returns (ParseResponse);
-  rpc ChangeHiddifySettings (ChangeHiddifySettingsRequest) returns (CoreInfoResponse);
+  rpc ChangeDonutSettings (ChangeDonutSettingsRequest) returns (CoreInfoResponse);
   //rpc GenerateConfig (GenerateConfigRequest) returns (GenerateConfigResponse);
   rpc StartService (StartRequest) returns (CoreInfoResponse);
   rpc Stop (hcommon.Empty) returns (CoreInfoResponse);

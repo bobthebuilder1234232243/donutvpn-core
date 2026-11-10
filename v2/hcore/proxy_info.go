@@ -154,7 +154,7 @@ func resolveActiveOutbound(box *sbox.Box, tag string, history adapter.URLTestHis
 	return tag
 }
 
-func (h *HiddifyInstance) GetProxyInfo(url_test_history *adapter.URLTestHistory, detour adapter.Outbound) *OutboundInfo {
+func (h *DonutInstance) GetProxyInfo(url_test_history *adapter.URLTestHistory, detour adapter.Outbound) *OutboundInfo {
 	// historyStorage := h.UrlTestHistory()
 	// if historyStorage == nil {
 	// 	return nil
@@ -233,7 +233,7 @@ func (h *HiddifyInstance) GetProxyInfo(url_test_history *adapter.URLTestHistory,
 	return out
 }
 
-func (h *HiddifyInstance) GetAllProxiesInfo(hismap map[string]*adapter.URLTestHistory, onlyGroupitems bool) *OutboundGroupList {
+func (h *DonutInstance) GetAllProxiesInfo(hismap map[string]*adapter.URLTestHistory, onlyGroupitems bool) *OutboundGroupList {
 	ctx, box := h.Context(), h.Box()
 	if ctx == nil || box == nil {
 		return nil
@@ -382,12 +382,12 @@ func (s *CoreService) MainOutboundsInfo(req *hcommon.Empty, stream grpc.ServerSt
 	return static.AllProxiesInfoStream(stream, true)
 }
 
-func (h *HiddifyInstance) AllProxiesInfoStream(stream grpc.ServerStreamingServer[OutboundGroupList], onlyMain bool) error {
+func (h *DonutInstance) AllProxiesInfoStream(stream grpc.ServerStreamingServer[OutboundGroupList], onlyMain bool) error {
 	h.MakeSureContextIsNew(stream.Context())
 
 	ctx := h.Context()
 	if ctx == nil || h.UrlTestHistory() == nil {
-		return E.New("hiddify service not found")
+		return E.New("donutvpn service not found")
 	}
 	monitor := monitoring.Get(ctx)
 	if monitor == nil {
@@ -493,7 +493,7 @@ func (h *HiddifyInstance) AllProxiesInfoStream(stream grpc.ServerStreamingServer
 
 // subscribeAllProxies waits until the catch-all monitoring group exists (box start race) then
 // subscribes. A failed Subscribe used to leave a nil channel and block the stream forever.
-func (h *HiddifyInstance) subscribeAllProxies(streamCtx context.Context, monitor *monitoring.OutboundMonitoring) (<-chan monitoring.GroupEvent, error) {
+func (h *DonutInstance) subscribeAllProxies(streamCtx context.Context, monitor *monitoring.OutboundMonitoring) (<-chan monitoring.GroupEvent, error) {
 	for attempt := 0; attempt < 20; attempt++ {
 		urltestch, err := monitor.SubscribeGroup("")
 		if err == nil {

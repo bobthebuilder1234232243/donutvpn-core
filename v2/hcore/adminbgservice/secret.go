@@ -17,23 +17,23 @@ const controlSecretFileName = "control.secret"
 // unelevated app. It must not live next to a debug build path (those move) and must not be a
 // copy of the app binary tree (that triggers antivirus heuristics on Windows).
 func controlDataDir() string {
-	if dir := os.Getenv("HIDDIFY_ADMIN_BG_DATA"); dir != "" {
+	if dir := os.Getenv("DONUT_ADMIN_BG_DATA"); dir != "" {
 		return dir
 	}
-	if dir := os.Getenv("HIDDIFY_TUNNEL_DATA"); dir != "" {
+	if dir := os.Getenv("DONUT_TUNNEL_DATA"); dir != "" {
 		return dir
 	}
 	switch runtime.GOOS {
 	case "darwin":
-		return "/Library/Application Support/Hiddify/AdminBgService/data"
+		return "/Library/Application Support/DonutVpn/AdminBgService/data"
 	case "windows":
 		base := os.Getenv("PROGRAMDATA")
 		if base == "" {
 			base = `C:\ProgramData`
 		}
-		return filepath.Join(base, "Hiddify", "AdminBgService")
+		return filepath.Join(base, "DonutVpn", "AdminBgService")
 	default:
-		return "/var/lib/hiddify-admin-bgservice"
+		return "/var/lib/donutvpn-admin-bgservice"
 	}
 }
 
@@ -41,15 +41,15 @@ func controlDataDir() string {
 func legacyControlDataDir() string {
 	switch runtime.GOOS {
 	case "darwin":
-		return "/Library/Application Support/Hiddify/TunnelService/data"
+		return "/Library/Application Support/DonutVpn/TunnelService/data"
 	case "windows":
 		base := os.Getenv("PROGRAMDATA")
 		if base == "" {
 			base = `C:\ProgramData`
 		}
-		return filepath.Join(base, "Hiddify", "TunnelService")
+		return filepath.Join(base, "DonutVpn", "TunnelService")
 	default:
-		return "/var/lib/hiddify-tunnel"
+		return "/var/lib/donutvpn-tunnel"
 	}
 }
 

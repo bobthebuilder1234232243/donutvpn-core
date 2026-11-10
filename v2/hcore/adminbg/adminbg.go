@@ -24,7 +24,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-const SecretHeader = "x-hiddify-secret"
+const SecretHeader = "x-donutvpn-secret"
 const MinSecretLength = 32
 
 type Options struct {
@@ -160,7 +160,7 @@ func applyLocked(options *Options, platform libbox.PlatformInterface) error {
 	}
 	// StartService waits for the queue: it returns only when the background core
 	// has finished starting (WAITING or STARTED) or failed. Callers such as
-	// `HiddifyCli tunnel connect` must not report success before that.
+	// `DonutCli tunnel connect` must not report success before that.
 	res, err := hcore.StartService(libbox.BaseContext(platform), &hcore.StartRequest{
 		ConfigContent: options.ConfigContent, ConfigName: options.ConfigName,
 		DisableMemoryLimit: options.DisableMemoryLimit,
@@ -205,8 +205,8 @@ func applySettings(options *Options) error {
 	if err != nil {
 		return err
 	}
-	_, err = hcore.ChangeHiddifySettings(&hcore.ChangeHiddifySettingsRequest{
-		HiddifySettingsJson: string(settingsBytes),
+	_, err = hcore.ChangeDonutSettings(&hcore.ChangeDonutSettingsRequest{
+		DonutSettingsJson: string(settingsBytes),
 	}, false)
 	return err
 }

@@ -159,7 +159,7 @@ var file_v2_hcore_hcore_service_proto_goTypes = []any{
 	(*hcommon.Empty)(nil),                // 1: hcommon.Empty
 	(*SetupRequest)(nil),                 // 2: hcore.SetupRequest
 	(*ParseRequest)(nil),                 // 3: hcore.ParseRequest
-	(*ChangeHiddifySettingsRequest)(nil), // 4: hcore.ChangeHiddifySettingsRequest
+	(*ChangeDonutSettingsRequest)(nil), // 4: hcore.ChangeDonutSettingsRequest
 	(*SelectOutboundRequest)(nil),        // 5: hcore.SelectOutboundRequest
 	(*UrlTestRequest)(nil),               // 6: hcore.UrlTestRequest
 	(*SpeedTestRequest)(nil),             // 7: hcore.SpeedTestRequest
@@ -194,7 +194,7 @@ var file_v2_hcore_hcore_service_proto_depIdxs = []int32{
 	1,  // 5: hcore.Core.GetSystemInfoStream:input_type -> hcommon.Empty
 	2,  // 6: hcore.Core.Setup:input_type -> hcore.SetupRequest
 	3,  // 7: hcore.Core.Parse:input_type -> hcore.ParseRequest
-	4,  // 8: hcore.Core.ChangeHiddifySettings:input_type -> hcore.ChangeHiddifySettingsRequest
+	4,  // 8: hcore.Core.ChangeDonutSettings:input_type -> hcore.ChangeDonutSettingsRequest
 	0,  // 9: hcore.Core.StartService:input_type -> hcore.StartRequest
 	1,  // 10: hcore.Core.Stop:input_type -> hcommon.Empty
 	0,  // 11: hcore.Core.Restart:input_type -> hcore.StartRequest
@@ -224,7 +224,7 @@ var file_v2_hcore_hcore_service_proto_depIdxs = []int32{
 	17, // 35: hcore.Core.GetSystemInfoStream:output_type -> hcore.SystemInfo
 	18, // 36: hcore.Core.Setup:output_type -> hcommon.Response
 	19, // 37: hcore.Core.Parse:output_type -> hcore.ParseResponse
-	15, // 38: hcore.Core.ChangeHiddifySettings:output_type -> hcore.CoreInfoResponse
+	15, // 38: hcore.Core.ChangeDonutSettings:output_type -> hcore.CoreInfoResponse
 	15, // 39: hcore.Core.StartService:output_type -> hcore.CoreInfoResponse
 	15, // 40: hcore.Core.Stop:output_type -> hcore.CoreInfoResponse
 	15, // 41: hcore.Core.Restart:output_type -> hcore.CoreInfoResponse

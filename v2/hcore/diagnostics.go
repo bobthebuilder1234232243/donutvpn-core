@@ -202,7 +202,7 @@ func exportDiagnostics(workingPath, tempPath string, req *ExportDiagnosticsReque
 
 	destination := req.DestinationPath
 	if destination == "" {
-		destination = filepath.Join(tempPath, "hiddify-diagnostics-"+stamp+".zip")
+		destination = filepath.Join(tempPath, "donutvpn-diagnostics-"+stamp+".zip")
 	}
 	if err := libbox.CreateZipArchive(staging, destination, false); err != nil {
 		return "", E.Cause(err, "zip the diagnostics")

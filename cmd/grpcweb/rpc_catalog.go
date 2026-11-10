@@ -27,7 +27,7 @@ var coreRPCCatalog = []rpcMeta{
 	{Name: "GetSystemInfoStream", Kind: "server_stream", Desc: "Live system info", Path: "/api/stream/system"},
 	{Name: "Setup", Kind: "unary", Desc: "Setup working dirs / mode", Path: "/api/rpc"},
 	{Name: "Parse", Kind: "unary", Desc: "Parse share links / config", Path: "/api/resolve"},
-	{Name: "ChangeHiddifySettings", Kind: "unary", Desc: "Apply Hiddify options", Path: "/api/settings"},
+	{Name: "ChangeDonutSettings", Kind: "unary", Desc: "Apply DonutVpn options", Path: "/api/settings"},
 	{Name: "SelectOutbound", Kind: "unary", Desc: "Select proxy in a group", Path: "/api/select"},
 	{Name: "UrlTest", Kind: "unary", Desc: "URL-test a tag", Path: "/api/urltest"},
 	{Name: "UrlTestActive", Kind: "unary", Desc: "URL-test active outbound", Path: "/api/urltest-active"},

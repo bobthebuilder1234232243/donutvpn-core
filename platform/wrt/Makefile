@@ -1,14 +1,14 @@
-# OpenWrt SDK package for hiddify-core: builds the CLI from source with OpenWrt's Go toolchain.
+# OpenWrt SDK package for donut-core: builds the CLI from source with OpenWrt's Go toolchain.
 # Prebuilt packages for every OpenWrt architecture come from the release feeds instead; see
 # README.md beside this file. `make release` in the repository bumps PKG_VERSION; CI checks
 # GO_PKG_TAGS against `make print-WRT_TAGS` of the repository's Makefile.
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=hiddify-core
+PKG_NAME:=donut-core
 PKG_VERSION:=5.5.5
 PKG_RELEASE:=1
 
-# From git at the version's tag, with the submodules (hiddify-sing-box, ray2sing, the forks under
+# From git at the version's tag, with the submodules (donutvpn-sing-box, ray2sing, the forks under
 # replace/) that a GitHub tarball lacks and go.mod replaces into. No fixed hash: the tarball the
 # buildroot makes from the clone is not reproducible across its versions.
 PKG_SOURCE_PROTO:=git
@@ -18,7 +18,7 @@ PKG_MIRROR_HASH:=skip
 
 PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE.md
-PKG_MAINTAINER:=Hiddify <wrt@hiddify.com>
+PKG_MAINTAINER:=DonutVpn <wrt@donutvpn.com>
 
 PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
@@ -36,38 +36,38 @@ GO_PKG_TAGS:=with_gvisor,with_quic,with_wireguard,with_utls,with_clash_api,with_
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
-define Package/hiddify-core
+define Package/donut-core
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=Web Servers/Proxies
-  TITLE:=Hiddify universal proxy platform
-  URL:=https://hiddify.com/
+  TITLE:=DonutVpn universal proxy platform
+  URL:=https://donutvpn.com/
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle +kmod-inet-diag +kmod-tun +firewall4 +kmod-nft-queue
 endef
 
-define Package/hiddify-core/description
-  Hiddify is a universal proxy platform built on sing-box: Hysteria, SOCKS, Shadowsocks,
+define Package/donut-core/description
+  DonutVpn is a universal proxy platform built on sing-box: Hysteria, SOCKS, Shadowsocks,
   ShadowTLS, Tor, Trojan, VLESS, VMess, WireGuard, WARP, Psiphon and more, from a config file
   or a subscription link.
 endef
 
-define Package/hiddify-core/conffiles
-/etc/config/hiddify-core
-/etc/hiddify-core/config.json
+define Package/donut-core/conffiles
+/etc/config/donut-core
+/etc/donut-core/config.json
 endef
 
-define Package/hiddify-core/install
+define Package/donut-core/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/main $(1)/usr/bin/hiddify-core
-	$(INSTALL_DIR) $(1)/etc/hiddify-core
-	$(INSTALL_CONF) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/hiddify-core/config.json
+	$(INSTALL_BIN) $(GO_PKG_BUILD_BIN_DIR)/main $(1)/usr/bin/donut-core
+	$(INSTALL_DIR) $(1)/etc/donut-core
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/release/config/config.json $(1)/etc/donut-core/config.json
 	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/hiddify-core.conf $(1)/etc/config/hiddify-core
+	$(INSTALL_CONF) ./files/donut-core.conf $(1)/etc/config/donut-core
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./files/hiddify-core.init $(1)/etc/init.d/hiddify-core
+	$(INSTALL_BIN) ./files/donut-core.init $(1)/etc/init.d/donut-core
 	$(INSTALL_DIR) $(1)/lib/upgrade/keep.d
-	$(INSTALL_DATA) ./files/hiddify-core.keep $(1)/lib/upgrade/keep.d/hiddify-core
+	$(INSTALL_DATA) ./files/donut-core.keep $(1)/lib/upgrade/keep.d/donut-core
 endef
 
-$(eval $(call GoBinPackage,hiddify-core))
-$(eval $(call BuildPackage,hiddify-core))
+$(eval $(call GoBinPackage,donut-core))
+$(eval $(call BuildPackage,donut-core))

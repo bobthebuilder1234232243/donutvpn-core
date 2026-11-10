@@ -59,7 +59,7 @@ func ExecuteCmd(executablePath string, background bool, args ...string) (string,
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		if owner := os.Getenv("USER"); owner != "" {
-			cmd.Env = append(os.Environ(), "HIDDIFY_TUNNEL_OWNER="+owner)
+			cmd.Env = append(os.Environ(), "DONUT_TUNNEL_OWNER="+owner)
 		}
 		fmt.Printf("Running command: %v\n", command)
 		if background {

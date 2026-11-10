@@ -1900,16 +1900,16 @@ func (x *ParseResponse) GetMessage() string {
 	return ""
 }
 
-type ChangeHiddifySettingsRequest struct {
+type ChangeDonutSettingsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	HiddifySettingsJson string `protobuf:"bytes,1,opt,name=hiddify_settings_json,json=hiddifySettingsJson,proto3" json:"hiddify_settings_json,omitempty"`
+	DonutSettingsJson string `protobuf:"bytes,1,opt,name=donutvpn_settings_json,json=donutvpnSettingsJson,proto3" json:"donutvpn_settings_json,omitempty"`
 }
 
-func (x *ChangeHiddifySettingsRequest) Reset() {
-	*x = ChangeHiddifySettingsRequest{}
+func (x *ChangeDonutSettingsRequest) Reset() {
+	*x = ChangeDonutSettingsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_v2_hcore_hcore_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1917,13 +1917,13 @@ func (x *ChangeHiddifySettingsRequest) Reset() {
 	}
 }
 
-func (x *ChangeHiddifySettingsRequest) String() string {
+func (x *ChangeDonutSettingsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ChangeHiddifySettingsRequest) ProtoMessage() {}
+func (*ChangeDonutSettingsRequest) ProtoMessage() {}
 
-func (x *ChangeHiddifySettingsRequest) ProtoReflect() protoreflect.Message {
+func (x *ChangeDonutSettingsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v2_hcore_hcore_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1935,14 +1935,14 @@ func (x *ChangeHiddifySettingsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ChangeHiddifySettingsRequest.ProtoReflect.Descriptor instead.
-func (*ChangeHiddifySettingsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ChangeDonutSettingsRequest.ProtoReflect.Descriptor instead.
+func (*ChangeDonutSettingsRequest) Descriptor() ([]byte, []int) {
 	return file_v2_hcore_hcore_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *ChangeHiddifySettingsRequest) GetHiddifySettingsJson() string {
+func (x *ChangeDonutSettingsRequest) GetDonutSettingsJson() string {
 	if x != nil {
-		return x.HiddifySettingsJson
+		return x.DonutSettingsJson
 	}
 	return ""
 }
@@ -2899,7 +2899,7 @@ type NeedAdminBgServiceRequest struct {
 
 	// proxy | system-proxy | vpn
 	ServiceMode         string          `protobuf:"bytes,1,opt,name=service_mode,json=serviceMode,proto3" json:"service_mode,omitempty"`
-	HiddifySettingsJson string          `protobuf:"bytes,2,opt,name=hiddify_settings_json,json=hiddifySettingsJson,proto3" json:"hiddify_settings_json,omitempty"`
+	DonutSettingsJson string          `protobuf:"bytes,2,opt,name=donutvpn_settings_json,json=donutvpnSettingsJson,proto3" json:"donutvpn_settings_json,omitempty"`
 	AdminPreference     AdminPreference `protobuf:"varint,3,opt,name=admin_preference,json=adminPreference,proto3,enum=hcore.AdminPreference" json:"admin_preference,omitempty"`
 	// True after an in-process start failed with a privilege error.
 	PrivilegeErrorRemembered bool `protobuf:"varint,4,opt,name=privilege_error_remembered,json=privilegeErrorRemembered,proto3" json:"privilege_error_remembered,omitempty"`
@@ -2944,9 +2944,9 @@ func (x *NeedAdminBgServiceRequest) GetServiceMode() string {
 	return ""
 }
 
-func (x *NeedAdminBgServiceRequest) GetHiddifySettingsJson() string {
+func (x *NeedAdminBgServiceRequest) GetDonutSettingsJson() string {
 	if x != nil {
-		return x.HiddifySettingsJson
+		return x.DonutSettingsJson
 	}
 	return ""
 }
@@ -3031,7 +3031,7 @@ type EnsureAdminBgServiceRequest struct {
 	Resources          map[string][]byte `protobuf:"bytes,4,rep,name=resources,proto3" json:"resources,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	DisableMemoryLimit bool              `protobuf:"varint,5,opt,name=disable_memory_limit,json=disableMemoryLimit,proto3" json:"disable_memory_limit,omitempty"`
 	OwnerPid           int32             `protobuf:"varint,6,opt,name=owner_pid,json=ownerPid,proto3" json:"owner_pid,omitempty"`
-	// Absolute path to this app's HiddifyCli / HiddifyCli.exe (used for elevate install).
+	// Absolute path to this app's DonutCli / DonutCli.exe (used for elevate install).
 	CliPath   string `protobuf:"bytes,7,opt,name=cli_path,json=cliPath,proto3" json:"cli_path,omitempty"`
 	OwnerUser string `protobuf:"bytes,8,opt,name=owner_user,json=ownerUser,proto3" json:"owner_user,omitempty"`
 	// Runs the engine without its TUN: a proxy mode whose profile needs administrator rights.
@@ -3724,7 +3724,7 @@ var file_v2_hcore_hcore_proto_goTypes = []any{
 	(*SystemProxyStatus)(nil),            // 21: hcore.SystemProxyStatus
 	(*ParseRequest)(nil),                 // 22: hcore.ParseRequest
 	(*ParseResponse)(nil),                // 23: hcore.ParseResponse
-	(*ChangeHiddifySettingsRequest)(nil), // 24: hcore.ChangeHiddifySettingsRequest
+	(*ChangeDonutSettingsRequest)(nil), // 24: hcore.ChangeDonutSettingsRequest
 	(*GenerateConfigRequest)(nil),        // 25: hcore.GenerateConfigRequest
 	(*GenerateConfigResponse)(nil),       // 26: hcore.GenerateConfigResponse
 	(*SelectOutboundRequest)(nil),        // 27: hcore.SelectOutboundRequest
@@ -3970,7 +3970,7 @@ func file_v2_hcore_hcore_proto_init() {
 			}
 		}
 		file_v2_hcore_hcore_proto_msgTypes[15].Exporter = func(v any, i int) any {
-			switch v := v.(*ChangeHiddifySettingsRequest); i {
+			switch v := v.(*ChangeDonutSettingsRequest); i {
 			case 0:
 				return &v.state
 			case 1:

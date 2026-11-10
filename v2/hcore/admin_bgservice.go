@@ -32,8 +32,8 @@ func (s *CoreService) NeedAdminBgService(ctx context.Context, req *NeedAdminBgSe
 		return &NeedAdminBgServiceResponse{Decision: AdminBgServiceDecision_ADMIN_BG_SERVICE_NO}, nil
 	}
 
-	features := scanAdminNeededFeatures(req.GetHiddifySettingsJson())
-	vpn := isVpnServiceMode(req.GetServiceMode(), req.GetHiddifySettingsJson())
+	features := scanAdminNeededFeatures(req.GetDonutSettingsJson())
+	vpn := isVpnServiceMode(req.GetServiceMode(), req.GetDonutSettingsJson())
 
 	if hutils.IsAdmin() {
 		return &NeedAdminBgServiceResponse{Decision: AdminBgServiceDecision_ADMIN_BG_SERVICE_NO}, nil
@@ -214,7 +214,7 @@ func parseSettingsMap(settingsJSON string) (map[string]any, error) {
 }
 
 func adminBgDataDir() string {
-	if dir := os.Getenv("HIDDIFY_TUNNEL_DATA"); dir != "" {
+	if dir := os.Getenv("DONUT_TUNNEL_DATA"); dir != "" {
 		return dir
 	}
 	switch runtime.GOOS {
@@ -223,9 +223,9 @@ func adminBgDataDir() string {
 		if base == "" {
 			base = `C:\ProgramData`
 		}
-		return filepath.Join(base, "Hiddify", "AdminBgService")
+		return filepath.Join(base, "DonutVpn", "AdminBgService")
 	default:
-		return "/var/lib/hiddify-admin-bgservice"
+		return "/var/lib/donutvpn-admin-bgservice"
 	}
 }
 
@@ -290,7 +290,7 @@ func ensureAdminBgServiceInstalled(cliPath, ownerUser string) error {
 		}
 	}
 	if owner != "" {
-		_ = os.Setenv("HIDDIFY_TUNNEL_OWNER", owner)
+		_ = os.Setenv("DONUT_TUNNEL_OWNER", owner)
 	}
 	return elevateAdminBgInstall(cliPath, owner)
 }
@@ -332,7 +332,7 @@ func writeAdminBgConnectRequest(req *EnsureAdminBgServiceRequest) (string, error
 	if err != nil {
 		return "", err
 	}
-	f, err := os.CreateTemp("", "hiddify-admin-bgservice-*.json")
+	f, err := os.CreateTemp("", "donutvpn-admin-bgservice-*.json")
 	if err != nil {
 		return "", err
 	}

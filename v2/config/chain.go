@@ -10,7 +10,7 @@ import (
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/option"
 	"github.com/sagernet/sing/common/json/badoption"
-	"github.com/sagernet/wireguard-go/hiddify"
+	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn"
 )
 
 // Chain hops ("extra security" / "unblocker") configured in the app settings.
@@ -229,7 +229,7 @@ func IsChainUnblockerTag(tag string) bool {
 // setChainHop adds the active chain hop and routes the main profile through it:
 //   - extra security: the hop dials through the main selector and all traffic enters the hop
 //   - unblocker: the hop dials directly and every main outbound/endpoint dials through the hop
-func setChainHop(opt *HiddifyOptions, outbounds *[]option.Outbound, endpoints *[]option.Endpoint) error {
+func setChainHop(opt *DonutOptions, outbounds *[]option.Outbound, endpoints *[]option.Endpoint) error {
 	var (
 		hop    ChainHopOptions
 		tag    string
@@ -538,25 +538,25 @@ func chainWarpAwg(awg *ChainWarpAwgOptions) *option.AwgOptions {
 	}
 }
 
-func chainWarpNoise(warp ChainWarpOptions) hiddify.NoiseOptions {
-	parse := func(s string) hiddify.Range {
-		var r hiddify.Range
+func chainWarpNoise(warp ChainWarpOptions) donutvpn.NoiseOptions {
+	parse := func(s string) donutvpn.Range {
+		var r donutvpn.Range
 		if s != "" {
 			_ = r.UnmarshalJSON([]byte(strconv.Quote(s))) // invalid input leaves the range empty
 		}
 		return r
 	}
-	fake := hiddify.FakePacketOptions{
+	fake := donutvpn.FakePacketOptions{
 		Count: parse(warp.Noise),
 		Size:  parse(warp.NoiseSize),
 		Delay: parse(warp.NoiseDelay),
 		Mode:  warp.NoiseMode,
 	}
-	fake.Enabled = fake.Count != (hiddify.Range{})
-	if _, isPreset := hiddify.NoisePresetByName(warp.NoiseMode); isPreset {
+	fake.Enabled = fake.Count != (donutvpn.Range{})
+	if _, isPreset := donutvpn.NoisePresetByName(warp.NoiseMode); isPreset {
 		fake.Enabled = true // a preset brings its own count
 	}
-	return hiddify.NoiseOptions{FakePacket: fake}
+	return donutvpn.NoiseOptions{FakePacket: fake}
 }
 
 func chainPsiphonOutbound(tag string, psiphon ChainPsiphonOptions, detour string) option.Outbound {
@@ -564,15 +564,15 @@ func chainPsiphonOutbound(tag string, psiphon ChainPsiphonOptions, detour string
 	if region == psiphonRegionAuto {
 		region = ""
 	}
-	// "hiddify": the Psiphon config embedded at build time (falls back to the defaults without it)
-	options := &option.PsiphonOutboundOptions{Config: "hiddify", EgressRegion: region}
+	// "donutvpn": the Psiphon config embedded at build time (falls back to the defaults without it)
+	options := &option.PsiphonOutboundOptions{Config: "donutvpn", EgressRegion: region}
 	options.Detour = detour
 	return option.Outbound{Type: C.TypePsiphon, Tag: tag, Options: options}
 }
 
 // chainUsesPsiphon reports whether the active chain hop is Psiphon; Psiphon runs as one instance
 // per process, so the profile's own Psiphon outbounds are dropped then.
-func chainUsesPsiphon(opt *HiddifyOptions) bool {
+func chainUsesPsiphon(opt *DonutOptions) bool {
 	switch opt.ChainStatus {
 	case ChainStatusExtraSecurity:
 		return opt.ExtraSecurity.Mode == ChainModePsiphon || opt.ExtraSecurity.Mode == ChainModeSelectable

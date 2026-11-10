@@ -7,8 +7,8 @@ Never commit the private halves.
 
 | File | For | Made with |
 |---|---|---|
-| `hiddify.pub` | opkg (OpenWrt 24.10 and earlier), `Packages.sig` | `usign -G -c "Hiddify OpenWrt feed" -s hiddify.sec -p hiddify.pub` |
-| `hiddify-apk.pem` | apk (OpenWrt 25.12 and later), `packages.adb` | `openssl ecparam -name prime256v1 -genkey -noout -out hiddify-apk.key` then `openssl ec -in hiddify-apk.key -pubout -out hiddify-apk.pem` |
+| `donutvpn.pub` | opkg (OpenWrt 24.10 and earlier), `Packages.sig` | `usign -G -c "DonutVpn OpenWrt feed" -s donutvpn.sec -p donutvpn.pub` |
+| `donutvpn-apk.pem` | apk (OpenWrt 25.12 and later), `packages.adb` | `openssl ecparam -name prime256v1 -genkey -noout -out donutvpn-apk.key` then `openssl ec -in donutvpn-apk.key -pubout -out donutvpn-apk.pem` |
 
 Pass the private keys to `make-feed.sh`. Without them the indexes are unsigned: routers then need
 `option check_signature 0` (opkg) or `--allow-untrusted` (apk). The apk key must be an EC key in

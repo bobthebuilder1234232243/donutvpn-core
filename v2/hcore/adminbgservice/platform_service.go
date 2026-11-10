@@ -17,8 +17,8 @@ import (
 
 var logger service.Logger
 
-type hiddifyNext struct {
-	adminBg *hiddifyAdminBG
+type donutvpnNext struct {
+	adminBg *donutvpnAdminBG
 	secret  string
 }
 
@@ -26,9 +26,9 @@ var port int = 18020
 
 func allowAdminBgMethod(method string) error {
 	switch method {
-	case HiddifyAdminBG_Start_FullMethodName, HiddifyAdminBG_Reload_FullMethodName, HiddifyAdminBG_Restart_FullMethodName,
-		HiddifyAdminBG_Stop_FullMethodName, HiddifyAdminBG_Status_FullMethodName,
-		HiddifyAdminBG_Exit_FullMethodName:
+	case DonutAdminBG_Start_FullMethodName, DonutAdminBG_Reload_FullMethodName, DonutAdminBG_Restart_FullMethodName,
+		DonutAdminBG_Stop_FullMethodName, DonutAdminBG_Status_FullMethodName,
+		DonutAdminBG_Exit_FullMethodName:
 		return nil
 	}
 	return adminbg.AllowCoreMethod(method)
@@ -41,7 +41,7 @@ func CleanupLeftovers() {
 	hcore.CleanupLeftovers(work, func(_ hcore.LogLevel, message string) { log.Print(message) })
 }
 
-func (m *hiddifyNext) StartAdminBgGrpcServer(listenAddressG string) (*grpc.Server, error) {
+func (m *donutvpnNext) StartAdminBgGrpcServer(listenAddressG string) (*grpc.Server, error) {
 	// an engine killed with the service (a crash, SIGKILL) left its TUN's routing behind: the host
 	// has no network until the app connects again, so undo it before waiting for the app
 	CleanupLeftovers()
@@ -55,8 +55,8 @@ func (m *hiddifyNext) StartAdminBgGrpcServer(listenAddressG string) (*grpc.Serve
 		serverOptions = adminbg.ServerOptions(m.secret, allowAdminBgMethod)
 	}
 	s := grpc.NewServer(serverOptions...)
-	m.adminBg = &hiddifyAdminBG{}
-	RegisterHiddifyAdminBGServer(s, m.adminBg)
+	m.adminBg = &donutvpnAdminBG{}
+	RegisterDonutAdminBGServer(s, m.adminBg)
 	if m.secret != "" {
 		adminbg.RegisterControl(s)
 	}
@@ -71,7 +71,7 @@ func (m *hiddifyNext) StartAdminBgGrpcServer(listenAddressG string) (*grpc.Serve
 	return s, nil
 }
 
-func (m *hiddifyNext) Start(s service.Service) error {
+func (m *donutvpnNext) Start(s service.Service) error {
 	if err := WriteRunningBinaryStamp(); err != nil {
 		return fmt.Errorf("record tunnel binary stamp: %w", err)
 	}
@@ -86,7 +86,7 @@ func (m *hiddifyNext) Start(s service.Service) error {
 	return err
 }
 
-func (m *hiddifyNext) Stop(s service.Service) error {
+func (m *donutvpnNext) Stop(s service.Service) error {
 	if m.adminBg == nil {
 		return nil
 	}
@@ -123,10 +123,10 @@ func dataDirectoryFor(directory string) string {
 }
 
 func installOwner() string {
-	if owner := os.Getenv("HIDDIFY_ADMIN_BG_OWNER"); owner != "" {
+	if owner := os.Getenv("DONUT_ADMIN_BG_OWNER"); owner != "" {
 		return owner
 	}
-	if owner := os.Getenv("HIDDIFY_TUNNEL_OWNER"); owner != "" {
+	if owner := os.Getenv("DONUT_TUNNEL_OWNER"); owner != "" {
 		return owner
 	}
 	if owner := os.Getenv("USERNAME"); owner != "" {
@@ -138,7 +138,7 @@ func installOwner() string {
 // osServiceName is the OS service id passed to kardianos/service.
 // On Linux systemd, that library writes Name+".service" (do not include the suffix here).
 func osServiceName() string {
-	return "HiddifyAdminBG"
+	return "DonutAdminBG"
 }
 
 func serviceRunArguments() []string {
@@ -158,13 +158,13 @@ func StartAdminBgService(goArg string) (int, string) {
 			return 3, fmt.Sprintf("Error: %v", err)
 		}
 	}
-	// Windows/Linux: HiddifyCli admin_bgservice run.
+	// Windows/Linux: DonutCli admin_bgservice run.
 	// macOS: the copied .app must get --tunnel so AppDelegate runs parseCli instead of the Flutter UI.
 	svcConfig := &service.Config{
 		Name:             osServiceName(),
-		DisplayName:      "Hiddify VPN",
+		DisplayName:      "DonutVpn VPN",
 		Arguments:        serviceRunArguments(),
-		Description:      "Hiddify virtual private network",
+		Description:      "DonutVpn virtual private network",
 		WorkingDirectory: dataDirectory,
 		Option: map[string]interface{}{
 			"RunAtLoad":     true,
@@ -172,7 +172,7 @@ func StartAdminBgService(goArg string) (int, string) {
 		},
 	}
 
-	prg := &hiddifyNext{}
+	prg := &donutvpnNext{}
 	s, err := service.New(prg, svcConfig)
 	if err != nil {
 		return 1, fmt.Sprintf("Error: %v", err)

@@ -10,13 +10,13 @@ import (
 	"github.com/sagernet/sing-box/option"
 )
 
-// The values of HiddifyOptions.DefaultProxy besides the balancer, its default.
+// The values of DonutOptions.DefaultProxy besides the balancer, its default.
 const (
 	DefaultProxyLowest = "lowest"
 	DefaultProxyFirst  = "first"
 )
 
-type HiddifyOptions struct {
+type DonutOptions struct {
 	EnableFullConfig        bool   `json:"enable-full-config,omitempty" overridable:"true"`
 	LogLevel                string `json:"log-level,omitempty"`
 	LogFile                 string `json:"log-file,omitempty"`
@@ -98,7 +98,7 @@ type InboundOptions struct {
 	// LanSharingPort is the port the local network uses while the VPN is shared with it, apart from
 	// this device's own (MixedPort), and asking for ProxySecret (see proxyListeners).
 	LanSharingPort uint16 `json:"lan-sharing-port,omitempty"`
-	// ProxySecret is the password (of the user "hiddify") of the LAN sharing port, and of the local
+	// ProxySecret is the password (of the user "donutvpn") of the LAN sharing port, and of the local
 	// port too while LocalProxyAuth is on.
 	ProxySecret string `json:"lan-sharing-password,omitempty"`
 	// LocalProxyAuth makes the local port ask for ProxySecret as well. Off by default: browsers can not
@@ -170,8 +170,8 @@ type WarpOptions struct {
 	Account            WarpAccount
 }
 
-func DefaultHiddifyOptions() *HiddifyOptions {
-	return &HiddifyOptions{
+func DefaultDonutOptions() *DonutOptions {
+	return &DonutOptions{
 		EnableNTP: true,
 		DNSOptions: DNSOptions{
 			RemoteDnsAddress:        "1.1.1.1",
@@ -331,20 +331,20 @@ func parseUint(value interface{}) (uint64, error) {
 	return 0, fmt.Errorf("invalid uint value")
 }
 
-func GetOverridableHiddifyOptions(overrides map[string][]string) *HiddifyOptions {
-	overrideHiddify := HiddifyOptions{}
+func GetOverridableDonutOptions(overrides map[string][]string) *DonutOptions {
+	overrideDonutVpn := DonutOptions{}
 
 	// Convert flat overrides to nested structure
 	nestedOverrides := convertFlatToNested(overrides)
 
-	// Use reflection to iterate over the fields of HiddifyOptions
-	v := reflect.ValueOf(&overrideHiddify).Elem()
-	t := reflect.TypeOf(overrideHiddify)
+	// Use reflection to iterate over the fields of DonutOptions
+	v := reflect.ValueOf(&overrideDonutVpn).Elem()
+	t := reflect.TypeOf(overrideDonutVpn)
 
 	// Recursively set the fields that are marked as overridable
 	setOverridableFields(v, t, nestedOverrides)
 
-	return &overrideHiddify
+	return &overrideDonutVpn
 }
 
 // Converts the flat overrides map to a nested structure without removing underscores

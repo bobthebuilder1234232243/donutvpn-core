@@ -70,7 +70,7 @@ var (
 )
 
 // TODO include selectors
-func BuildConfig(ctx context.Context, hopts *HiddifyOptions, inputOpt *ReadOptions) (*option.Options, error) {
+func BuildConfig(ctx context.Context, hopts *DonutOptions, inputOpt *ReadOptions) (*option.Options, error) {
 	ipv6Only := !hostHasIPv4()
 	hopts = forIPv6OnlyHost(hopts, ipv6Only)
 	hopts, err := forRouterMode(hopts)
@@ -175,7 +175,7 @@ func isDNSOutbound(out option.Outbound) bool {
 	return ok && invalid.OriginalType == C.TypeDNS
 }
 
-func setOutbounds(options *option.Options, input *option.Options, opt *HiddifyOptions, staticIPs *map[string][]string) error {
+func setOutbounds(options *option.Options, input *option.Options, opt *DonutOptions, staticIPs *map[string][]string) error {
 	var outbounds []option.Outbound
 	var endpoints []option.Endpoint
 	var tags []string
@@ -394,7 +394,7 @@ func contains(slice []string, item string) bool {
 	return false
 }
 
-func setExperimental(options *option.Options, hopt *HiddifyOptions) {
+func setExperimental(options *option.Options, hopt *DonutOptions) {
 	if len(hopt.ConnectionTestUrls) == 0 {
 		hopt.ConnectionTestUrls = []string{hopt.ConnectionTestUrl, "http://captive.apple.com/generate_204", "https://cp.cloudflare.com", "https://google.com/generate_204"}
 		if isBlockedConnectionTestUrl(hopt.ConnectionTestUrl) {
@@ -433,7 +433,7 @@ func setExperimental(options *option.Options, hopt *HiddifyOptions) {
 	}
 }
 
-func setLog(options *option.Options, opt *HiddifyOptions) {
+func setLog(options *option.Options, opt *DonutOptions) {
 	options.Log = &option.LogOptions{
 		Level:        opt.LogLevel,
 		Output:       opt.LogFile,
@@ -453,7 +453,7 @@ func isIPv6Supported() bool {
 // dnsStrategy is the strategy of a DNS rule: the explicit setting when there is one, else what
 // the IPv6 mode asks. Neither ever becomes ipv4_only or ipv6_only: the core's own lookups then
 // favour one family, but a client still gets both A and AAAA, and a config whose server has only
-// the other family still routes (hiddify-app #2307, #2420 are about IPv6-first sites on proxies
+// the other family still routes (donutvpn-app #2307, #2420 are about IPv6-first sites on proxies
 // without IPv6; the mode used to reach only the local listeners).
 func dnsStrategy(explicit, ipv6Mode option.DomainStrategy) option.DomainStrategy {
 	strategy := explicit
@@ -473,7 +473,7 @@ func dnsStrategy(explicit, ipv6Mode option.DomainStrategy) option.DomainStrategy
 // connections through the proxy. Off unless the IPv6 mode turns it on (the user, or a
 // subscription's ipv6-mode header): most proxies' exits have no IPv6, and a proxy accepts an
 // IPv6 connection and then closes it, which a browser shows as a dead site and never retries over
-// IPv4 (hiddify-app #2307, #2420). On, IPv6 goes only through a proxy found carrying it: the
+// IPv4 (donutvpn-app #2307, #2420). On, IPv6 goes only through a proxy found carrying it: the
 // monitoring verifies each proxy once at its URL test (verify_ipv6), the router carries over IPv4
 // a connection the proxy cannot (ipv6_fallback) and learns from it, and the DNS and route rules
 // (ipv6_by_outbound, ipv6_unavailable_via) keep IPv6 away from a proxy found without. The core's
@@ -488,7 +488,7 @@ func ipv6ForClients(ipv6Mode option.DomainStrategy) bool {
 
 // ipv6ByOutbound names the outbound whose IPv6, as the monitoring knows it, limits a DNS rule's
 // AAAA answers: the detour the rule's traffic takes, when the apps get IPv6 at all.
-func ipv6ByOutbound(hopt *HiddifyOptions, detour string) string {
+func ipv6ByOutbound(hopt *DonutOptions, detour string) string {
 	if !ipv6ForClients(hopt.IPv6Mode) {
 		return ""
 	}
@@ -515,7 +515,7 @@ func shouldEnableIPv6() bool {
 	return isIPv6Supported()
 }
 
-func setInbound(options *option.Options, hopt *HiddifyOptions) {
+func setInbound(options *option.Options, hopt *DonutOptions) {
 	// var inboundDomainStrategy option.DomainStrategy
 	// if !opt.ResolveDestination {
 	// 	inboundDomainStrategy = option.DomainStrategy(dns.DomainStrategyAsIS)
@@ -628,7 +628,7 @@ func setInbound(options *option.Options, hopt *HiddifyOptions) {
 	}
 }
 
-func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
+func setRoutingOptions(options *option.Options, hopt *DonutOptions) error {
 	dnsRules := []option.DefaultDNSRule{}
 	routeRules := []option.Rule{}
 	rulesets := []option.RuleSet{}
@@ -641,7 +641,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 
 	// 	// 		DefaultOptions: option.DefaultRule{
 	// 	// 			Inbound:     []string{InboundTUNTag},
-	// 	// 			PackageName: []string{"app.hiddify.com"},
+	// 	// 			PackageName: []string{"app.donutvpn.com"},
 	// 	// 			Outbound:    OutboundBypassTag,
 	// 	// 		},
 	// 	// 	},
@@ -653,7 +653,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 	// 	// 	option.Rule{
 	// 	// 		Type: C.RuleTypeDefault,
 	// 	// 		DefaultOptions: option.DefaultRule{
-	// 	// 			ProcessName: []string{"Hiddify", "Hiddify.exe", "HiddifyCli", "HiddifyCli.exe"},
+	// 	// 			ProcessName: []string{"DonutVpn", "DonutVpn.exe", "DonutCli", "DonutCli.exe"},
 	// 	// 			Outbound:    OutboundBypassTag,
 	// 	// 		},
 	// 	// 	},
@@ -893,7 +893,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geosite-ads"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geosite-category-ads-all.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geosite-category-ads-all.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -903,7 +903,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geosite-malware"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geosite-malware.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geosite-malware.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -913,7 +913,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geosite-phishing"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geosite-phishing.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geosite-phishing.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -923,7 +923,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geosite-cryptominers"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geosite-cryptominers.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geosite-cryptominers.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -933,7 +933,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geoip-phishing"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geoip-phishing.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geoip-phishing.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -943,7 +943,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geoip-malware"},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/block/geoip-malware.srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/block/geoip-malware.srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -1042,7 +1042,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geoip-" + hopt.Region},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/country/geoip-" + hopt.Region + ".srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/country/geoip-" + hopt.Region + ".srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -1052,7 +1052,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 			Tag:    badoption.Listable[string]{"geosite-" + hopt.Region},
 			Format: C.RuleSetFormatBinary,
 			RemoteOptions: option.RemoteRuleSet{
-				URL:            "https://raw.githubusercontent.com/hiddify/hiddify-geo/rule-set/country/geosite-" + hopt.Region + ".srs",
+				URL:            "https://raw.githubusercontent.com/donutvpn/donutvpn-geo/rule-set/country/geosite-" + hopt.Region + ".srs",
 				UpdateInterval: badoption.Duration(5 * time.Hour * 24),
 				DownloadDetour: OutboundSelectTag,
 			},
@@ -1154,7 +1154,7 @@ func setRoutingOptions(options *option.Options, hopt *HiddifyOptions) error {
 				Server: DNSMultiRemoteTag,
 				AbstractDNSRouteActionOptions: option.AbstractDNSRouteActionOptions{
 					// no AAAA for the apps unless the IPv6 mode turns IPv6 on, and then none
-					// through a proxy found without IPv6 (hiddify-app #2307, #2420)
+					// through a proxy found without IPv6 (donutvpn-app #2307, #2420)
 					Strategy:       clientDNSStrategy(hopt.RemoteDnsDomainStrategy, hopt.IPv6Mode),
 					IPv6ByOutbound: ipv6ByOutbound(hopt, OutboundMainDetour),
 					RewriteTTL:     &DEFAULT_DNS_TTL,
@@ -1331,7 +1331,7 @@ func generateRandomString(length int) string {
 	randomBytes := make([]byte, bytesNeeded)
 	_, err := rand.Read(randomBytes)
 	if err != nil {
-		return "hiddify"
+		return "donutvpn"
 	}
 
 	// Encode random bytes to base64

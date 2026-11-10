@@ -16,7 +16,7 @@ var (
 	sSetupMode            SetupMode // which core this process is: the app's own, or the background one
 )
 
-func InitHiddifyService() error {
+func InitDonutVpnService() error {
 	return service_manager.StartServices()
 }
 

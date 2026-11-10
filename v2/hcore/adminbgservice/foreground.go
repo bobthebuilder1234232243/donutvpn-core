@@ -14,7 +14,7 @@ var foregroundSecret string
 // ForegroundService is the VPN service run in the foreground by RunForeground.
 type ForegroundService struct {
 	server *grpc.Server
-	next   *hiddifyNext
+	next   *donutvpnNext
 }
 
 // RunForeground serves the VPN service's API on listen in this process, authenticated by secret,
@@ -24,7 +24,7 @@ func RunForeground(listen string, secret string) (*ForegroundService, error) {
 		return nil, fmt.Errorf("the control secret is too short")
 	}
 	foregroundSecret = secret
-	next := &hiddifyNext{secret: secret}
+	next := &donutvpnNext{secret: secret}
 	server, err := next.StartAdminBgGrpcServer(listen)
 	if err != nil {
 		return nil, err

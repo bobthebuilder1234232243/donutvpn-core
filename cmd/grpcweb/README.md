@@ -1,18 +1,18 @@
-# grpcweb — tiny HTML tester for hiddify-core
+# grpcweb — tiny HTML tester for donutvpn-core
 
 Browser UI and **Core gRPC on the same TCP port** (HTTP/2 cleartext / h2c). Shows **CoreInfoListener** states and **OutboundsInfo** as JSON, and can Start / Stop / SelectOutbound / UrlTestActive.
 
-One config box accepts a **file path**, **subscription URL**, **JSON**, or **share links**. URLs are fetched with `HiddifyNext/5.0.0 (…)` User-Agent; content is run through **Core.Parse** (ray2sing). **Preview / Parse** (and Start) open a dialog with raw + parsed JSON.
+One config box accepts a **file path**, **subscription URL**, **JSON**, or **share links**. URLs are fetched with `DonutVpnNext/5.0.0 (…)` User-Agent; content is run through **Core.Parse** (ray2sing). **Preview / Parse** (and Start) open a dialog with raw + parsed JSON.
 
 Use this to confirm `STARTING → WAITING → STARTED` without the Flutter app (which may stay on “Connecting” if it never sees `WAITING`).
 
 ## Run
 
-From `hiddify-core` (via `cmd/main`, same tags as `cmd.sh`):
+From `donutvpn-core` (via `cmd/main`, same tags as `cmd.sh`):
 
 ```bash
 ./cmd.sh grpcweb \
-  --config "$HOME/Library/Application Support/apple.hiddify.com/configs/<profile>.json"
+  --config "$HOME/Library/Application Support/apple.donutvpn.com/configs/<profile>.json"
 ```
 
 Or:

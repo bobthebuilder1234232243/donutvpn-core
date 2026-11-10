@@ -59,7 +59,7 @@ func stopConnectivityWatcher() {
 	watcher.cancel, watcher.done = nil, nil
 }
 
-func (h *HiddifyInstance) watchConnectivity(ctx context.Context) {
+func (h *DonutInstance) watchConnectivity(ctx context.Context) {
 	defer config.DeferPanicToError("connectivity", func(err error) {
 		Log(LogLevel_ERROR, LogType_CORE, "connectivity watcher: ", err.Error())
 	})
@@ -94,7 +94,7 @@ func (h *HiddifyInstance) watchConnectivity(ctx context.Context) {
 
 // updateConnectivity moves the running core between WAITING, STARTED and NO_AVAILABLE_PROXIES by
 // what the monitoring knows of the proxies, and reports that state; not ok once ctx is done.
-func (h *HiddifyInstance) updateConnectivity(ctx context.Context) (CoreStates, bool) {
+func (h *DonutInstance) updateConnectivity(ctx context.Context) (CoreStates, bool) {
 	if ctx.Err() != nil {
 		return 0, false
 	}
@@ -104,12 +104,12 @@ func (h *HiddifyInstance) updateConnectivity(ctx context.Context) (CoreStates, b
 }
 
 // connectedState is the state of a running core by its proxies.
-func (h *HiddifyInstance) connectedState() CoreStates {
+func (h *DonutInstance) connectedState() CoreStates {
 	return probeConnectivity(h)
 }
 
 // probeConnectivity is replaced in tests, which have no outbound to ping.
-var probeConnectivity = (*HiddifyInstance).proxiesConnectivity
+var probeConnectivity = (*DonutInstance).proxiesConnectivity
 
 // maxPing is the first delay that is no ping: a real delay is 0 < delay < maxPing, a test that
 // failed is timeoutPing.
@@ -124,7 +124,7 @@ func pingTimedOut(delay int32) bool { return delay >= maxPing }
 // proxiesConnectivity reads pings of the built-in "lowest" group from monitoring. It runs often,
 // so it only walks that group's members and their histories — not the user's selected outbound.
 // With a single-proxy profile there is no "lowest"; the select leaf is used instead.
-func (h *HiddifyInstance) proxiesConnectivity() CoreStates {
+func (h *DonutInstance) proxiesConnectivity() CoreStates {
 	ctx, box := h.Context(), h.Box()
 	if ctx == nil || box == nil || h.UrlTestHistory() == nil {
 		return CoreStates_WAITING

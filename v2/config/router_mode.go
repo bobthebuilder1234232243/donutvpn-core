@@ -26,7 +26,7 @@ var ErrRouterModeNeedsRoot = errors.New("router mode needs root: it changes the 
 
 // forRouterMode is hopts as router mode runs them: the TUN on, with auto_redirect, whatever the VPN
 // settings say. Unchanged when router mode is off; an error where router mode can not run.
-func forRouterMode(hopts *HiddifyOptions) (*HiddifyOptions, error) {
+func forRouterMode(hopts *DonutOptions) (*DonutOptions, error) {
 	if !hopts.RouterMode {
 		return hopts, nil
 	}
@@ -44,7 +44,7 @@ func forRouterMode(hopts *HiddifyOptions) (*HiddifyOptions, error) {
 
 // tunAutoRedirect says whether the TUN built for hopts asks for auto_redirect: always in router
 // mode, which has no TUN without it; else where the setting and the system allow it.
-func tunAutoRedirect(hopts *HiddifyOptions) bool {
+func tunAutoRedirect(hopts *DonutOptions) bool {
 	if hopts.RouterMode {
 		return true
 	}

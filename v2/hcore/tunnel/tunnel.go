@@ -1,4 +1,4 @@
-// Package tunnel is the gomobile bind surface for HiddifyTunnelCore.xcframework.
+// Package tunnel is the gomobile bind surface for DonutVpnTunnelCore.xcframework.
 // ObjC symbols stay Tunnel* (TunnelStart, TunnelOptions, …) for the packet-tunnel
 // extension. Implementation lives in adminbg.
 package tunnel

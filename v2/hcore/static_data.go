@@ -13,9 +13,9 @@ import (
 	"github.com/sagernet/sing-box/log"
 )
 
-type HiddifyInstance struct {
+type DonutInstance struct {
 	StartedService *daemon.StartedService
-	HiddifyOptions *config.HiddifyOptions
+	DonutOptions *config.DonutOptions
 	// activeConfigPath string
 	CoreLogFactory            log.Factory
 	coreInfoObserver          *monitoring.Broadcaster[*CoreInfoResponse]
@@ -36,7 +36,7 @@ type HiddifyInstance struct {
 	logLevel atomic.Int32
 }
 
-var static = &HiddifyInstance{
+var static = &DonutInstance{
 	CoreState:                 CoreStates_STOPPED,
 	coreInfoObserver:          monitoring.NewBroadcaster[*CoreInfoResponse](context.Background()),
 	logObserver:               monitoring.NewBroadcaster[*LogMessage](context.Background()),

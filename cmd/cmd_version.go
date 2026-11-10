@@ -13,7 +13,7 @@ import (
 
 var commandVersion = &cobra.Command{
 	Use:   "version",
-	Short: "Print current version of hiddify-core",
+	Short: "Print current version of donut-core",
 	Run:   printVersion,
 	Args:  cobra.NoArgs,
 }
@@ -30,7 +30,7 @@ func printVersion(cmd *cobra.Command, args []string) {
 		os.Stdout.WriteString(C.Version + "\n")
 		return
 	}
-	version := "hiddify-core version " + HC.Version + " hiddify-sing-box version " + C.Version + "\n\n"
+	version := "donut-core version " + HC.Version + " donutvpn-sing-box version " + C.Version + "\n\n"
 	version += "Environment: " + runtime.Version() + " " + runtime.GOOS + "/" + runtime.GOARCH + "\n"
 
 	var tags string

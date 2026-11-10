@@ -16,7 +16,7 @@ var hcommandRun = &cobra.Command{
 
 func init() {
 	// hcommandRun.PersistentFlags().BoolP("help", "", false, "help for this command")
-	// hcommandRun.Flags().StringVarP(&hiddifySettingPath, "hiddify", "d", "", "Hiddify Setting JSON Path")
+	// hcommandRun.Flags().StringVarP(&donutvpnSettingPath, "donutvpn", "d", "", "DonutVpn Setting JSON Path")
 
 	addHConfigFlags(hcommandRun)
 
@@ -47,5 +47,5 @@ func runCommand(cmd *cobra.Command, args []string) {
 	// fmt.Println(res, err)
 	// <-time.After(10 * time.Second)
 	ctx := libbox.BaseContext(nil)
-	hcore.RunStandalone(ctx, hiddifySettingPath, configPath, defaultConfigs)
+	hcore.RunStandalone(ctx, donutvpnSettingPath, configPath, defaultConfigs)
 }

@@ -53,7 +53,7 @@ var commandService = &cobra.Command{
 		case "install":
 			// pkexec clears most of the environment; pass the owner as the second argument.
 			if len(args) >= 2 && args[1] != "" {
-				_ = os.Setenv("HIDDIFY_ADMIN_BG_OWNER", args[1])
+				_ = os.Setenv("DONUT_ADMIN_BG_OWNER", args[1])
 			}
 			code, out := adminbgservice.StartAdminBgService("install")
 			fmt.Printf("exitCode:%d msg=%s", code, out)

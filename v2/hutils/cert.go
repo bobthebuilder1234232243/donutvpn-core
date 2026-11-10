@@ -35,7 +35,7 @@ func GenerateCertificatePair() (*CertificatePair, error) {
 	certTemplate := x509.Certificate{
 		SerialNumber: serial,
 		Subject: pkix.Name{
-			Organization: []string{"Hiddify, Inc."},
+			Organization: []string{"DonutVpn, Inc."},
 			CommonName:   "127.0.0.1",
 		},
 		NotBefore: time.Now().Add(-1 * time.Hour),

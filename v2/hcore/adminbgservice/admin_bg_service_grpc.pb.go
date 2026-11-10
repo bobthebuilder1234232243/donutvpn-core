@@ -20,20 +20,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HiddifyAdminBG_Start_FullMethodName   = "/adminbgservice.HiddifyAdminBG/Start"
-	HiddifyAdminBG_Reload_FullMethodName  = "/adminbgservice.HiddifyAdminBG/Reload"
-	HiddifyAdminBG_Restart_FullMethodName = "/adminbgservice.HiddifyAdminBG/Restart"
-	HiddifyAdminBG_Stop_FullMethodName    = "/adminbgservice.HiddifyAdminBG/Stop"
-	HiddifyAdminBG_Status_FullMethodName  = "/adminbgservice.HiddifyAdminBG/Status"
-	HiddifyAdminBG_Exit_FullMethodName    = "/adminbgservice.HiddifyAdminBG/Exit"
+	DonutAdminBG_Start_FullMethodName   = "/adminbgservice.DonutAdminBG/Start"
+	DonutAdminBG_Reload_FullMethodName  = "/adminbgservice.DonutAdminBG/Reload"
+	DonutAdminBG_Restart_FullMethodName = "/adminbgservice.DonutAdminBG/Restart"
+	DonutAdminBG_Stop_FullMethodName    = "/adminbgservice.DonutAdminBG/Stop"
+	DonutAdminBG_Status_FullMethodName  = "/adminbgservice.DonutAdminBG/Status"
+	DonutAdminBG_Exit_FullMethodName    = "/adminbgservice.DonutAdminBG/Exit"
 )
 
-// HiddifyAdminBGClient is the client API for HiddifyAdminBG service.
+// DonutAdminBGClient is the client API for DonutAdminBG service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // Elevated background core control API (Windows/Linux OS service, macOS root daemon).
-type HiddifyAdminBGClient interface {
+type DonutAdminBGClient interface {
 	Start(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error)
 	// Applies a changed configuration to the running engine without restarting it.
 	Reload(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error)
@@ -44,80 +44,80 @@ type HiddifyAdminBGClient interface {
 	Exit(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error)
 }
 
-type hiddifyAdminBGClient struct {
+type donutvpnAdminBGClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHiddifyAdminBGClient(cc grpc.ClientConnInterface) HiddifyAdminBGClient {
-	return &hiddifyAdminBGClient{cc}
+func NewDonutAdminBGClient(cc grpc.ClientConnInterface) DonutAdminBGClient {
+	return &donutvpnAdminBGClient{cc}
 }
 
-func (c *hiddifyAdminBGClient) Start(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Start(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Start_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Start_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hiddifyAdminBGClient) Reload(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Reload(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Reload_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Reload_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hiddifyAdminBGClient) Restart(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Restart(ctx context.Context, in *AdminBgStartRequest, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Restart_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Restart_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hiddifyAdminBGClient) Stop(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Stop(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Stop_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Stop_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hiddifyAdminBGClient) Status(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Status(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Status_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Status_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *hiddifyAdminBGClient) Exit(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
+func (c *donutvpnAdminBGClient) Exit(ctx context.Context, in *hcommon.Empty, opts ...grpc.CallOption) (*AdminBgResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminBgResponse)
-	err := c.cc.Invoke(ctx, HiddifyAdminBG_Exit_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DonutAdminBG_Exit_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HiddifyAdminBGServer is the server API for HiddifyAdminBG service.
-// All implementations must embed UnimplementedHiddifyAdminBGServer
+// DonutAdminBGServer is the server API for DonutAdminBG service.
+// All implementations must embed UnimplementedDonutAdminBGServer
 // for forward compatibility.
 //
 // Elevated background core control API (Windows/Linux OS service, macOS root daemon).
-type HiddifyAdminBGServer interface {
+type DonutAdminBGServer interface {
 	Start(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error)
 	// Applies a changed configuration to the running engine without restarting it.
 	Reload(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error)
@@ -126,193 +126,193 @@ type HiddifyAdminBGServer interface {
 	Stop(context.Context, *hcommon.Empty) (*AdminBgResponse, error)
 	Status(context.Context, *hcommon.Empty) (*AdminBgResponse, error)
 	Exit(context.Context, *hcommon.Empty) (*AdminBgResponse, error)
-	mustEmbedUnimplementedHiddifyAdminBGServer()
+	mustEmbedUnimplementedDonutAdminBGServer()
 }
 
-// UnimplementedHiddifyAdminBGServer must be embedded to have
+// UnimplementedDonutAdminBGServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedHiddifyAdminBGServer struct{}
+type UnimplementedDonutAdminBGServer struct{}
 
-func (UnimplementedHiddifyAdminBGServer) Start(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Start(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) Reload(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Reload(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Reload not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) Restart(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Restart(context.Context, *AdminBgStartRequest) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Restart not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) Stop(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Stop(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) Status(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Status(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Status not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) Exit(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
+func (UnimplementedDonutAdminBGServer) Exit(context.Context, *hcommon.Empty) (*AdminBgResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Exit not implemented")
 }
-func (UnimplementedHiddifyAdminBGServer) mustEmbedUnimplementedHiddifyAdminBGServer() {}
-func (UnimplementedHiddifyAdminBGServer) testEmbeddedByValue()                        {}
+func (UnimplementedDonutAdminBGServer) mustEmbedUnimplementedDonutAdminBGServer() {}
+func (UnimplementedDonutAdminBGServer) testEmbeddedByValue()                        {}
 
-// UnsafeHiddifyAdminBGServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HiddifyAdminBGServer will
+// UnsafeDonutAdminBGServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DonutAdminBGServer will
 // result in compilation errors.
-type UnsafeHiddifyAdminBGServer interface {
-	mustEmbedUnimplementedHiddifyAdminBGServer()
+type UnsafeDonutAdminBGServer interface {
+	mustEmbedUnimplementedDonutAdminBGServer()
 }
 
-func RegisterHiddifyAdminBGServer(s grpc.ServiceRegistrar, srv HiddifyAdminBGServer) {
-	// If the following call pancis, it indicates UnimplementedHiddifyAdminBGServer was
+func RegisterDonutAdminBGServer(s grpc.ServiceRegistrar, srv DonutAdminBGServer) {
+	// If the following call pancis, it indicates UnimplementedDonutAdminBGServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&HiddifyAdminBG_ServiceDesc, srv)
+	s.RegisterService(&DonutAdminBG_ServiceDesc, srv)
 }
 
-func _HiddifyAdminBG_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Start_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdminBgStartRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Start(ctx, in)
+		return srv.(DonutAdminBGServer).Start(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Start_FullMethodName,
+		FullMethod: DonutAdminBG_Start_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Start(ctx, req.(*AdminBgStartRequest))
+		return srv.(DonutAdminBGServer).Start(ctx, req.(*AdminBgStartRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HiddifyAdminBG_Reload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Reload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdminBgStartRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Reload(ctx, in)
+		return srv.(DonutAdminBGServer).Reload(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Reload_FullMethodName,
+		FullMethod: DonutAdminBG_Reload_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Reload(ctx, req.(*AdminBgStartRequest))
+		return srv.(DonutAdminBGServer).Reload(ctx, req.(*AdminBgStartRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HiddifyAdminBG_Restart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Restart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdminBgStartRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Restart(ctx, in)
+		return srv.(DonutAdminBGServer).Restart(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Restart_FullMethodName,
+		FullMethod: DonutAdminBG_Restart_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Restart(ctx, req.(*AdminBgStartRequest))
+		return srv.(DonutAdminBGServer).Restart(ctx, req.(*AdminBgStartRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HiddifyAdminBG_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(hcommon.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Stop(ctx, in)
+		return srv.(DonutAdminBGServer).Stop(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Stop_FullMethodName,
+		FullMethod: DonutAdminBG_Stop_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Stop(ctx, req.(*hcommon.Empty))
+		return srv.(DonutAdminBGServer).Stop(ctx, req.(*hcommon.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HiddifyAdminBG_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Status_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(hcommon.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Status(ctx, in)
+		return srv.(DonutAdminBGServer).Status(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Status_FullMethodName,
+		FullMethod: DonutAdminBG_Status_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Status(ctx, req.(*hcommon.Empty))
+		return srv.(DonutAdminBGServer).Status(ctx, req.(*hcommon.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HiddifyAdminBG_Exit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DonutAdminBG_Exit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(hcommon.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HiddifyAdminBGServer).Exit(ctx, in)
+		return srv.(DonutAdminBGServer).Exit(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HiddifyAdminBG_Exit_FullMethodName,
+		FullMethod: DonutAdminBG_Exit_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HiddifyAdminBGServer).Exit(ctx, req.(*hcommon.Empty))
+		return srv.(DonutAdminBGServer).Exit(ctx, req.(*hcommon.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HiddifyAdminBG_ServiceDesc is the grpc.ServiceDesc for HiddifyAdminBG service.
+// DonutAdminBG_ServiceDesc is the grpc.ServiceDesc for DonutAdminBG service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HiddifyAdminBG_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "adminbgservice.HiddifyAdminBG",
-	HandlerType: (*HiddifyAdminBGServer)(nil),
+var DonutAdminBG_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "adminbgservice.DonutAdminBG",
+	HandlerType: (*DonutAdminBGServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Start",
-			Handler:    _HiddifyAdminBG_Start_Handler,
+			Handler:    _DonutAdminBG_Start_Handler,
 		},
 		{
 			MethodName: "Reload",
-			Handler:    _HiddifyAdminBG_Reload_Handler,
+			Handler:    _DonutAdminBG_Reload_Handler,
 		},
 		{
 			MethodName: "Restart",
-			Handler:    _HiddifyAdminBG_Restart_Handler,
+			Handler:    _DonutAdminBG_Restart_Handler,
 		},
 		{
 			MethodName: "Stop",
-			Handler:    _HiddifyAdminBG_Stop_Handler,
+			Handler:    _DonutAdminBG_Stop_Handler,
 		},
 		{
 			MethodName: "Status",
-			Handler:    _HiddifyAdminBG_Status_Handler,
+			Handler:    _DonutAdminBG_Status_Handler,
 		},
 		{
 			MethodName: "Exit",
-			Handler:    _HiddifyAdminBG_Exit_Handler,
+			Handler:    _DonutAdminBG_Exit_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

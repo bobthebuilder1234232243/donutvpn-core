@@ -78,12 +78,12 @@ func TestBalancerRowSpeaksForItsFastestProxy(t *testing.T) {
 	require.NoError(t, Setup(&SetupRequest{BasePath: dir, WorkingDir: dir, TempDir: dir, Mode: SetupMode_OLD}, nil))
 	plain := hotReloadSettings(t, freeTCPPort(t), "warn")
 	settings := strings.Replace(plain, "{", `{"balancer-strategy":"round-robin",`, 1)
-	_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: settings}, false)
+	_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: settings}, false)
 	require.NoError(t, err)
 	// the next tests get the balancer they expect
 	t.Cleanup(func() {
 		Stop()
-		_, _ = ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: plain}, false)
+		_, _ = ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: plain}, false)
 	})
 	_, err = StartService(static.BaseContext, &StartRequest{ConfigContent: profile(socks("proxy-a", 1080), socks("proxy-b", 1081), socks("proxy-c", 1082))})
 	require.NoError(t, err)
@@ -127,11 +127,11 @@ func TestBalancerMainItemIsItsFastestProxy(t *testing.T) {
 	require.NoError(t, Setup(&SetupRequest{BasePath: dir, WorkingDir: dir, TempDir: dir, Mode: SetupMode_OLD}, nil))
 	plain := hotReloadSettings(t, freeTCPPort(t), "warn")
 	settings := strings.Replace(plain, "{", `{"balancer-strategy":"round-robin",`, 1)
-	_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: settings}, false)
+	_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: settings}, false)
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		Stop()
-		_, _ = ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: plain}, false)
+		_, _ = ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: plain}, false)
 	})
 	_, err = StartService(static.BaseContext, &StartRequest{ConfigContent: profile(socks("proxy-a", 1080), socks("proxy-b", 1081), socks("proxy-c", 1082))})
 	require.NoError(t, err)
@@ -183,7 +183,7 @@ func (f *fakeFailing) StatusError() error     { return f.err }
 // The app shows why a proxy failed: the error of its last URL test, or why it is not ready. A
 // result from the cache has no error to show, as it has no ping.
 func TestProxyInfoCarriesTheError(t *testing.T) {
-	h := &HiddifyInstance{}
+	h := &DonutInstance{}
 	ready := &fakeGroup{tag: "proxy"}
 	info := h.GetProxyInfo(&adapter.URLTestHistory{Delay: unreachableDelay, Error: "tls: handshake failure"}, ready)
 	require.Equal(t, "tls: handshake failure", info.Error)

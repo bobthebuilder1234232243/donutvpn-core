@@ -61,7 +61,7 @@ var resolverIPv6 = map[string]string{
 
 // forIPv6OnlyHost returns the options to build with on an IPv6-only host: "ipv4_only" becomes
 // "prefer_ipv6". Any other choice is the user's and stays.
-func forIPv6OnlyHost(hopts *HiddifyOptions, ipv6Only bool) *HiddifyOptions {
+func forIPv6OnlyHost(hopts *DonutOptions, ipv6Only bool) *DonutOptions {
 	if !ipv6Only || hopts.IPv6Mode != option.DomainStrategy(C.DomainStrategyIPv4Only) {
 		return hopts
 	}

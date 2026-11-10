@@ -256,7 +256,7 @@ func downloadProfileContent(ctx context.Context, url string) (*request.Response,
 			Timeout: 5 * time.Second,
 		})
 		if resp == nil {
-			instance, err1 := hcore.RunInstance(ctx, config.DefaultHiddifyOptions(), &option.Options{})
+			instance, err1 := hcore.RunInstance(ctx, config.DefaultDonutOptions(), &option.Options{})
 			if err1 != nil {
 				return nil, fmt.Errorf("%v,error running instance: %v", err, err1)
 			}

@@ -3,11 +3,11 @@ import "v2/hcommon/common.proto";
 package adminbgservice;
 
 option go_package = "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbgservice";
-option java_package = "com.hiddify.core.api.v2.hcore.adminbgservice";
+option java_package = "com.donutvpn.core.api.v2.hcore.adminbgservice";
 import "v2/hcore/adminbgservice/admin_bg.proto";
 
 // Elevated background core control API (Windows/Linux OS service, macOS root daemon).
-service HiddifyAdminBG {
+service DonutAdminBG {
     rpc Start(AdminBgStartRequest) returns (AdminBgResponse);
     // Applies a changed configuration to the running engine without restarting it.
     rpc Reload(AdminBgStartRequest) returns (AdminBgResponse);

@@ -12,7 +12,7 @@ on:
         type: string
         default: "dev"
 env:
-    REGISTRY_IMAGE: ghcr.io/hiddify/donutvpn-core
+    REGISTRY_IMAGE: ghcr.io/donutvpn/donutvpn-core
 
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     name: Calculate version
     runs-on: ubuntu-latest
     outputs:
-      hiddify_version: ${{ steps.outputs.outputs.hiddify_version }}
+      donutvpn_version: ${{ steps.outputs.outputs.donutvpn_version }}
       singbox_version: ${{ steps.outputs.outputs.singbox_version }}
     steps:
       - name: Checkout
@@ -36,20 +36,20 @@ jobs:
       - name: Check input version
         if: github.event_name == 'workflow_dispatch'
         run: |-
-          echo "hiddify_version=${{ inputs.version }}"
+          echo "donutvpn_version=${{ inputs.version }}"
           echo "version=${{ inputs.version }}" >> "$GITHUB_ENV"
       
       - name: Check input version
         if: github.event_name != 'workflow_dispatch' && "${{ inputs.tag-name }}" != "draft"
         run: |-
-          echo "hiddify_version=${{ inputs.tag-name }}"
-          echo "hiddify_version=${{ inputs.tag-name }}" >> "$GITHUB_ENV"
+          echo "donutvpn_version=${{ inputs.tag-name }}"
+          echo "donutvpn_version=${{ inputs.tag-name }}" >> "$GITHUB_ENV"
               
       - name: Calculate version
         if: github.event_name != 'workflow_dispatch' && "${{ inputs.tag-name }}" == "draft"
         run: |-
           # only version tags count
-          echo "hiddify_version=$(git describe --tags --match 'v[0-9]*')" >> "$GITHUB_ENV"
+          echo "donutvpn_version=$(git describe --tags --match 'v[0-9]*')" >> "$GITHUB_ENV"
       - name: Calculate singbox version
         run: |-
           cd donutvpn-sing-box
@@ -57,7 +57,7 @@ jobs:
       - name: Set outputs
         id: outputs
         run: |-
-          echo "hiddify_version=${hiddify_version}" >> "$GITHUB_OUTPUT"
+          echo "donutvpn_version=${donutvpn_version}" >> "$GITHUB_OUTPUT"
           echo "singbox_version=$version" >> "$GITHUB_OUTPUT"
   
           
@@ -69,14 +69,14 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: 'hiddify-lib-android', os: 'ubuntu-latest', target: 'android'}
-          - { name: 'hiddify-lib-linux-amd64', os: 'ubuntu-22.04', target: 'linux-amd64',  arch: 'amd64', naive: true , corenet: 'linux/amd64', build_corenet: true }
-          - { name: 'hiddify-lib-linux-arm64', os: 'ubuntu-latest', target: 'linux-arm64', naive: true ,  arch: 'arm64', corenet: 'linux/arm64', build_corenet: true }
-          # - { name: 'hiddify-lib-linux-amd64-musl', os: 'ubuntu-22.04', variant: 'musl', target: 'linux-amd64',  arch: 'amd64', naive: true , corenet: 'linux/amd64', build_corenet: true }
-          # - { name: 'hiddify-lib-linux-arm64-musl', os: 'ubuntu-latest', variant: 'musl', target: 'linux-arm64', naive: true ,  arch: 'arm64', corenet: 'linux/arm64', build_corenet: true }
-          - { name: "hiddify-lib-windows-amd64", os: 'ubuntu-latest', target: 'windows-amd64', aarch: 'x64', naive: true, corenet: 'windows/amd64' }
-          - { name: "hiddify-lib-macos", os: 'macos-15', target: 'macos'  }
-          - { name: "hiddify-lib-ios", os: "macos-15", target: "ios" }
+          - { name: 'donutvpn-lib-android', os: 'ubuntu-latest', target: 'android'}
+          - { name: 'donutvpn-lib-linux-amd64', os: 'ubuntu-22.04', target: 'linux-amd64',  arch: 'amd64', naive: true , corenet: 'linux/amd64', build_corenet: true }
+          - { name: 'donutvpn-lib-linux-arm64', os: 'ubuntu-latest', target: 'linux-arm64', naive: true ,  arch: 'arm64', corenet: 'linux/arm64', build_corenet: true }
+          # - { name: 'donutvpn-lib-linux-amd64-musl', os: 'ubuntu-22.04', variant: 'musl', target: 'linux-amd64',  arch: 'amd64', naive: true , corenet: 'linux/amd64', build_corenet: true }
+          # - { name: 'donutvpn-lib-linux-arm64-musl', os: 'ubuntu-latest', variant: 'musl', target: 'linux-arm64', naive: true ,  arch: 'arm64', corenet: 'linux/arm64', build_corenet: true }
+          - { name: "donutvpn-lib-windows-amd64", os: 'ubuntu-latest', target: 'windows-amd64', aarch: 'x64', naive: true, corenet: 'windows/amd64' }
+          - { name: "donutvpn-lib-macos", os: 'macos-15', target: 'macos'  }
+          - { name: "donutvpn-lib-ios", os: "macos-15", target: "ios" }
           # # linux custom
           # - {name: donutvpn-core-linux-amd64, goos: linux, goarch: amd64, goamd64: v1, target: 'linux-custom', os: 'ubuntu-22.04', naive: true }
           # - {name: donutvpn-core-linux-amd64-v3, goos: linux, goarch: amd64, goamd64: v3, target: 'linux-custom', os: 'ubuntu-22.04', naive: true }
@@ -95,7 +95,7 @@ jobs:
     
     runs-on: ${{ matrix.job.os }}
     env:
-      CODE_VERSION: "-X github.com/hiddify/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.hiddify_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
+      CODE_VERSION: "-X github.com/donutvpn/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.donutvpn_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
       GOOS: ${{ matrix.job.goos }}
       GOARCH: ${{ matrix.job.goarch }}
       GOAMD64: ${{ matrix.job.goamd64 }}
@@ -160,7 +160,7 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
           # embedded at build time; the Psiphon config only in encrypted form (empty = not embedded)
-          HIDDIFY_SECRET_KEY: ${{ secrets.HIDDIFY_SECRET_KEY }}
+          DONUTVPN_SECRET_KEY: ${{ secrets.DONUTVPN_SECRET_KEY }}
           PSIPHON_CONFIG: ${{ secrets.PSIPHON_CONFIG }}
 
       - name: zip
@@ -176,12 +176,12 @@ jobs:
                 -o -name "donutvpn-core.dylib" \
                 -o -name "donutvpn-core.aar" \
                 -o -name "webui" \
-                -o -name "HiddifyCore.xcframework" \
-                -o -name "HiddifyTunnelCore.xcframework" \
-                -o -name "HiddifyCli" \
-                -o -name "HiddifyCli.exe" \
-                -o -name "HiddifyAdmin.exe" \
-                -o -path "./core/Hiddify.exe" \))
+                -o -name "DonutVpnCore.xcframework" \
+                -o -name "DonutVpnTunnelCore.xcframework" \
+                -o -name "DonutVpnCli" \
+                -o -name "DonutVpnCli.exe" \
+                -o -name "DonutVpnAdmin.exe" \
+                -o -path "./core/DonutVpn.exe" \))
           echo tar -czvf ${{ matrix.job.name }}.tar.gz  $files
           tar -czvf ${{ matrix.job.name }}.tar.gz  $files
           
@@ -212,7 +212,7 @@ jobs:
     needs:
       - calculate_version
     env:
-      CODE_VERSION: "-X github.com/hiddify/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.hiddify_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
+      CODE_VERSION: "-X github.com/donutvpn/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.donutvpn_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
       
     strategy:
       fail-fast: false
@@ -454,7 +454,7 @@ jobs:
             DIR_NAME="${DIR_NAME}-musl"
           fi
           echo "DIR_NAME=${DIR_NAME}" >> "${GITHUB_ENV}"
-          PKG_VERSION="${{ needs.calculate_version.outputs.hiddify_version }}"
+          PKG_VERSION="${{ needs.calculate_version.outputs.donutvpn_version }}"
           PKG_VERSION="${PKG_VERSION//-/\~}"
           echo "PKG_VERSION=${PKG_VERSION}" >> "${GITHUB_ENV}"
       - name: Package DEB
@@ -524,7 +524,7 @@ jobs:
           SOURCE_DATE_EPOCH: "0"
         run: |-
           set -xeuo pipefail
-          version="${{ needs.calculate_version.outputs.hiddify_version }}"
+          version="${{ needs.calculate_version.outputs.donutvpn_version }}"
           for architecture in ${{ matrix.openwrt }}; do
             release/openwrt/build-ipk.sh "$architecture" "$version" dist/donutvpn-core "dist/donutvpn-core_${version#v}_${architecture}.ipk"
             release/openwrt/build-apk.sh "$architecture" "$version" dist/donutvpn-core dist/
@@ -569,7 +569,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
-          pattern: hiddify-*
+          pattern: donutvpn-*
           path: bin/
 
       - name: Display Files Structure
@@ -603,7 +603,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           merge-multiple: true
-          pattern: hiddify-*
+          pattern: donutvpn-*
           path: bin/
 
       - name: Display Files Structure
@@ -641,7 +641,7 @@ jobs:
         uses: geekyeggo/delete-artifact@v5
         with:
           name: |
-            hiddify-*
+            donutvpn-*
 
 
 

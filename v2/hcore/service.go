@@ -32,7 +32,7 @@ func NewService(ctx context.Context, options option.Options, stop <-chan struct{
 		// Options:           *options,
 		Handler: &logInterface,
 		ExtraServices: []adapter.LifecycleService{
-			&hiddifyMainServiceManager{},
+			&donutvpnMainServiceManager{},
 		},
 	}
 	watch := newStopwatch("start/service")
@@ -84,7 +84,7 @@ func NewService(ctx context.Context, options option.Options, stop <-chan struct{
 	}
 	watch.step("starting the inbounds, outbounds and services")
 
-	// instance.GetInstance().AddPostService("hiddifyMainServiceManager", &hiddifyMainServiceManager{})
+	// instance.GetInstance().AddPostService("donutvpnMainServiceManager", &donutvpnMainServiceManager{})
 
 	// if err := startCommandServer(instance); err != nil {
 	// 	return errorWrapper(MessageType_START_COMMAND_SERVER, err)
@@ -111,7 +111,7 @@ func closeService(ss *daemon.StartedService) error {
 	return err
 }
 
-func (h *HiddifyInstance) UrlTestHistory() *urltest.HistoryStorage {
+func (h *DonutInstance) UrlTestHistory() *urltest.HistoryStorage {
 
 	ins := h.Instance()
 	if ins == nil {
@@ -120,7 +120,7 @@ func (h *HiddifyInstance) UrlTestHistory() *urltest.HistoryStorage {
 	return ins.UrlTestHistory()
 }
 
-func (h *HiddifyInstance) Box() *box.Box {
+func (h *DonutInstance) Box() *box.Box {
 	ins := h.Instance()
 	if ins == nil {
 		return nil
@@ -128,7 +128,7 @@ func (h *HiddifyInstance) Box() *box.Box {
 	return ins.Box()
 }
 
-func (h *HiddifyInstance) Instance() *daemon.Instance {
+func (h *DonutInstance) Instance() *daemon.Instance {
 	ss := h.StartedService
 	if ss == nil {
 		return nil
@@ -137,7 +137,7 @@ func (h *HiddifyInstance) Instance() *daemon.Instance {
 
 }
 
-func (h *HiddifyInstance) Context() context.Context {
+func (h *DonutInstance) Context() context.Context {
 	ins := h.Instance()
 	if ins == nil {
 		return nil
@@ -145,7 +145,7 @@ func (h *HiddifyInstance) Context() context.Context {
 	return ins.Context()
 }
 
-func (h *HiddifyInstance) TrafficManager() *trafficontrol.Manager {
+func (h *DonutInstance) TrafficManager() *trafficontrol.Manager {
 	if ctx := h.Context(); ctx != nil {
 		if s, ok := service.FromContext[adapter.ClashServer](ctx).(*clashapi.Server); ok {
 			return s.TrafficManager()

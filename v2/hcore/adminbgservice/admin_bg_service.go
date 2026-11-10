@@ -29,8 +29,8 @@ import (
 	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
 )
 
-type hiddifyAdminBG struct {
-	UnimplementedHiddifyAdminBGServer
+type donutvpnAdminBG struct {
+	UnimplementedDonutAdminBGServer
 	mutex sync.Mutex
 	box   *daemon.StartedService
 	// closed when the box or full core stops, to end its watchdog
@@ -38,7 +38,7 @@ type hiddifyAdminBG struct {
 	fullCore bool
 }
 
-func (s *hiddifyAdminBG) Start(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
+func (s *donutvpnAdminBG) Start(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	defer func() {
@@ -56,7 +56,7 @@ func (s *hiddifyAdminBG) Start(ctx context.Context, in *AdminBgStartRequest) (re
 	return s.startBridge(in)
 }
 
-func (s *hiddifyAdminBG) startBridge(in *AdminBgStartRequest) (*AdminBgResponse, error) {
+func (s *donutvpnAdminBG) startBridge(in *AdminBgStartRequest) (*AdminBgResponse, error) {
 	s.closeRunning()
 	if in.ServerPort == 0 {
 		in.ServerPort = 12334
@@ -121,7 +121,7 @@ func fullCoreOptions(in *AdminBgStartRequest) (*adminbg.Options, error) {
 	}, nil
 }
 
-func (s *hiddifyAdminBG) startFullCore(in *AdminBgStartRequest) error {
+func (s *donutvpnAdminBG) startFullCore(in *AdminBgStartRequest) error {
 	s.closeRunning()
 	options, err := fullCoreOptions(in)
 	if err != nil {
@@ -139,7 +139,7 @@ func (s *hiddifyAdminBG) startFullCore(in *AdminBgStartRequest) error {
 // Restart stops the running engine and starts it again with the request, in one call: a change a
 // reload cannot apply (the TUN changed, for one). The app keeps its connection to the service, and
 // the engine stops again once the app is gone, as after a start.
-func (s *hiddifyAdminBG) Restart(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
+func (s *donutvpnAdminBG) Restart(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	defer func() {
@@ -162,7 +162,7 @@ func (s *hiddifyAdminBG) Restart(ctx context.Context, in *AdminBgStartRequest) (
 // Reload applies a changed configuration (a profile update, a changed option) to the running
 // engine, keeping the TUN and the connections: the same request as Start. When the change cannot
 // be hot reloaded the engine keeps running unchanged and the app starts it again.
-func (s *hiddifyAdminBG) Reload(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
+func (s *donutvpnAdminBG) Reload(ctx context.Context, in *AdminBgStartRequest) (response *AdminBgResponse, err error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	defer func() {
@@ -212,7 +212,7 @@ func writeResources(directory string, resources map[string][]byte) error {
 }
 
 // watchPort stops the TUN bridge once the app's proxy stops answering.
-func (s *hiddifyAdminBG) watchPort(port int32, done <-chan struct{}) {
+func (s *donutvpnAdminBG) watchPort(port int32, done <-chan struct{}) {
 	address := net.JoinHostPort("127.0.0.1", strconv.Itoa(int(port)))
 	failures := 0
 	ticker := time.NewTicker(2 * time.Second)
@@ -245,7 +245,7 @@ func (s *hiddifyAdminBG) watchPort(port int32, done <-chan struct{}) {
 // watchOwner stops the VPN engine once the connecting app is gone, but leaves the service
 // process listening. Exiting the process would require another administrator prompt to start
 // it again; an idle authenticated listener is enough to avoid a background VPN.
-func (s *hiddifyAdminBG) watchOwner(pid int32, done <-chan struct{}) {
+func (s *donutvpnAdminBG) watchOwner(pid int32, done <-chan struct{}) {
 	if !hprocess.WaitOwnerGone(pid, done) {
 		return
 	}
@@ -258,7 +258,7 @@ func (s *hiddifyAdminBG) watchOwner(pid int32, done <-chan struct{}) {
 	s.mutex.Unlock()
 }
 
-func (s *hiddifyAdminBG) closeRunning() error {
+func (s *donutvpnAdminBG) closeRunning() error {
 	if s.watching != nil {
 		close(s.watching)
 		s.watching = nil
@@ -335,10 +335,10 @@ func makeTunnelConfig(in *AdminBgStartRequest) option.Options {
 					DefaultOptions: option.DefaultRule{
 						RawDefaultRule: option.RawDefaultRule{
 							ProcessName: []string{
-								"Hiddify.exe",
-								"Hiddify",
-								"HiddifyCli",
-								"HiddifyCli.exe",
+								"DonutVpn.exe",
+								"DonutVpn",
+								"DonutCli",
+								"DonutCli.exe",
 							},
 						},
 						RuleAction: option.RuleAction{
@@ -354,7 +354,7 @@ func makeTunnelConfig(in *AdminBgStartRequest) option.Options {
 	}
 }
 
-func (s *hiddifyAdminBG) Stop(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
+func (s *donutvpnAdminBG) Stop(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	if s.box == nil && !s.fullCore {
@@ -366,7 +366,7 @@ func (s *hiddifyAdminBG) Stop(ctx context.Context, _ *hcommon.Empty) (*AdminBgRe
 	return &AdminBgResponse{Message: "OK"}, nil
 }
 
-func (s *hiddifyAdminBG) Status(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
+func (s *donutvpnAdminBG) Status(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	if s.fullCore || s.box != nil {
@@ -381,7 +381,7 @@ func (s *hiddifyAdminBG) Status(ctx context.Context, _ *hcommon.Empty) (*AdminBg
 	return &AdminBgResponse{Message: "stopped"}, nil
 }
 
-func (s *hiddifyAdminBG) Exit(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
+func (s *donutvpnAdminBG) Exit(ctx context.Context, _ *hcommon.Empty) (*AdminBgResponse, error) {
 	s.mutex.Lock()
 	s.closeRunning()
 	s.mutex.Unlock()
@@ -419,5 +419,5 @@ func tunInterfaceName() string {
 	if runtime.GOOS == "darwin" {
 		return ""
 	}
-	return "HiddifyAdminBg"
+	return "DonutAdminBg"
 }

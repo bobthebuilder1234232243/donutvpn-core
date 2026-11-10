@@ -34,7 +34,7 @@ func ReadContent(ctx context.Context, opt *ReadOptions) ([]byte, error) {
 	return []byte(opt.Content), nil
 }
 
-func ParseConfig(ctx context.Context, opt *ReadOptions, debug bool, configOpt *HiddifyOptions, fullConfig bool) (*option.Options, error) {
+func ParseConfig(ctx context.Context, opt *ReadOptions, debug bool, configOpt *DonutOptions, fullConfig bool) (*option.Options, error) {
 	content, err := ReadContent(ctx, opt)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func ParseConfig(ctx context.Context, opt *ReadOptions, debug bool, configOpt *H
 	return parseConfigContent(ctx, content, debug, nil, false)
 }
 
-func ParseConfigBytes(ctx context.Context, opt *ReadOptions, debug bool, configOpt *HiddifyOptions, fullConfig bool) ([]byte, error) {
+func ParseConfigBytes(ctx context.Context, opt *ReadOptions, debug bool, configOpt *DonutOptions, fullConfig bool) ([]byte, error) {
 
 	options, err := ParseConfig(ctx, opt, debug, configOpt, fullConfig)
 	if err != nil {
@@ -52,12 +52,12 @@ func ParseConfigBytes(ctx context.Context, opt *ReadOptions, debug bool, configO
 	return options.MarshalJSONContext(ctx)
 
 }
-func parseConfigContent(ctx context.Context, content []byte, debug bool, configOpt *HiddifyOptions, fullConfig bool) (*option.Options, error) {
+func parseConfigContent(ctx context.Context, content []byte, debug bool, configOpt *DonutOptions, fullConfig bool) (*option.Options, error) {
 	if configOpt == nil {
-		configOpt = DefaultHiddifyOptions()
+		configOpt = DefaultDonutOptions()
 	}
 
-	// The content is JSON, YAML or text. JSON and YAML are read as sing-box / hiddify-core first, then as Clash,
+	// The content is JSON, YAML or text. JSON and YAML are read as sing-box / donut-core first, then as Clash,
 	// then as Xray; text is share links.
 	var structured any
 	isStructured := json.NewDecoder(SJ.NewCommentFilter(bytes.NewReader(content))).Decode(&structured) == nil
@@ -92,7 +92,7 @@ func parseConfigContent(ctx context.Context, content []byte, debug bool, configO
 	return nil, singboxErr
 }
 
-func parseShareLinks(ctx context.Context, content []byte, configOpt *HiddifyOptions) (*option.Options, error) {
+func parseShareLinks(ctx context.Context, content []byte, configOpt *DonutOptions) (*option.Options, error) {
 	content = expandSubscriptionLinks(ctx, content)
 	v2ray, err := ray2sing.Ray2SingboxOptions(ctx, string(content), configOpt.UseXrayCoreWhenPossible)
 	if err != nil {
@@ -118,8 +118,8 @@ func isYAMLConfig(value any) bool {
 	return false
 }
 
-// parseSingboxContent reads a decoded sing-box / hiddify-core config: a config, one outbound or a list of them.
-func parseSingboxContent(ctx context.Context, structured any, configOpt *HiddifyOptions, fullConfig bool) (*option.Options, error) {
+// parseSingboxContent reads a decoded sing-box / donut-core config: a config, one outbound or a list of them.
+func parseSingboxContent(ctx context.Context, structured any, configOpt *DonutOptions, fullConfig bool) (*option.Options, error) {
 	fmt.Printf("Convert using singbox\n")
 	var jsonObj map[string]interface{} = make(map[string]interface{})
 	if tmpJsonObj, ok := structured.(map[string]interface{}); ok {
@@ -173,7 +173,7 @@ func parseSingboxContent(ctx context.Context, structured any, configOpt *Hiddify
 }
 
 // parseClashContent reads a Clash config; isClash is false when content has no Clash proxies.
-func parseClashContent(ctx context.Context, content []byte, configOpt *HiddifyOptions) (options *option.Options, isClash bool, err error) {
+func parseClashContent(ctx context.Context, content []byte, configOpt *DonutOptions) (options *option.Options, isClash bool, err error) {
 	clashObj := clash.Clash{}
 	if err := yaml.Unmarshal(content, &clashObj); err != nil || clashObj.Proxies == nil {
 		return nil, false, nil
@@ -199,7 +199,7 @@ func parseClashContent(ctx context.Context, content []byte, configOpt *HiddifyOp
 	return options, true, err
 }
 
-// clashAmneziaFields are the keys of Clash.Meta's "amnezia-wg-option" that hiddify-core reads; the
+// clashAmneziaFields are the keys of Clash.Meta's "amnezia-wg-option" that donut-core reads; the
 // AmneziaWG 1.5 drafts' j1–j3 and itime were replaced by i1–i5 and are not read.
 var clashAmneziaFields = map[string]bool{
 	"jc": true, "jmin": true, "jmax": true, "s1": true, "s2": true, "s3": true, "s4": true,
@@ -339,7 +339,7 @@ func numberClashDuplicates(clashObj *clash.Clash) {
 	}
 }
 
-func patchConfigStr(ctx context.Context, content []byte, name string, configOpt *HiddifyOptions) (*option.Options, error) {
+func patchConfigStr(ctx context.Context, content []byte, name string, configOpt *DonutOptions) (*option.Options, error) {
 	options := option.Options{}
 	err := options.UnmarshalJSONContext(ctx, content)
 
@@ -349,7 +349,7 @@ func patchConfigStr(ctx context.Context, content []byte, name string, configOpt 
 
 	return patchConfigOptions(ctx, &options, name, configOpt)
 }
-func patchConfigOptions(ctx context.Context, options *option.Options, name string, configOpt *HiddifyOptions) (*option.Options, error) {
+func patchConfigOptions(ctx context.Context, options *option.Options, name string, configOpt *DonutOptions) (*option.Options, error) {
 	// dns outbounds were removed in sing-box 1.13; drop them instead of keeping invalid placeholders
 	options.Outbounds = slices.DeleteFunc(options.Outbounds, isDNSOutbound)
 	b, _ := batch.New(ctx, batch.WithConcurrencyNum[*option.Endpoint](2))

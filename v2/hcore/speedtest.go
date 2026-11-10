@@ -281,7 +281,7 @@ func (s *CoreService) DownloadTest(ctx context.Context, in *SpeedTestRequest) (*
 
 // SpeedTest starts the test in direction d of a proxy, or of each proxy of a group, and returns at
 // once; one already testing is not tested twice.
-func (h *HiddifyInstance) SpeedTest(d direction, in *SpeedTestRequest) (*hcommon.Response, error) {
+func (h *DonutInstance) SpeedTest(d direction, in *SpeedTestRequest) (*hcommon.Response, error) {
 	box, ctx := h.Box(), h.Context()
 	if box == nil || ctx == nil {
 		err := E.New("the core is not running")
@@ -354,13 +354,13 @@ func (h *HiddifyInstance) SpeedTest(d direction, in *SpeedTestRequest) (*hcommon
 }
 
 // activeSpeedTestTag is the proxy the user's selection uses now, down through its groups.
-func (h *HiddifyInstance) activeSpeedTestTag() string {
+func (h *DonutInstance) activeSpeedTestTag() string {
 	return resolveActiveOutbound(h.Box(), config.OutboundSelectTag, h.UrlTestHistory())
 }
 
 // speedTestTagOf is whose speeds the outbound shows: its own, or a group's, the proxy the group
 // uses now.
-func (h *HiddifyInstance) speedTestTagOf(outbound adapter.Outbound) string {
+func (h *DonutInstance) speedTestTagOf(outbound adapter.Outbound) string {
 	if _, isGroup := outbound.(adapter.OutboundGroup); isGroup {
 		if box := h.Box(); box != nil {
 			return resolveActiveOutbound(box, outbound.Tag(), h.UrlTestHistory())

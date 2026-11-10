@@ -8,10 +8,10 @@
     "#1": {
       "0409": {
         "identity": {
-          "name": "Hiddify.HiddifyAdmin",
+          "name": "DonutVpn.DonutVpnAdmin",
           "version": "0.0.0.0"
         },
-        "description": "Hiddify VPN service setup (administrator)",
+        "description": "DonutVpn VPN service setup (administrator)",
         "minimum-os": "win7",
         "execution-level": "requireAdministrator",
         "ui-access": false,
@@ -31,12 +31,12 @@
         },
         "info": {
           "0409": {
-            "CompanyName": "Hiddify",
-            "FileDescription": "Hiddify",
-            "InternalName": "HiddifyAdmin",
-            "LegalCopyright": "Copyright (C) Hiddify.com. All rights reserved.",
-            "OriginalFilename": "HiddifyAdmin.exe",
-            "ProductName": "Hiddify",
+            "CompanyName": "DonutVpn",
+            "FileDescription": "DonutVpn",
+            "InternalName": "DonutVpnAdmin",
+            "LegalCopyright": "Copyright (C) DonutVpn.com. All rights reserved.",
+            "OriginalFilename": "DonutVpnAdmin.exe",
+            "ProductName": "DonutVpn",
             "Comments": "https://github.com/donutvpn/donutvpn-core"
           }
         }

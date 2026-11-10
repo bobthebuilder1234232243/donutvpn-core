@@ -73,7 +73,7 @@ func startTunnelRequest(opt *AdminBgStartRequest, installService bool) (bool, er
 		return false, err
 	}
 	defer conn.Close()
-	c := NewHiddifyAdminBGClient(conn)
+	c := NewDonutAdminBGClient(conn)
 	_, _ = c.Stop(ctx, &hcommon.Empty{})
 	res, err := c.Start(ctx, opt)
 	if err != nil {
@@ -98,7 +98,7 @@ func stopTunnelRequest() error {
 		return err
 	}
 	defer conn.Close()
-	c := NewHiddifyAdminBGClient(conn)
+	c := NewDonutAdminBGClient(conn)
 	res, err := c.Stop(ctx, &hcommon.Empty{})
 	if err != nil {
 		log.Printf("did not Stopped: %v %v", res, err)
@@ -117,7 +117,7 @@ func ExitAdminBgService() (bool, error) {
 		return false, err
 	}
 	defer conn.Close()
-	res, err := NewHiddifyAdminBGClient(conn).Exit(ctx, &hcommon.Empty{})
+	res, err := NewDonutAdminBGClient(conn).Exit(ctx, &hcommon.Empty{})
 	if err != nil {
 		log.Printf("did not exit: %v %v", res, err)
 		return false, err
@@ -158,11 +158,11 @@ func getTunnelServicePath() string {
 	binFolder := filepath.Dir(exePath)
 	switch runtime.GOOS {
 	case "windows":
-		fullPath = "HiddifyCli.exe"
+		fullPath = "DonutCli.exe"
 	case "darwin":
 		fallthrough
 	default:
-		fullPath = "HiddifyCli"
+		fullPath = "DonutCli"
 	}
 
 	abspath, _ := filepath.Abs(filepath.Join(binFolder, fullPath))

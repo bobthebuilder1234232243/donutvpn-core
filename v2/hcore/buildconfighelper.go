@@ -30,14 +30,14 @@ func BuildConfig(ctx context.Context, in *StartRequest) (*option.Options, error)
 
 	readOpt := &config.ReadOptions{Content: in.ConfigContent, Path: in.ConfigPath}
 	if !in.EnableRawConfig {
-		// hcontent, err := json.MarshalIndent(static.HiddifyOptions, "", " ")
+		// hcontent, err := json.MarshalIndent(static.DonutOptions, "", " ")
 		// if err != nil {
 		// 	return nil, err
 		// }
 
 		// Log(LogLevel_DEBUG, LogType_CORE, "Building config ", string(hcontent))
 		// Log(LogLevel_DEBUG, LogType_CORE, "Building config ")
-		return config.BuildConfig(ctx, static.HiddifyOptions, readOpt)
+		return config.BuildConfig(ctx, static.DonutOptions, readOpt)
 	}
 	return config.ReadSingOptions(ctx, readOpt)
 
@@ -58,7 +58,7 @@ func Parse(ctx context.Context, in *ParseRequest) (*ParseResponse, error) {
 		path = in.ConfigPath
 	}
 
-	config, err := config.ParseConfigBytes(ctx, &config.ReadOptions{Content: in.Content, Path: path}, true, static.HiddifyOptions, false)
+	config, err := config.ParseConfigBytes(ctx, &config.ReadOptions{Content: in.Content, Path: path}, true, static.DonutOptions, false)
 	if err != nil {
 		return &ParseResponse{
 			ResponseCode: hcommon.ResponseCode_FAILED,
@@ -81,14 +81,14 @@ func Parse(ctx context.Context, in *ParseRequest) (*ParseResponse, error) {
 	}, err
 }
 
-func (s *CoreService) ChangeHiddifySettings(ctx context.Context, in *ChangeHiddifySettingsRequest) (*CoreInfoResponse, error) {
-	return ChangeHiddifySettings(in, true)
+func (s *CoreService) ChangeDonutSettings(ctx context.Context, in *ChangeDonutSettingsRequest) (*CoreInfoResponse, error) {
+	return ChangeDonutSettings(in, true)
 }
 
-func ChangeHiddifySettings(in *ChangeHiddifySettingsRequest, insert bool) (*CoreInfoResponse, error) {
-	static.HiddifyOptions = config.DefaultHiddifyOptions()
+func ChangeDonutSettings(in *ChangeDonutSettingsRequest, insert bool) (*CoreInfoResponse, error) {
+	static.DonutOptions = config.DefaultDonutOptions()
 	defer func() {
-		switch static.HiddifyOptions.LogLevel {
+		switch static.DonutOptions.LogLevel {
 		case "debug":
 			static.logLevel.Store(int32(LogLevel_DEBUG))
 		case "info":
@@ -107,30 +107,30 @@ func ChangeHiddifySettings(in *ChangeHiddifySettingsRequest, insert bool) (*Core
 		static.debug = static.debug || LogLevel(static.logLevel.Load()) <= LogLevel_DEBUG
 	}()
 
-	if in.HiddifySettingsJson == "" {
+	if in.DonutSettingsJson == "" {
 		return &CoreInfoResponse{}, nil
 	}
 	if insert {
 		settings := db.GetTable[hcommon.AppSettings]()
 		settings.UpdateInsert(&hcommon.AppSettings{
-			Id:    "HiddifySettingsJson",
-			Value: in.HiddifySettingsJson,
+			Id:    "DonutSettingsJson",
+			Value: in.DonutSettingsJson,
 		})
 	}
 
-	err := json.Unmarshal([]byte(in.HiddifySettingsJson), static.HiddifyOptions)
+	err := json.Unmarshal([]byte(in.DonutSettingsJson), static.DonutOptions)
 	if err != nil {
 		return nil, err
 	}
 
-	if static.HiddifyOptions.Warp.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(static.HiddifyOptions.Warp.WireguardConfigStr), &static.HiddifyOptions.Warp.WireguardConfig)
+	if static.DonutOptions.Warp.WireguardConfigStr != "" {
+		err := json.Unmarshal([]byte(static.DonutOptions.Warp.WireguardConfigStr), &static.DonutOptions.Warp.WireguardConfig)
 		if err != nil {
 			return nil, err
 		}
 	}
-	if static.HiddifyOptions.Warp2.WireguardConfigStr != "" {
-		err := json.Unmarshal([]byte(static.HiddifyOptions.Warp2.WireguardConfigStr), &static.HiddifyOptions.Warp2.WireguardConfig)
+	if static.DonutOptions.Warp2.WireguardConfigStr != "" {
+		err := json.Unmarshal([]byte(static.DonutOptions.Warp2.WireguardConfigStr), &static.DonutOptions.Warp2.WireguardConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -147,10 +147,10 @@ func GenerateConfig(ctx context.Context, in *GenerateConfigRequest) (*GenerateCo
 		Log(LogLevel_FATAL, LogType_CONFIG, err.Error())
 		StopAndAlert(MessageType_UNEXPECTED_ERROR, err.Error())
 	})
-	if static.HiddifyOptions == nil {
-		static.HiddifyOptions = config.DefaultHiddifyOptions()
+	if static.DonutOptions == nil {
+		static.DonutOptions = config.DefaultDonutOptions()
 	}
-	config, err := config.ParseBuildConfigBytes(ctx, static.HiddifyOptions, &config.ReadOptions{Path: in.Path})
+	config, err := config.ParseBuildConfigBytes(ctx, static.DonutOptions, &config.ReadOptions{Path: in.Path})
 	if err != nil {
 		return nil, err
 	}

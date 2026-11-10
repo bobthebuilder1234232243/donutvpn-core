@@ -8,12 +8,12 @@
         },
         "info": {
           "0409": {
-            "CompanyName": "Hiddify",
-            "FileDescription": "Hiddify core proxy engine",
+            "CompanyName": "DonutVpn",
+            "FileDescription": "DonutVpn core proxy engine",
             "InternalName": "donutvpn-core",
-            "LegalCopyright": "Copyright (C) Hiddify.com. All rights reserved.",
+            "LegalCopyright": "Copyright (C) DonutVpn.com. All rights reserved.",
             "OriginalFilename": "donutvpn-core.dll",
-            "ProductName": "Hiddify",
+            "ProductName": "DonutVpn",
             "Comments": "https://github.com/donutvpn/donutvpn-core"
           }
         }

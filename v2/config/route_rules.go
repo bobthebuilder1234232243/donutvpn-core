@@ -50,7 +50,7 @@ type appRouteRules struct {
 	usedTags   map[string]bool
 }
 
-func buildAppRouteRules(hopt *HiddifyOptions) *appRouteRules {
+func buildAppRouteRules(hopt *DonutOptions) *appRouteRules {
 	b := &appRouteRules{
 		region:   hopt.Region,
 		fakeDNS:  hopt.EnableFakeDNS,

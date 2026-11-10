@@ -10,11 +10,11 @@ import (
 )
 
 // ProxyUser is the user name of the mixed port; its password is the proxy secret.
-const ProxyUser = "hiddify"
+const ProxyUser = "donutvpn"
 
 // transparentPortsOpen says whether tproxy, redirect and direct open: they serve no app in VPN
 // mode, and take no password, so there only while the VPN is shared (a Linux gateway).
-func transparentPortsOpen(hopt *HiddifyOptions) bool {
+func transparentPortsOpen(hopt *DonutOptions) bool {
 	return !hopt.EnableTun || hopt.AllowConnectionFromLAN
 }
 
@@ -29,13 +29,13 @@ func portEnabled(enabled *bool, port uint16, byDefault bool) bool {
 // localPortOpen says whether this device's own proxy port (the mixed port, on loopback) opens: in
 // proxy and system proxy mode; in VPN mode, where every app already goes through the TUN, only when
 // the user asked for it.
-func localPortOpen(hopt *HiddifyOptions) bool {
+func localPortOpen(hopt *DonutOptions) bool {
 	return portEnabled(hopt.EnableMixedPort, hopt.MixedPort, true) && (!hopt.EnableTun || hopt.LocalProxyInVpn)
 }
 
 // localUsers are the users the local port asks for: none unless the user asked for the secret, as
 // browsers can not send a SOCKS5 password; and none as the system proxy, which can not pass one.
-func localUsers(hopt *HiddifyOptions) []auth.User {
+func localUsers(hopt *DonutOptions) []auth.User {
 	if !hopt.LocalProxyAuth || hopt.SetSystemProxy {
 		return secretUsers("")
 	}
@@ -68,7 +68,7 @@ type proxyListener struct {
 // Only the IPv4 loopback listener sets the system proxy: each listener that does so overwrites the
 // setting as it starts, and the ::1 one, starting last, left Windows pointed at http://[::1]:port,
 // which Telegram and other apps that read the system proxy can not use (5.5.1).
-func proxyListeners(hopt *HiddifyOptions, ipv6 bool) []proxyListener {
+func proxyListeners(hopt *DonutOptions, ipv6 bool) []proxyListener {
 	shared := hopt.AllowConnectionFromLAN && hopt.LanSharingPort > 0
 	var listeners []proxyListener
 	if localPortOpen(hopt) && !(shared && hopt.LanSharingPort == hopt.MixedPort) {

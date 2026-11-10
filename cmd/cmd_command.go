@@ -21,7 +21,7 @@ var execCommand = &cobra.Command{
 
 func init() {
 	// commandRun.PersistentFlags().BoolP("help", "", false, "help for this command")
-	// commandRun.Flags().StringVarP(&hiddifySettingPath, "hiddify", "d", "", "Hiddify Setting JSON Path")
+	// commandRun.Flags().StringVarP(&donutvpnSettingPath, "donutvpn", "d", "", "DonutVpn Setting JSON Path")
 
 	mainCommand.AddCommand(execCommand)
 }

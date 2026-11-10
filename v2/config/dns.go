@@ -43,7 +43,7 @@ func getDnsAddress(d string) string {
 	return d
 }
 
-func setDns(options *option.Options, opt *HiddifyOptions, staticIps *map[string][]string) error {
+func setDns(options *option.Options, opt *DonutOptions, staticIps *map[string][]string) error {
 	remoteAddr := getDnsAddress(opt.RemoteDnsAddress)
 	fallbackAddr := "https://8.8.8.8/dns-query"
 	if remoteAddr == fallbackAddr {
@@ -203,7 +203,7 @@ func getAllOutboundsOptions(options *option.Options) []any {
 	}
 	return outbounds
 }
-func addForceDirect(options *option.Options, hopt *HiddifyOptions) ([]option.DefaultDNSRule, error) {
+func addForceDirect(options *option.Options, hopt *DonutOptions) ([]option.DefaultDNSRule, error) {
 	dnsMap := make(map[string]string)
 	// outbounds := getAllOutboundsOptions(options)
 

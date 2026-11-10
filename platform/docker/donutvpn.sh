@@ -6,8 +6,8 @@
 # kernel module (a container can not load it).
 
 set -- run --config "$CONFIG"
-[ -f "/hiddify/hiddify.json" ] && set -- "$@" -d /hiddify/hiddify.json
+[ -f "/donutvpn/donutvpn.json" ] && set -- "$@" -d /donutvpn/donutvpn.json
 case "$ROUTER_MODE" in
 1 | true | yes) set -- "$@" --router ;;
 esac
-exec /hiddify/hiddify-core "$@"
+exec /donutvpn/donutvpn-core "$@"

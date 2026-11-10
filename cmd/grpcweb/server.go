@@ -1,4 +1,4 @@
-// Package grpcweb is a tiny HTML+gRPC harness for hiddify-core.
+// Package grpcweb is a tiny HTML+gRPC harness for donut-core.
 //
 // It starts an insecure Core gRPC server and an HTML UI on the same TCP port
 // (h2c multiplex: application/grpc → gRPC, everything else → HTTP UI).
@@ -37,9 +37,9 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// Same shape as the Flutter app (HiddifyNext/5.0.0 …).
+// Same shape as the Flutter app (DonutNext/5.0.0 …).
 func userAgent() string {
-	return fmt.Sprintf("HiddifyNext/5.0.0 (%s) like ClashMeta v2ray sing-box", runtime.GOOS)
+	return fmt.Sprintf("DonutNext/5.0.0 (%s) like ClashMeta v2ray sing-box", runtime.GOOS)
 }
 
 //go:embed index.html
@@ -60,7 +60,7 @@ type Options struct {
 	MixedPort   int
 }
 
-// uiSettings are the Hiddify options the harness exposes (proxy/VPN/chain).
+// uiSettings are the DonutVpn options the harness exposes (proxy/VPN/chain).
 type uiSettings struct {
 	MixedPort      int    `json:"mixedPort"`
 	ServiceMode    string `json:"serviceMode"` // proxy | system-proxy | vpn | router
@@ -113,7 +113,7 @@ func Run(opts Options) error {
 		dir := opts.Workdir
 		if dir == "" {
 			var err error
-			dir, err = os.MkdirTemp("", "hiddify-grpcweb-*")
+			dir, err = os.MkdirTemp("", "donutvpn-grpcweb-*")
 			if err != nil {
 				return err
 			}
@@ -298,8 +298,8 @@ func setupLocalCore(dir string, mixedPort, clashAPIPort int) error {
 		`{"mixed-port":%d,"tproxy-port":0,"redirect-port":0,"direct-port":0,"clash-api-port":%d,"enable-clash-api":true,"log-level":"warn"}`,
 		mixedPort, clashAPIPort,
 	)
-	if _, err := hcore.ChangeHiddifySettings(&hcore.ChangeHiddifySettingsRequest{HiddifySettingsJson: settings}, false); err != nil {
-		return fmt.Errorf("ChangeHiddifySettings: %w", err)
+	if _, err := hcore.ChangeDonutSettings(&hcore.ChangeDonutSettingsRequest{DonutSettingsJson: settings}, false); err != nil {
+		return fmt.Errorf("ChangeDonutSettings: %w", err)
 	}
 	return nil
 }
@@ -435,7 +435,7 @@ func (s *server) watchProxies(ctx context.Context, mainOnly bool) {
 				if ctx.Err() != nil {
 					return
 				}
-				if !s.coreRunning() || strings.Contains(err.Error(), "hiddify service not found") {
+				if !s.coreRunning() || strings.Contains(err.Error(), "donutvpn service not found") {
 					break
 				}
 				log.Printf("OutboundsInfo recv(%v): %v", mainOnly, err)
@@ -575,7 +575,7 @@ func (s *server) handleStart(w http.ResponseWriter, r *http.Request) {
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), 90*time.Second)
 	defer cancel()
-	if err := s.applyHiddifySettings(); err != nil {
+	if err := s.applyDonutVpnSettings(); err != nil {
 		httpError(w, 500, err)
 		return
 	}
@@ -794,11 +794,11 @@ func (s *server) handleSettings(w http.ResponseWriter, r *http.Request) {
 		normalizeServiceMode(&s.settings)
 		settingsCopy := s.settings
 		s.mu.Unlock()
-		if err := s.applyHiddifySettings(); err != nil {
+		if err := s.applyDonutVpnSettings(); err != nil {
 			httpError(w, 500, err)
 			return
 		}
-		s.writeJSONMethod(w, "ChangeHiddifySettings", settingsCopy)
+		s.writeJSONMethod(w, "ChangeDonutSettings", settingsCopy)
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -891,12 +891,12 @@ func (s *server) settingsJSON() (string, error) {
 	return string(b), nil
 }
 
-func (s *server) applyHiddifySettings() error {
+func (s *server) applyDonutVpnSettings() error {
 	js, err := s.settingsJSON()
 	if err != nil {
 		return err
 	}
-	_, err = hcore.ChangeHiddifySettings(&hcore.ChangeHiddifySettingsRequest{HiddifySettingsJson: js}, false)
+	_, err = hcore.ChangeDonutSettings(&hcore.ChangeDonutSettingsRequest{DonutSettingsJson: js}, false)
 	return err
 }
 
@@ -912,7 +912,7 @@ func (s *server) needAdminBgCheck(ctx context.Context) (resp *hcore.NeedAdminBgS
 	s.mu.Unlock()
 	resp, err = s.client.NeedAdminBgService(ctx, &hcore.NeedAdminBgServiceRequest{
 		ServiceMode:         mode,
-		HiddifySettingsJson: js,
+		DonutSettingsJson: js,
 		AdminPreference:     hcore.AdminPreference_ADMIN_PREFERENCE_UNSET,
 	})
 	if err != nil {
@@ -963,7 +963,7 @@ func (s *server) handleRestart(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&req)
 	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
 	defer cancel()
-	if err := s.applyHiddifySettings(); err != nil {
+	if err := s.applyDonutVpnSettings(); err != nil {
 		httpError(w, 500, err)
 		return
 	}
@@ -999,7 +999,7 @@ func (s *server) handleHotReload(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&req)
 	ctx, cancel := context.WithTimeout(r.Context(), 120*time.Second)
 	defer cancel()
-	if err := s.applyHiddifySettings(); err != nil {
+	if err := s.applyDonutVpnSettings(); err != nil {
 		httpError(w, 500, err)
 		return
 	}
@@ -1283,7 +1283,7 @@ func (s *server) handleRPC(w http.ResponseWriter, r *http.Request) {
 			Config string `json:"config"`
 		}
 		_ = json.Unmarshal(req.Body, &body)
-		if err := s.applyHiddifySettings(); err != nil {
+		if err := s.applyDonutVpnSettings(); err != nil {
 			httpError(w, 500, err)
 			return
 		}
@@ -1431,8 +1431,8 @@ func (s *server) handleRPC(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		s.writeJSONMethod(w, req.Method, protoToAny(out))
-	case "ChangeHiddifySettings":
-		if err := s.applyHiddifySettings(); err != nil {
+	case "ChangeDonutSettings":
+		if err := s.applyDonutVpnSettings(); err != nil {
 			httpError(w, 500, err)
 			return
 		}

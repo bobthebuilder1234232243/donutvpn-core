@@ -9,7 +9,7 @@ import (
 
 type outboundMap map[string]interface{}
 
-func patchOutboundMux(base option.Outbound, configOpt HiddifyOptions, obj outboundMap) outboundMap {
+func patchOutboundMux(base option.Outbound, configOpt DonutOptions, obj outboundMap) outboundMap {
 	if configOpt.Mux.Enable {
 		multiplex := option.OutboundMultiplexOptions{
 			Enabled:    true,
@@ -24,7 +24,7 @@ func patchOutboundMux(base option.Outbound, configOpt HiddifyOptions, obj outbou
 	return obj
 }
 
-func patchOutboundTLSTricks(base option.Outbound, configOpt HiddifyOptions) option.Outbound {
+func patchOutboundTLSTricks(base option.Outbound, configOpt DonutOptions) option.Outbound {
 	if base.Type == C.TypeSelector || base.Type == C.TypeURLTest || base.Type == C.TypeBlock {
 		return base
 	}
@@ -108,7 +108,7 @@ func patchOutboundTLSTricks(base option.Outbound, configOpt HiddifyOptions) opti
 	return base
 }
 
-func patchOutboundFragment(base option.Outbound, configOpt HiddifyOptions) option.Outbound {
+func patchOutboundFragment(base option.Outbound, configOpt DonutOptions) option.Outbound {
 	if configOpt.TLSTricks.EnableFragment {
 		if opts, ok := base.Options.(option.DialerOptionsWrapper); ok {
 			dialer := opts.TakeDialerOptions()
@@ -148,7 +148,7 @@ func isOutboundReality(base option.Outbound) bool {
 	return tls.Reality.Enabled
 }
 
-func patchEndpoint(base *option.Endpoint, configOpt HiddifyOptions, staticIPs *map[string][]string) (*option.Endpoint, error) {
+func patchEndpoint(base *option.Endpoint, configOpt DonutOptions, staticIPs *map[string][]string) (*option.Endpoint, error) {
 	formatErr := func(err error) error {
 		return fmt.Errorf("error patching outbound[%s][%s]: %w", base.Tag, base.Type, err)
 	}
@@ -158,7 +158,7 @@ func patchEndpoint(base *option.Endpoint, configOpt HiddifyOptions, staticIPs *m
 	}
 	return base, nil
 }
-func patchOutbound(base option.Outbound, configOpt HiddifyOptions, staticIPs *map[string][]string) (*option.Outbound, error) {
+func patchOutbound(base option.Outbound, configOpt DonutOptions, staticIPs *map[string][]string) (*option.Outbound, error) {
 
 	base = patchOutboundTLSTricks(base, configOpt)
 	patchOutboundDiscoveryCountry(base, configOpt)
@@ -175,7 +175,7 @@ func patchOutbound(base option.Outbound, configOpt HiddifyOptions, staticIPs *ma
 // patchOutboundDiscoveryCountry gives a DNS tunnel outbound (dnstt, masterdns, soar) without a
 // discovery country the app's region, so its "auto" resolvers start with the bundled resolvers
 // of the user's country. A soar outbound without smart_pool gets one, enabled as by default.
-func patchOutboundDiscoveryCountry(base option.Outbound, configOpt HiddifyOptions) {
+func patchOutboundDiscoveryCountry(base option.Outbound, configOpt DonutOptions) {
 	if configOpt.Region == "" || configOpt.Region == "other" {
 		return
 	}
@@ -202,7 +202,7 @@ func patchOutboundDiscoveryCountry(base option.Outbound, configOpt HiddifyOption
 	}
 }
 
-// func patchOutboundXray(base option.Outbound, configOpt HiddifyOptions, staticIpsDns map[string][]string) outboundMap {
+// func patchOutboundXray(base option.Outbound, configOpt DonutOptions, staticIpsDns map[string][]string) outboundMap {
 // 	if base.Type == C.TypeXray {
 // 		if opts, ok := base.Options.(option.XrayOutboundOptions); ok {
 // 			if opts.DeprecatedXrayOutboundJson != nil {
@@ -237,7 +237,7 @@ func patchOutboundDiscoveryCountry(base option.Outbound, configOpt HiddifyOption
 // 			dnsConfig = map[string]any{}
 // 		}
 // 		if dnsConfig["tag"] == nil {
-// 			dnsConfig["tag"] = "hiddify-dns-out"
+// 			dnsConfig["tag"] = "donutvpn-dns-out"
 // 		}
 // 		// Ensure "servers" key exists and is a slice
 // 		servers, ok := dnsConfig["servers"].([]any)

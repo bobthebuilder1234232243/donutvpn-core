@@ -5,7 +5,7 @@ import "v2/hcommon/common.proto";
 package extension;
 
 option go_package = "github.com/bobthebuilder1234232243/donutvpn-core/extension";
-option java_package = "com.hiddify.core.api.extension";
+option java_package = "com.donutvpn.core.api.extension";
 message ExtensionActionResult {
   string extension_id = 1;
   hcommon.ResponseCode code = 2;

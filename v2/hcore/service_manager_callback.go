@@ -5,18 +5,18 @@ import (
 	"github.com/sagernet/sing-box/adapter"
 )
 
-type hiddifyMainServiceManager struct{}
+type donutvpnMainServiceManager struct{}
 
-var _ adapter.LifecycleService = (*hiddifyMainServiceManager)(nil)
+var _ adapter.LifecycleService = (*donutvpnMainServiceManager)(nil)
 
-func (h *hiddifyMainServiceManager) Name() string { return "hiddifyMainServiceManager" }
-func (h *hiddifyMainServiceManager) Start(stage adapter.StartStage, _ *adapter.Scope) error {
+func (h *donutvpnMainServiceManager) Name() string { return "donutvpnMainServiceManager" }
+func (h *donutvpnMainServiceManager) Start(stage adapter.StartStage, _ *adapter.Scope) error {
 	if stage == adapter.StartStateStarted {
 		return service_manager.OnMainServiceStart()
 	}
 	return nil
 }
 
-func (h *hiddifyMainServiceManager) Close() error {
+func (h *donutvpnMainServiceManager) Close() error {
 	return service_manager.OnMainServiceClose()
 }

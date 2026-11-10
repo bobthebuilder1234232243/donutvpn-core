@@ -6,7 +6,7 @@ import (
 	"syscall"
 )
 
-const renamedEnv = "HIDDIFY_PROCESS_RENAMED"
+const renamedEnv = "DONUT_PROCESS_RENAMED"
 
 // SetName gives the process the name process monitors such as htop and top show. The command line
 // htop shows comes from argv[0], which only exec sets: the process runs itself again with name and

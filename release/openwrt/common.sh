@@ -6,10 +6,10 @@
 set -e -o pipefail
 
 PKG_NAME="donutvpn-core"
-PKG_DESCRIPTION="Hiddify universal proxy platform: a sing-box core with Hiddify's protocols and subscription support."
+PKG_DESCRIPTION="DonutVpn universal proxy platform: a sing-box core with DonutVpn's protocols and subscription support."
 PKG_LICENSE="GPL-3.0-or-later"
 PKG_URL="https://donutvpn.com/"
-PKG_MAINTAINER="Hiddify <wrt@donutvpn.com>"
+PKG_MAINTAINER="DonutVpn <wrt@donutvpn.com>"
 PKG_SECTION="net"
 # kmod-tun for TUN mode, kmod-inet-diag for the connection tracker, ca-bundle for TLS, firewall4
 # and kmod-nft-queue for the nftables rules the core installs in TUN mode (as sing-box's package).

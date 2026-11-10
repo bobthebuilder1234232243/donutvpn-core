@@ -23,7 +23,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (h *HiddifyInstance) readStatus(prev *SystemInfo) *SystemInfo {
+func (h *DonutInstance) readStatus(prev *SystemInfo) *SystemInfo {
 	var message SystemInfo
 	message.Memory = int64(memory.Inuse())
 	message.Goroutines = int32(runtime.NumGoroutine())
@@ -81,7 +81,7 @@ func (s *CoreService) GetSystemInfoStream(req *hcommon.Empty, stream grpc.Server
 	return static.GetSystemInfo(stream)
 
 }
-func (h *HiddifyInstance) MakeSureContextIsNew(streamContext context.Context) {
+func (h *DonutInstance) MakeSureContextIsNew(streamContext context.Context) {
 	for range 10 {
 		if ctx := h.Context(); ctx != nil {
 			select {
@@ -97,7 +97,7 @@ func (h *HiddifyInstance) MakeSureContextIsNew(streamContext context.Context) {
 		}
 	}
 }
-func (h *HiddifyInstance) GetSystemInfo(stream grpc.ServerStreamingServer[SystemInfo]) error {
+func (h *DonutInstance) GetSystemInfo(stream grpc.ServerStreamingServer[SystemInfo]) error {
 	// return fmt.Errorf("not implemented yet")
 	h.MakeSureContextIsNew(stream.Context())
 
@@ -207,7 +207,7 @@ func (s *CoreService) SelectOutbound(ctx context.Context, in *SelectOutboundRequ
 	return static.SelectOutbound(in)
 }
 
-func (h *HiddifyInstance) SelectOutbound(in *SelectOutboundRequest) (*hcommon.Response, error) {
+func (h *DonutInstance) SelectOutbound(in *SelectOutboundRequest) (*hcommon.Response, error) {
 	// err := libbox.NewStandaloneCommandClient().SelectOutbound(in.GroupTag, in.OutboundTag)
 	// if err != nil {
 	// 	return &hcommon.Response{
@@ -261,7 +261,7 @@ func (s *CoreService) UrlTestActive(ctx context.Context, in *hcommon.Empty) (*hc
 	return static.UrlTestActive()
 }
 
-func (h *HiddifyInstance) UrlTestActive() (*hcommon.Response, error) {
+func (h *DonutInstance) UrlTestActive() (*hcommon.Response, error) {
 	if box := h.Box(); box != nil {
 		outboundGroup, isLoaded := box.Outbound().Outbound(config.OutboundSelectTag)
 		if !isLoaded {
@@ -298,7 +298,7 @@ func (h *HiddifyInstance) UrlTestActive() (*hcommon.Response, error) {
 	}, nil
 }
 
-func (h *HiddifyInstance) UrlTest(in *UrlTestRequest) (*hcommon.Response, error) {
+func (h *DonutInstance) UrlTest(in *UrlTestRequest) (*hcommon.Response, error) {
 	if in.Tag == "" {
 		return h.UrlTestActive()
 	}

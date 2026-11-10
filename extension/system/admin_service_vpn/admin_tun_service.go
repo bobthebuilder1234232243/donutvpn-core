@@ -8,7 +8,7 @@ import (
 
 // AdminServiceExtension is kept registered for older configs but no longer starts the
 // TUN-to-SOCKS bridge. Windows and Linux VPN mode now run the full core inside
-// HiddifyTunnelService (same model as macOS), driven from the app over authenticated gRPC.
+// DonutVpnTunnelService (same model as macOS), driven from the app over authenticated gRPC.
 // The old bridge looked like a local traffic interceptor and raised antivirus false positives.
 type AdminServiceExtensionData struct {
 	Count int `json:"count"`
@@ -41,7 +41,7 @@ func init() {
 		ex.ExtensionFactory{
 			Id:          "github.com/bobthebuilder1234232243/donutvpn-core/extension/system/admin_service_vpn",
 			Title:       "Admin Service",
-			Description: "Deprecated: VPN runs in HiddifyTunnelService",
+			Description: "Deprecated: VPN runs in DonutVpnTunnelService",
 			Builder:     NewAdminServiceExtension,
 		},
 	)

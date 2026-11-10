@@ -328,11 +328,11 @@ require (
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
 )
 
-// replace github.com/sagernet/sing-box => github.com/hiddify/donutvpn-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
+// replace github.com/sagernet/sing-box => github.com/donutvpn/donutvpn-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
 
-// replace github.com/xtls/xray-core => github.com/hiddify/xray-core v0.0.0-20260124181826-59e6569c13e9
+// replace github.com/xtls/xray-core => github.com/donutvpn/xray-core v0.0.0-20260124181826-59e6569c13e9
 
-replace github.com/bepass-org/warp-plus => github.com/hiddify/warp-plus v0.0.0-20240717223357-4f3122e0d11d
+replace github.com/bepass-org/warp-plus => github.com/donutvpn/warp-plus v0.0.0-20240717223357-4f3122e0d11d
 
 replace github.com/sagernet/sing-dns => github.com/shtorm-7/sing-dns v0.4.6-extended-1.0.0
 

@@ -169,10 +169,10 @@ func startServiceLocked(ctx context.Context, in *StartRequest) (coreResponse *Co
 
 	static.previousStartRequest = in
 
-	if static.HiddifyOptions == nil {
+	if static.DonutOptions == nil {
 		return errorWrapper(
 			MessageType_ERROR_BUILDING_CONFIG,
-			errors.New("HiddifyOptions not initialized"),
+			errors.New("DonutOptions not initialized"),
 		)
 	}
 
@@ -223,7 +223,7 @@ func startServiceLocked(ctx context.Context, in *StartRequest) (coreResponse *Co
 	}
 	watch.step("preparing the platform and the delay")
 	libbox.SetMemoryLimit(C.IsIos || !in.DisableMemoryLimit)
-	routerMode := static.HiddifyOptions.RouterMode
+	routerMode := static.DonutOptions.RouterMode
 	if routerMode {
 		prepareRouterHost()
 	}

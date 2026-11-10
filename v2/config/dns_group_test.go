@@ -48,7 +48,7 @@ func TestTCPFirstOrder(t *testing.T) {
 }
 
 func TestBuildConfigDNSGroups(t *testing.T) {
-	opts := DefaultHiddifyOptions()
+	opts := DefaultDonutOptions()
 	opts.RemoteDnsAddress = "udp://1.1.1.1"
 	opts.DirectDnsAddress = "udp://9.9.9.9"
 	options, err := BuildConfig(libbox.BaseContext(nil), opts, &ReadOptions{Content: chainTestProfile})
@@ -104,9 +104,9 @@ func TestBuildConfigDNSGroups(t *testing.T) {
 
 // Remote DNS "local" became udp://local, a UDP server whose host is the name "local": it never
 // answered, and every remote lookup fell through to the fallbacks, which a network that blocks
-// public resolvers refuses. It is the system resolver, as Direct DNS "local" is (hiddify-app#2454).
+// public resolvers refuses. It is the system resolver, as Direct DNS "local" is (donutvpn-app#2454).
 func TestBuildConfigRemoteDNSLocal(t *testing.T) {
-	opts := DefaultHiddifyOptions()
+	opts := DefaultDonutOptions()
 	opts.RemoteDnsAddress = "local"
 	opts.DirectDnsAddress = "local"
 	options, err := BuildConfig(libbox.BaseContext(nil), opts, &ReadOptions{Content: chainTestProfile})

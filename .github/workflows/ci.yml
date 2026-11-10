@@ -41,7 +41,7 @@ jobs:
       - name: Build an ipk and its feed index from a stand-in binary
         run: |
           set -euo pipefail
-          printf '#!/bin/sh\necho hiddify\n' > /tmp/donutvpn-core && chmod +x /tmp/donutvpn-core
+          printf '#!/bin/sh\necho donutvpn\n' > /tmp/donutvpn-core && chmod +x /tmp/donutvpn-core
           release/openwrt/build-ipk.sh x86_64 0.0.0 /tmp/donutvpn-core /tmp/feed/donutvpn-core_0.0.0_x86_64.ipk
           release/openwrt/make-feed.sh /tmp/feed
           grep -q '^Package: donutvpn-core$' /tmp/feed/Packages

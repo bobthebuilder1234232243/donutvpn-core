@@ -19,7 +19,7 @@ import (
 // app connects to it as to the installed service. The first stdin line is the control secret
 // (pkexec clears the environment); stdin then stays open, and its end, like the app's exit, stops
 // the engine and the process.
-const CoreServiceReadyLine = "HIDDIFY_SERVICE_READY"
+const CoreServiceReadyLine = "DONUT_SERVICE_READY"
 
 var coreServiceOptions struct {
 	listen   string
@@ -69,7 +69,7 @@ func runCoreService() int {
 	hprocess.DetachStdio()
 
 	reason := waitForCoreEnd(stdin, coreServiceOptions.ownerPID)
-	fmt.Fprintf(os.Stderr, "hiddify core service: stopping (%s)\n", reason)
+	fmt.Fprintf(os.Stderr, "donutvpn core service: stopping (%s)\n", reason)
 	stopped := make(chan struct{})
 	go func() {
 		service.Close()

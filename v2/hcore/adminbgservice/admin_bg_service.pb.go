@@ -74,18 +74,18 @@ var file_v2_hcore_adminbgservice_admin_bg_service_proto_goTypes = []any{
 	(*AdminBgResponse)(nil),     // 2: adminbgservice.AdminBgResponse
 }
 var file_v2_hcore_adminbgservice_admin_bg_service_proto_depIdxs = []int32{
-	0, // 0: adminbgservice.HiddifyAdminBG.Start:input_type -> adminbgservice.AdminBgStartRequest
-	0, // 1: adminbgservice.HiddifyAdminBG.Reload:input_type -> adminbgservice.AdminBgStartRequest
-	0, // 2: adminbgservice.HiddifyAdminBG.Restart:input_type -> adminbgservice.AdminBgStartRequest
-	1, // 3: adminbgservice.HiddifyAdminBG.Stop:input_type -> hcommon.Empty
-	1, // 4: adminbgservice.HiddifyAdminBG.Status:input_type -> hcommon.Empty
-	1, // 5: adminbgservice.HiddifyAdminBG.Exit:input_type -> hcommon.Empty
-	2, // 6: adminbgservice.HiddifyAdminBG.Start:output_type -> adminbgservice.AdminBgResponse
-	2, // 7: adminbgservice.HiddifyAdminBG.Reload:output_type -> adminbgservice.AdminBgResponse
-	2, // 8: adminbgservice.HiddifyAdminBG.Restart:output_type -> adminbgservice.AdminBgResponse
-	2, // 9: adminbgservice.HiddifyAdminBG.Stop:output_type -> adminbgservice.AdminBgResponse
-	2, // 10: adminbgservice.HiddifyAdminBG.Status:output_type -> adminbgservice.AdminBgResponse
-	2, // 11: adminbgservice.HiddifyAdminBG.Exit:output_type -> adminbgservice.AdminBgResponse
+	0, // 0: adminbgservice.DonutAdminBG.Start:input_type -> adminbgservice.AdminBgStartRequest
+	0, // 1: adminbgservice.DonutAdminBG.Reload:input_type -> adminbgservice.AdminBgStartRequest
+	0, // 2: adminbgservice.DonutAdminBG.Restart:input_type -> adminbgservice.AdminBgStartRequest
+	1, // 3: adminbgservice.DonutAdminBG.Stop:input_type -> hcommon.Empty
+	1, // 4: adminbgservice.DonutAdminBG.Status:input_type -> hcommon.Empty
+	1, // 5: adminbgservice.DonutAdminBG.Exit:input_type -> hcommon.Empty
+	2, // 6: adminbgservice.DonutAdminBG.Start:output_type -> adminbgservice.AdminBgResponse
+	2, // 7: adminbgservice.DonutAdminBG.Reload:output_type -> adminbgservice.AdminBgResponse
+	2, // 8: adminbgservice.DonutAdminBG.Restart:output_type -> adminbgservice.AdminBgResponse
+	2, // 9: adminbgservice.DonutAdminBG.Stop:output_type -> adminbgservice.AdminBgResponse
+	2, // 10: adminbgservice.DonutAdminBG.Status:output_type -> adminbgservice.AdminBgResponse
+	2, // 11: adminbgservice.DonutAdminBG.Exit:output_type -> adminbgservice.AdminBgResponse
 	6, // [6:12] is the sub-list for method output_type
 	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

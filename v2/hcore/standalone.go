@@ -19,15 +19,15 @@ import (
 	"github.com/sagernet/sing-box/option"
 )
 
-func RunStandalone(ctx context.Context, hiddifySettingPath string, configPath string, defaultConfig config.HiddifyOptions) error {
+func RunStandalone(ctx context.Context, donutvpnSettingPath string, configPath string, defaultConfig config.DonutOptions) error {
 	fmt.Println("Running in standalone mode")
-	current, err := readAndBuildConfig(ctx, hiddifySettingPath, configPath, &defaultConfig)
+	current, err := readAndBuildConfig(ctx, donutvpnSettingPath, configPath, &defaultConfig)
 	if err != nil {
 		fmt.Printf("Error in read and build config %v", err)
 		return err
 	}
 	// the start sees the settings the config was built with: router mode, for one
-	static.HiddifyOptions = current.HiddifyHiddifyOptions
+	static.DonutOptions = current.DonutVpnDonutOptions
 
 	_, err = StartService(ctx, &StartRequest{
 		ConfigContent:          current.Config,
@@ -39,7 +39,7 @@ func RunStandalone(ctx context.Context, hiddifySettingPath string, configPath st
 		fmt.Printf("Error in start service %v", err)
 		return err
 	}
-	go updateConfigInterval(ctx, current, hiddifySettingPath, configPath)
+	go updateConfigInterval(ctx, current, donutvpnSettingPath, configPath)
 
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
@@ -55,10 +55,10 @@ func RunStandalone(ctx context.Context, hiddifySettingPath string, configPath st
 type ConfigResult struct {
 	Config                string
 	RefreshInterval       int
-	HiddifyHiddifyOptions *config.HiddifyOptions
+	DonutVpnDonutOptions *config.DonutOptions
 }
 
-func readAndBuildConfig(ctx context.Context, hiddifySettingPath string, configPath string, defaultConfig *config.HiddifyOptions) (ConfigResult, error) {
+func readAndBuildConfig(ctx context.Context, donutvpnSettingPath string, configPath string, defaultConfig *config.DonutOptions) (ConfigResult, error) {
 	var result ConfigResult
 
 	result, err := readConfigContent(configPath)
@@ -66,25 +66,25 @@ func readAndBuildConfig(ctx context.Context, hiddifySettingPath string, configPa
 		return result, err
 	}
 
-	hiddifyconfig := config.DefaultHiddifyOptions()
+	donutvpnconfig := config.DefaultDonutOptions()
 
 	if defaultConfig != nil {
-		hiddifyconfig = defaultConfig
+		donutvpnconfig = defaultConfig
 	}
 
-	if hiddifySettingPath != "" {
-		hiddifyconfig, err = ReadHiddifyOptionsAt(hiddifySettingPath)
+	if donutvpnSettingPath != "" {
+		donutvpnconfig, err = ReadDonutOptionsAt(donutvpnSettingPath)
 		if err != nil {
 			return result, err
 		}
 		// --router holds with a settings file too (the docker image's ROUTER_MODE, the OpenWrt mode)
 		if defaultConfig != nil && defaultConfig.RouterMode {
-			hiddifyconfig.RouterMode = true
+			donutvpnconfig.RouterMode = true
 		}
 	}
 
-	result.HiddifyHiddifyOptions = hiddifyconfig
-	result.Config, err = buildStandaloneConfig(ctx, &config.ReadOptions{Content: result.Config}, result.HiddifyHiddifyOptions)
+	result.DonutVpnDonutOptions = donutvpnconfig
+	result.Config, err = buildStandaloneConfig(ctx, &config.ReadOptions{Content: result.Config}, result.DonutVpnDonutOptions)
 	if err != nil {
 		return result, err
 	}
@@ -105,7 +105,7 @@ func readConfigContent(configPath string) (ConfigResult, error) {
 			fmt.Println("Error creating request:", err)
 			return ConfigResult{}, err
 		}
-		req.Header.Set("User-Agent", "HiddifyNext/4.0.0("+runtime.GOOS+") like ClashMeta v2ray sing-box")
+		req.Header.Set("User-Agent", "DonutNext/4.0.0("+runtime.GOOS+") like ClashMeta v2ray sing-box")
 		resp, err := client.Do(req)
 		if err != nil {
 			fmt.Println("Error making GET request:", err)
@@ -161,7 +161,7 @@ func extractRefreshInterval(header http.Header, bodyStr string) (int, error) {
 	return 0, nil
 }
 
-func buildStandaloneConfig(ctx context.Context, ropt *config.ReadOptions, hopts *config.HiddifyOptions) (string, error) {
+func buildStandaloneConfig(ctx context.Context, ropt *config.ReadOptions, hopts *config.DonutOptions) (string, error) {
 	finalconfig, err := config.ParseBuildConfig(ctx, hopts, ropt)
 	if err != nil {
 		return "", fmt.Errorf("failed to parse config content: %w", err)
@@ -203,14 +203,14 @@ func buildStandaloneConfig(ctx context.Context, ropt *config.ReadOptions, hopts 
 	return string(configStr), nil
 }
 
-func updateConfigInterval(ctx context.Context, current ConfigResult, hiddifySettingPath string, configPath string) {
+func updateConfigInterval(ctx context.Context, current ConfigResult, donutvpnSettingPath string, configPath string) {
 	if current.RefreshInterval <= 0 {
 		return
 	}
 
 	for {
 		<-time.After(time.Duration(current.RefreshInterval) * time.Hour)
-		new, err := readAndBuildConfig(ctx, hiddifySettingPath, configPath, current.HiddifyHiddifyOptions)
+		new, err := readAndBuildConfig(ctx, donutvpnSettingPath, configPath, current.DonutVpnDonutOptions)
 		if err != nil {
 			continue
 		}
@@ -228,12 +228,12 @@ func updateConfigInterval(ctx context.Context, current ConfigResult, hiddifySett
 	}
 }
 
-func ReadHiddifyOptionsAt(path string) (*config.HiddifyOptions, error) {
+func ReadDonutOptionsAt(path string) (*config.DonutOptions, error) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	var options config.HiddifyOptions
+	var options config.DonutOptions
 	err = json.Unmarshal(content, &options)
 	if err != nil {
 		return nil, err

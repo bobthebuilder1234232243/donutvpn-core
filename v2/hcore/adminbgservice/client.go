@@ -11,7 +11,7 @@ import (
 	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 )
 
-// ConnectRequest is the JSON file the macOS app writes before `Hiddify --tunnel connect`.
+// ConnectRequest is the JSON file the macOS app writes before `DonutVpn --tunnel connect`.
 type ConnectRequest struct {
 	ConfigContent      string            `json:"configContent"`
 	ConfigName         string            `json:"configName"`
@@ -49,7 +49,7 @@ func ConnectFromFile(path string) error {
 		return fmt.Errorf("VPN service is not running: %w", err)
 	}
 	defer conn.Close()
-	client := NewHiddifyAdminBGClient(conn)
+	client := NewDonutAdminBGClient(conn)
 	total := time.Now()
 	// Only stop if something is running — avoids a long no-op Stop before every connect.
 	statusStarted := time.Now()
@@ -120,7 +120,7 @@ func DisconnectAdminBg() error {
 	}
 	defer conn.Close()
 	started := time.Now()
-	_, err = NewHiddifyAdminBGClient(conn).Stop(ctx, &hcommon.Empty{})
+	_, err = NewDonutAdminBGClient(conn).Stop(ctx, &hcommon.Empty{})
 	log.Printf("tunnel disconnect: Stop took %s (err=%v)", time.Since(started), err)
 	return err
 }

@@ -1,8 +1,8 @@
-// Package buildid holds a per-build identity for hiddify-core artifacts (dylib/dll/so, HiddifyCli,
+// Package buildid holds a per-build identity for donut-core artifacts (dylib/dll/so, DonutCli,
 // tunnel service). The Flutter app never embeds this value: it asks the bundled core via
 // `tunnel build-id` and compares that to the running service's build.id stamp.
 //
-// Set at link time in the hiddify-core repository (Makefile sets a random UUID when unset):
+// Set at link time in the donut-core repository (Makefile sets a random UUID when unset):
 //
 //	-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid.ID=<uuid>
 package buildid

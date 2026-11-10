@@ -11,7 +11,7 @@ import (
 
 	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	"github.com/sagernet/sing-box/adapter"
-	"github.com/sagernet/sing-box/hiddify/ipinfo"
+	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn/ipinfo"
 	"github.com/stretchr/testify/require"
 )
 
@@ -160,7 +160,7 @@ func TestKeepTopAnsweringPicks(t *testing.T) {
 	require.NoError(t, os.MkdirAll(filepath.Join(dir, "data"), 0o755))
 	require.NoError(t, Setup(&SetupRequest{BasePath: dir, WorkingDir: dir, TempDir: dir, Mode: SetupMode_OLD}, nil))
 	settings := strings.TrimSuffix(hotReloadSettings(t, freeTCPPort(t), "warn"), "}") + fmt.Sprintf(`,"keep-top":%d}`, config.KeepTopAnswering)
-	_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: settings}, false)
+	_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: settings}, false)
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		Stop()
@@ -180,20 +180,20 @@ func TestKeepTopAnsweringPicks(t *testing.T) {
 // The app sends the settings of another profile to check its config; keep top's own reload then
 // took that profile's keep-top, and the proxies it had just stopped all ran again.
 func TestKeepTopOwnReloadKeepsItsSettings(t *testing.T) {
-	saved := static.HiddifyOptions
+	saved := static.DonutOptions
 	t.Cleanup(func() {
-		static.HiddifyOptions = saved
+		static.DonutOptions = saved
 		keepTop.Lock()
 		keepTop.ownReload, keepTop.setting, keepTop.settingTags, keepTop.settingCountries = false, 0, nil, nil
 		keepTop.Unlock()
 	})
-	static.HiddifyOptions = config.DefaultHiddifyOptions()
-	static.HiddifyOptions.KeepTop = config.KeepTopAnswering
+	static.DonutOptions = config.DefaultDonutOptions()
+	static.DonutOptions.KeepTop = config.KeepTopAnswering
 	count, _, _ := keepTopSettings()
 	require.Equal(t, config.KeepTopAnswering, count)
 
-	static.HiddifyOptions = config.DefaultHiddifyOptions() // another profile's, checked
-	static.HiddifyOptions.KeepTop = -1
+	static.DonutOptions = config.DefaultDonutOptions() // another profile's, checked
+	static.DonutOptions.KeepTop = -1
 	keepTop.Lock()
 	keepTop.ownReload = true
 	keepTop.Unlock()
@@ -229,7 +229,7 @@ func TestKeepTopCountriesPicks(t *testing.T) {
 	require.NoError(t, os.MkdirAll(filepath.Join(dir, "data"), 0o755))
 	require.NoError(t, Setup(&SetupRequest{BasePath: dir, WorkingDir: dir, TempDir: dir, Mode: SetupMode_OLD}, nil))
 	settings := strings.TrimSuffix(hotReloadSettings(t, freeTCPPort(t), "warn"), "}") + `,"keep-top":-1,"keep-top-countries":["de"]}`
-	_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: settings}, false)
+	_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: settings}, false)
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		Stop()

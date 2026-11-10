@@ -72,7 +72,7 @@ func fetchSubscription(ctx context.Context, link string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	request.Header.Set("User-Agent", "HiddifyNext/4.0.0("+runtime.GOOS+") like ClashMeta v2ray sing-box")
+	request.Header.Set("User-Agent", "DonutNext/4.0.0("+runtime.GOOS+") like ClashMeta v2ray sing-box")
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		return "", err

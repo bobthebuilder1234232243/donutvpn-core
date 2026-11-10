@@ -17,9 +17,9 @@ import (
 )
 
 var (
-	hiddifySettingPath     string
+	donutvpnSettingPath     string
 	configPath             string
-	defaultConfigs         config.HiddifyOptions = *config.DefaultHiddifyOptions()
+	defaultConfigs         config.DonutOptions = *config.DefaultDonutOptions()
 	commandBuildOutputPath string
 )
 
@@ -27,7 +27,7 @@ var commandBuild = &cobra.Command{
 	Use:   "build",
 	Short: "Build configuration",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := build(configPath, hiddifySettingPath)
+		err := build(configPath, donutvpnSettingPath)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -62,15 +62,15 @@ func build(path string, optionsPath string) error {
 	ctx := libbox.BaseContext(nil)
 	var err error
 
-	hiddifyOptions := &defaultConfigs // config.DefaultHiddifyOptions()
+	donutvpnOptions := &defaultConfigs // config.DefaultDonutOptions()
 	if optionsPath != "" {
-		hiddifyOptions, err = readHiddifyOptionsAt(optionsPath)
+		donutvpnOptions, err = readDonutOptionsAt(optionsPath)
 		if err != nil {
 			return err
 		}
 	}
 
-	config, err := config.BuildConfigJson(ctx, hiddifyOptions, &config.ReadOptions{Path: path})
+	config, err := config.BuildConfigJson(ctx, donutvpnOptions, &config.ReadOptions{Path: path})
 	if err != nil {
 		return err
 	}
@@ -110,12 +110,12 @@ func readConfigAt(ctx context.Context, path string) (*option.Options, error) {
 	return &options, nil
 }
 
-func readHiddifyOptionsAt(path string) (*config.HiddifyOptions, error) {
+func readDonutOptionsAt(path string) (*config.DonutOptions, error) {
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	var options config.HiddifyOptions
+	var options config.DonutOptions
 	err = json.Unmarshal(content, &options)
 	if err != nil {
 		return nil, err
@@ -139,7 +139,7 @@ func readHiddifyOptionsAt(path string) (*config.HiddifyOptions, error) {
 func addHConfigFlags(commandRun *cobra.Command) {
 	commandRun.Flags().StringVarP(&configPath, "config", "c", "", "proxy config path or url")
 	commandRun.MarkFlagRequired("config")
-	commandRun.Flags().StringVarP(&hiddifySettingPath, "hiddify", "d", "", "Hiddify Setting JSON Path")
+	commandRun.Flags().StringVarP(&donutvpnSettingPath, "donutvpn", "d", "", "DonutVpn Setting JSON Path")
 	commandRun.Flags().BoolVar(&defaultConfigs.EnableFullConfig, "full-config", false, "allows including tags other than output")
 	commandRun.Flags().StringVar(&defaultConfigs.LogLevel, "log", "warn", "log level")
 	commandRun.Flags().BoolVar(&defaultConfigs.InboundOptions.EnableTun, "tun", false, "Enable Tun")

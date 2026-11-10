@@ -22,10 +22,10 @@ import (
 // PowerShell", "privilege escalation via Start-Process") are written for.
 func elevateAdminBgInstall(cliPath, owner string) error {
 	args := "admin_bgservice install " + quoteWindowsArg(owner)
-	// HiddifyAdmin.exe (GUI subsystem, requireAdministrator manifest, app icon) is the
+	// DonutAdmin.exe (GUI subsystem, requireAdministrator manifest, app icon) is the
 	// binary meant to be shown in the UAC dialog; it forwards to the same parseCli().
-	// Fall back to HiddifyCli.exe for packages that do not ship it.
-	exe := filepath.Join(filepath.Dir(cliPath), "HiddifyAdmin.exe")
+	// Fall back to DonutCli.exe for packages that do not ship it.
+	exe := filepath.Join(filepath.Dir(cliPath), "DonutAdmin.exe")
 	if _, statErr := os.Stat(exe); statErr != nil {
 		exe = cliPath
 	}

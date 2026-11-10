@@ -8,11 +8,11 @@ forwards to a device behind it.
 
 | Where | How |
 |---|---|
-| OpenWrt | the `hiddify-core` package, `option mode 'router'` (the default of a new install) |
-| Any Linux gateway | `hiddify-core run -c <profile> --router`, as root |
+| OpenWrt | the `donutvpn-core` package, `option mode 'router'` (the default of a new install) |
+| Any Linux gateway | `donutvpn-core run -c <profile> --router`, as root |
 | Docker on a Linux gateway | `ROUTER_MODE=1`, `network_mode: host`, `NET_ADMIN`, `/dev/net/tun` |
-| MikroTik (RouterOS 7) | hiddify-core on a box beside it (or a RouterOS container), and `platform/mikrotik/hiddify-gateway.rsc` |
-| Hiddify app on Linux | Settings → Service mode → Router |
+| MikroTik (RouterOS 7) | donutvpn-core on a box beside it (or a RouterOS container), and `platform/mikrotik/donutvpn-gateway.rsc` |
+| DonutVpn app on Linux | Settings → Service mode → Router |
 
 ## How it works
 
@@ -54,13 +54,13 @@ router mode needs nftables and the nfqueue kernel module (OpenWrt: kmod-nft-queu
 ## OpenWrt
 
 Install the package (see [platform/wrt/README.md](../platform/wrt/README.md)), put the profile in
-`/etc/hiddify-core/config.json` (a subscription link in the file works), and:
+`/etc/donutvpn-core/config.json` (a subscription link in the file works), and:
 
 ```sh
-uci set hiddify-core.main.mode='router'   # 'proxy' for the proxy ports only
-uci commit hiddify-core
-/etc/init.d/hiddify-core restart
-logread -e hiddify-core
+uci set donutvpn-core.main.mode='router'   # 'proxy' for the proxy ports only
+uci commit donutvpn-core
+/etc/init.d/donutvpn-core restart
+logread -e donutvpn-core
 ```
 
 An install from before this option has no `mode`, and keeps running as a proxy until it is set.
@@ -68,16 +68,16 @@ An install from before this option has no `mode`, and keeps running as a proxy u
 ## Any Linux gateway, or Docker
 
 ```sh
-sudo hiddify-core run -c 'https://example.com/sub' --router
+sudo donutvpn-core run -c 'https://example.com/sub' --router
 ```
 
-With a settings file (`-d hiddify.json`), `--router` still holds, or put `"router-mode": true` in
+With a settings file (`-d donutvpn.json`), `--router` still holds, or put `"router-mode": true` in
 the file. With Docker, on the gateway itself:
 
 ```yaml
 services:
-  hiddify:
-    image: ghcr.io/hiddify/hiddify-core:latest
+  donutvpn:
+    image: ghcr.io/donutvpn/donutvpn-core:latest
     network_mode: host
     cap_add: [NET_ADMIN]
     devices: ["/dev/net/tun:/dev/net/tun"]
@@ -88,7 +88,7 @@ services:
 
 ## MikroTik
 
-RouterOS can not run hiddify-core itself. It runs on a box the MikroTik sends its LAN to: another
+RouterOS can not run donutvpn-core itself. It runs on a box the MikroTik sends its LAN to: another
 Linux machine, an OpenWrt router, or a container on the MikroTik. The box runs router mode; the
 MikroTik keeps routing, NAT and the WAN.
 
@@ -96,16 +96,16 @@ MikroTik keeps routing, NAT and the WAN.
    Not the LAN: there its replies reach the devices directly, and RouterOS drops the connections
    it sees only half of.
 2. Run router mode on the box, with its default route through the MikroTik.
-3. On the MikroTik, upload `platform/mikrotik/hiddify-gateway.rsc` and run:
+3. On the MikroTik, upload `platform/mikrotik/donutvpn-gateway.rsc` and run:
 
    ```
-   :global hiddifyGateway 172.17.0.2
-   /import hiddify-gateway.rsc
+   :global donutvpnGateway 172.17.0.2
+   /import donutvpn-gateway.rsc
    ```
 
-The script, everything marked with the comment `hiddify`:
+The script, everything marked with the comment `donutvpn`:
 
-- adds a routing table `hiddify` whose default route is the box, with `check-gateway=ping`: while
+- adds a routing table `donutvpn` whose default route is the box, with `check-gateway=ping`: while
   the box does not answer, the LAN goes out directly;
 - marks connections from the WAN when they start (`connection-state=new`), so their replies keep
   the main table: the router's own services and port forwards keep working;
@@ -113,7 +113,7 @@ The script, everything marked with the comment `hiddify`:
 - points the router's DNS at the box, so names are resolved through the proxy;
 - turns fasttrack off: a fasttracked packet skips the routing mark.
 
-`/import hiddify-gateway-remove.rsc` takes it all out, and gives the router back its DNS servers and
+`/import donutvpn-gateway-remove.rsc` takes it all out, and gives the router back its DNS servers and
 fasttrack. The script covers IPv4; for IPv6, mark and route it the same way under `/ipv6`, or turn
 IPv6 off on the LAN, or it goes out directly.
 
@@ -124,16 +124,16 @@ container. Enable containers (`/system/device-mode/update container=yes`, then c
 power button or a cold boot), then:
 
 ```
-/interface/veth/add name=veth-hiddify address=172.17.0.2/24 gateway=172.17.0.1
+/interface/veth/add name=veth-donutvpn address=172.17.0.2/24 gateway=172.17.0.1
 /interface/bridge/add name=containers
 /ip/address/add address=172.17.0.1/24 interface=containers
-/interface/bridge/port/add bridge=containers interface=veth-hiddify
+/interface/bridge/port/add bridge=containers interface=veth-donutvpn
 /ip/firewall/nat/add chain=srcnat src-address=172.17.0.0/24 out-interface-list=WAN action=masquerade
 /container/config/set registry-url=https://ghcr.io tmpdir=disk1/tmp
-/container/envs/add list=hiddify key=CONFIG value="https://example.com/sub"
-/container/envs/add list=hiddify key=ROUTER_MODE value=1
-/container/add remote-image=ghcr.io/hiddify/hiddify-core:latest interface=veth-hiddify envlists=hiddify root-dir=disk1/hiddify start-on-boot=yes logging=yes
-/container/start [find interface=veth-hiddify]
+/container/envs/add list=donutvpn key=CONFIG value="https://example.com/sub"
+/container/envs/add list=donutvpn key=ROUTER_MODE value=1
+/container/add remote-image=ghcr.io/donutvpn/donutvpn-core:latest interface=veth-donutvpn envlists=donutvpn root-dir=disk1/donutvpn start-on-boot=yes logging=yes
+/container/start [find interface=veth-donutvpn]
 ```
 
 Leave the `containers` bridge out of the `LAN` interface list. The container needs a TUN device and

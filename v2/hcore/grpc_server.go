@@ -127,23 +127,23 @@ func Setup(params *SetupRequest, platformInterface libbox.PlatformInterface) err
 		}
 	}
 	settings := db.GetTable[hcommon.AppSettings]()
-	val, err := settings.Get("HiddifySettingsJson")
-	Log(LogLevel_DEBUG, LogType_CORE, "HiddifySettingsJson", val, err)
+	val, err := settings.Get("DonutSettingsJson")
+	Log(LogLevel_DEBUG, LogType_CORE, "DonutSettingsJson", val, err)
 	if val == nil || err != nil {
 		// if params.Mode == SetupMode_GRPC_BACKGROUND_INSECURE {
-		_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: ""}, false)
+		_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: ""}, false)
 		if err != nil {
-			Log(LogLevel_ERROR, LogType_CORE, E.Cause(err, "ChangeHiddifySettings").Error())
+			Log(LogLevel_ERROR, LogType_CORE, E.Cause(err, "ChangeDonutSettings").Error())
 		}
 	} else {
 		// settings := db.GetTable[hcommon.AppSettings]()
-		_, err := ChangeHiddifySettings(&ChangeHiddifySettingsRequest{HiddifySettingsJson: val.Value.(string)}, false)
+		_, err := ChangeDonutSettings(&ChangeDonutSettingsRequest{DonutSettingsJson: val.Value.(string)}, false)
 		if err != nil {
-			Log(LogLevel_ERROR, LogType_CORE, E.Cause(err, "ChangeHiddifySettings").Error())
+			Log(LogLevel_ERROR, LogType_CORE, E.Cause(err, "ChangeDonutSettings").Error())
 		}
 
 	}
-	return InitHiddifyService()
+	return InitDonutVpnService()
 }
 
 func StartGrpcServer(listenAddressG string, service string) (*grpc.Server, error) {
@@ -271,7 +271,7 @@ func StartGrpcServerByMode(listenAddressG string, mode SetupMode) (*grpc.Server,
 // same process, and the app pins the certificate it fetched when it set its core up. Reading it
 // again for the second server could fail (the store busy or not written yet on a first run), and
 // the new certificate made then replaced the pinned one: the app's call to the VPN service's core
-// failed with "self signed certificate" (hiddify-app#2473).
+// failed with "self signed certificate" (donutvpn-app#2473).
 func loadServerCertificate() error {
 	if certpair != nil {
 		return nil

@@ -8,10 +8,10 @@
     "#1": {
       "0409": {
         "identity": {
-          "name": "Hiddify.Core",
+          "name": "DonutVpn.Core",
           "version": "0.0.0.0"
         },
-        "description": "Hiddify",
+        "description": "DonutVpn",
         "minimum-os": "win7",
         "execution-level": "",
         "ui-access": false,
@@ -31,12 +31,12 @@
         },
         "info": {
           "0409": {
-            "CompanyName": "Hiddify",
-            "FileDescription": "Hiddify",
-            "InternalName": "HiddifyCore",
-            "LegalCopyright": "Copyright (C) Hiddify.com. All rights reserved.",
-            "OriginalFilename": "Hiddify.exe",
-            "ProductName": "Hiddify",
+            "CompanyName": "DonutVpn",
+            "FileDescription": "DonutVpn",
+            "InternalName": "DonutVpnCore",
+            "LegalCopyright": "Copyright (C) DonutVpn.com. All rights reserved.",
+            "OriginalFilename": "DonutVpn.exe",
+            "ProductName": "DonutVpn",
             "Comments": "https://github.com/donutvpn/donutvpn-core"
           }
         }

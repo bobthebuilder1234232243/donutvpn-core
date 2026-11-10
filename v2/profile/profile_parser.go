@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hiddifyoptions"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/donutoptions"
 )
 
 const (
@@ -92,7 +92,7 @@ func (p *ProfileEntity) Parse(headers http.Header) {
 
 	p.Options = options
 	p.SubInfo = subInfo
-	p.OverrideHiddifyOptions = hiddifyoptions.GetOverridableHiddifyOptions(headers)
+	p.OverrideDonutOptions = donutoptions.GetOverridableDonutOptions(headers)
 }
 
 // parseSubscriptionInfo parses subscription info from a string

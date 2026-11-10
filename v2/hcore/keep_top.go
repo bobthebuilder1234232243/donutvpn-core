@@ -66,9 +66,9 @@ var keepTop struct {
 func keepTopSettings() (int, []string, []string) {
 	keepTop.Lock()
 	defer keepTop.Unlock()
-	if !keepTop.ownReload && static.HiddifyOptions != nil {
-		keepTop.setting, keepTop.settingTags = static.HiddifyOptions.KeepTop, static.HiddifyOptions.KeepTags
-		keepTop.settingCountries = normalizeCountries(static.HiddifyOptions.KeepTopCountries)
+	if !keepTop.ownReload && static.DonutOptions != nil {
+		keepTop.setting, keepTop.settingTags = static.DonutOptions.KeepTop, static.DonutOptions.KeepTags
+		keepTop.settingCountries = normalizeCountries(static.DonutOptions.KeepTopCountries)
 	}
 	return keepTop.setting, keepTop.settingTags, keepTop.settingCountries
 }
@@ -139,7 +139,7 @@ func buildConfigToRun(ctx context.Context, in *StartRequest) (*option.Options, e
 	items := stableProfileTags(ctx, in.ConfigPath, input)
 	if count <= 0 && count != config.KeepTopAnswering && len(countries) == 0 && len(chosen) == 0 {
 		clearKeepTop()
-		return config.BuildConfig(ctx, static.HiddifyOptions, &config.ReadOptions{Options: input})
+		return config.BuildConfig(ctx, static.DonutOptions, &config.ReadOptions{Options: input})
 	}
 	total := len(config.UserProxyTags(input))
 	answering := count == config.KeepTopAnswering
@@ -153,11 +153,11 @@ func buildConfigToRun(ctx context.Context, in *StartRequest) (*option.Options, e
 		clearKeepTop()
 		stopped := config.KeepOnlyProxies(ctx, input, keep)
 		Log(LogLevel_INFO, LogType_CORE, fmt.Sprintf("keep chosen: running %d of the %d proxies", total-stopped, total))
-		return config.BuildConfig(ctx, static.HiddifyOptions, &config.ReadOptions{Options: input})
+		return config.BuildConfig(ctx, static.DonutOptions, &config.ReadOptions{Options: input})
 	}
 	if count <= 0 || (total <= count && !filtered) {
 		clearKeepTop()
-		return config.BuildConfig(ctx, static.HiddifyOptions, &config.ReadOptions{Options: input})
+		return config.BuildConfig(ctx, static.DonutOptions, &config.ReadOptions{Options: input})
 	}
 	fingerprints := config.Fingerprints(items) // the stable tags' own, so one pass tells both
 
@@ -187,7 +187,7 @@ func buildConfigToRun(ctx context.Context, in *StartRequest) (*option.Options, e
 		Log(LogLevel_INFO, LogType_CORE, fmt.Sprintf("keep top: running all %d proxies until the fastest %d are known", total, count))
 	}
 	keepTop.Unlock()
-	return config.BuildConfig(ctx, static.HiddifyOptions, &config.ReadOptions{Options: input})
+	return config.BuildConfig(ctx, static.DonutOptions, &config.ReadOptions{Options: input})
 }
 
 func clearKeepTop() {
@@ -231,11 +231,11 @@ func keptStillGood(fingerprints map[string]string) bool {
 
 // followKeepTop, run by the connectivity watcher, picks the fastest proxies once their first pings
 // are in, and brings the whole list back once every kept one timed out.
-func (h *HiddifyInstance) followKeepTop(state CoreStates) {
+func (h *DonutInstance) followKeepTop(state CoreStates) {
 	keepTop.Lock()
 	picking, kept, count, since, freshOnly, generation := keepTop.picking, keepTop.kept, keepTop.count, keepTop.since, keepTop.freshOnly, keepTop.generation
 	answering, countries := keepTop.answering, keepTop.countries
-	quick := static.HiddifyOptions != nil && static.HiddifyOptions.KeepTopQuick
+	quick := static.DonutOptions != nil && static.DonutOptions.KeepTopQuick
 	queued := keepTop.queued
 	keepTop.Unlock()
 	if queued || (!picking && kept == nil) {

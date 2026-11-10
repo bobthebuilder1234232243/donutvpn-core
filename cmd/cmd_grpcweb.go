@@ -20,7 +20,7 @@ var (
 var commandGRPCWeb = &cobra.Command{
 	Use:   "grpcweb",
 	Short: "HTML UI + Core gRPC on one port (Start/Stop/proxies)",
-	Long: `Tiny browser harness for hiddify-core.
+	Long: `Tiny browser harness for donut-core.
 
 Hosts insecure Core gRPC and the HTML UI on the same TCP port (h2c).
 Open http://127.0.0.1:18088 — also dial that host:port with a gRPC client.
@@ -49,6 +49,6 @@ func init() {
 	commandGRPCWeb.Flags().StringVar(&grpcwebGRPCAddr, "grpc", "", "with --connect: remote Core gRPC address")
 	commandGRPCWeb.Flags().BoolVar(&grpcwebConnectOnly, "connect", false, "do not start a core; only attach to --grpc (HTTP still on --listen)")
 	commandGRPCWeb.Flags().StringVar(&grpcwebConfigPath, "config", "", "optional default config path shown in the UI")
-	commandGRPCWeb.Flags().IntVar(&grpcwebMixedPort, "mixed-port", 12334, "hiddify mixed-port when starting a local core")
+	commandGRPCWeb.Flags().IntVar(&grpcwebMixedPort, "mixed-port", 12334, "donutvpn mixed-port when starting a local core")
 	mainCommand.AddCommand(commandGRPCWeb)
 }

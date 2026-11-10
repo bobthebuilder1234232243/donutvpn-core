@@ -72,8 +72,8 @@ func hotReloadService(ctx context.Context, in *StartRequest) (*CoreInfoResponse,
 	if err != nil {
 		return hotReloadError(MessageType_ERROR_BUILDING_CONFIG, err)
 	}
-	if static.HiddifyOptions == nil {
-		return hotReloadError(MessageType_ERROR_BUILDING_CONFIG, errors.New("HiddifyOptions not initialized"))
+	if static.DonutOptions == nil {
+		return hotReloadError(MessageType_ERROR_BUILDING_CONFIG, errors.New("DonutOptions not initialized"))
 	}
 	if static.StartedService == nil {
 		return hotReloadError(MessageType_HOT_RELOAD_FAILED, errors.New("no running service to hot reload"))

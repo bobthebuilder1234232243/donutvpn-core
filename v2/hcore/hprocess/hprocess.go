@@ -1,4 +1,4 @@
-// Package hprocess holds what the processes hiddify-core runs on its own share: the root VPN
+// Package hprocess holds what the processes donut-core runs on its own share: the root VPN
 // service (admin_bgservice) and the desktop app's core (`core`). Both stop when the app that
 // started them is gone, and both must keep full speed while the app is in the background.
 package hprocess

@@ -27,7 +27,7 @@ var systemProxyState struct {
 
 func recordDelegatedSystemProxy(options *option.Options) {
 	var target *config.SystemProxyTarget
-	if hopts := static.HiddifyOptions; hopts != nil && hopts.DelegateSystemProxy {
+	if hopts := static.DonutOptions; hopts != nil && hopts.DelegateSystemProxy {
 		target = config.TakeSystemProxy(options)
 	}
 	systemProxyState.access.Lock()
