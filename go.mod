@@ -7,7 +7,6 @@ go 1.27.3
 godebug multipathtcp=0
 
 require (
-	github.com/bepass-org/warp-plus v1.2.6
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb
@@ -332,7 +331,6 @@ require (
 
 // replace github.com/xtls/xray-core => github.com/donutvpn/xray-core v0.0.0-20260124181826-59e6569c13e9
 
-replace github.com/bepass-org/warp-plus => github.com/donutvpn/warp-plus v0.0.0-20240717223357-4f3122e0d11d
 
 replace github.com/sagernet/sing-dns => github.com/shtorm-7/sing-dns v0.4.6-extended-1.0.0
 
