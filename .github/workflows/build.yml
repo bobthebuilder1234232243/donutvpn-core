@@ -21,10 +21,10 @@ jobs:
           # Remove the old checksum so it grabs the new commit
           go clean -modcache
           cd donutvpn-sing-box
-          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c84c0886673f92f31deeaac6356c1
+          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           cd ..
-          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c84c0886673f92f31deeaac6356c1
+          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           
       - name: Build Linux amd64
