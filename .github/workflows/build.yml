@@ -20,10 +20,13 @@ jobs:
         run: |
           # Remove the old checksum so it grabs the new commit
           go clean -modcache
-          cd donutvpn-sing-box
+          cd ..
+          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latestnutvpn-sing-box
+          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latest
           go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           cd ..
+          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latest
           go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           
@@ -34,7 +37,8 @@ jobs:
         run: |
           mkdir -p out
           cp bin/donut-core.so out/donut-core.so || cp bin/hiddify-core.so out/donut-core.so
-          cd out && tar -czvf donut-core-linux-amd64.tar.gz donut-core.so
+          cd ..
+          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latestt && tar -czvf donut-core-linux-amd64.tar.gz donut-core.so
           
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
