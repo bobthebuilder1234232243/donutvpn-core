@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	"github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	"github.com/sagernet/sing-box/experimental/libbox"
 	E "github.com/sagernet/sing/common/exceptions"
 )

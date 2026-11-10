@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hcommon"
-	hcore "github.com/hiddify/hiddify-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	hcore "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"

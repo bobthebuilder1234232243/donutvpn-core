@@ -13,7 +13,7 @@ import (
 
 	"github.com/sagernet/sing-box/common/monitoring"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	"github.com/sagernet/sing-box/adapter"
 	"github.com/sagernet/sing-box/common/urltest"
 	M "github.com/sagernet/sing/common/metadata"

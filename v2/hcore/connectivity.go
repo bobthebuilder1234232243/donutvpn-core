@@ -8,7 +8,7 @@ import (
 	"github.com/sagernet/sing-box/adapter"
 	"github.com/sagernet/sing-box/common/monitoring"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 )
 
 // The core owns the connection state. Once the service is up the core is WAITING until the

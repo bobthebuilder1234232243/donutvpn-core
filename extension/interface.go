@@ -3,11 +3,11 @@ package extension
 import (
 	"fmt"
 
-	"github.com/hiddify/hiddify-core/v2/db"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/db"
 	"github.com/sagernet/sing-box/log"
 	"github.com/sagernet/sing-box/option"
 
-	"github.com/hiddify/hiddify-core/v2/service_manager"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/service_manager"
 )
 
 var (

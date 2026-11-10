@@ -27,8 +27,8 @@ import (
 	"syscall"
 	"time"
 
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
-	"github.com/hiddify/hiddify-core/v2/hcore"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"

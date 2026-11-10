@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/hiddify/hiddify-core/v2/db"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/db"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	"google.golang.org/grpc"
 )
 

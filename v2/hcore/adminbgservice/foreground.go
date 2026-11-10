@@ -3,7 +3,7 @@ package adminbgservice
 import (
 	"fmt"
 
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
 	"google.golang.org/grpc"
 )
 

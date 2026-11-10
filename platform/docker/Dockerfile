@@ -18,7 +18,7 @@ RUN echo "architecture: $(apk --print-arch)" && \
             s390x) BUILD=s390x ;; \
             *) echo "Unsupported architecture: $(apk --print-arch) $(uname -m)" && exit 1 ;; \
         esac && \
-        URL="https://github.com/hiddify/hiddify-core/releases/download/${VERSION}/hiddify-core-linux-$BUILD.tar.gz" && \
+        URL="https://github.com/bobthebuilder1234232243/donutvpn-core/releases/download/${VERSION}/hiddify-core-linux-$BUILD.tar.gz" && \
         echo "Downloading $URL" && \
         curl -fL -o hiddify-core.tar.gz "$URL" && \
         tar -xzf hiddify-core.tar.gz --strip-components=1 && rm hiddify-core.tar.gz && \

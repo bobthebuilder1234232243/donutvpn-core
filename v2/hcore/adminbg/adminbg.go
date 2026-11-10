@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hcore"
-	"github.com/hiddify/hiddify-core/v2/hello"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hello"
 	_ "github.com/sagernet/gomobile"
 	"github.com/sagernet/sing-box/experimental/libbox"
 	"google.golang.org/grpc"

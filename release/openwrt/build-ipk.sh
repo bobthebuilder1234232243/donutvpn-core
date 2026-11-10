@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Builds the OpenWrt .ipk (opkg, OpenWrt 24.10 and earlier) of hiddify-core for one OpenWrt
+# Builds the OpenWrt .ipk (opkg, OpenWrt 24.10 and earlier) of donutvpn-core for one OpenWrt
 # architecture, from a cross-built binary. An .ipk is a gzipped tar of debian-binary,
 # control.tar.gz and data.tar.gz; it is written here directly, with the control fields opkg and
 # the feed index read, instead of converting a Debian package.
 #
-#   release/openwrt/build-ipk.sh x86_64 5.3.0 dist/hiddify-core dist/hiddify-core_5.3.0_x86_64.ipk
+#   release/openwrt/build-ipk.sh x86_64 5.3.0 dist/donutvpn-core dist/donutvpn-core_5.3.0_x86_64.ipk
 
 . "$(dirname "$0")/common.sh"
 
@@ -24,7 +24,7 @@ cat > "$WORK/control/control" <<CONTROL
 Package: $PKG_NAME
 Version: $IPK_VERSION
 Depends: ${PKG_DEPENDS// /, }
-Source: https://github.com/hiddify/hiddify-core
+Source: https://github.com/donutvpn/donutvpn-core
 SourceName: $PKG_NAME
 License: $PKG_LICENSE
 Section: $PKG_SECTION
@@ -34,8 +34,8 @@ Maintainer: $PKG_MAINTAINER
 Description: $PKG_DESCRIPTION
 CONTROL
 printf '%s\n' $PKG_CONFFILES > "$WORK/control/conffiles"
-install -m755 "$WRT_FILES/hiddify-core.postinst" "$WORK/control/postinst"
-install -m755 "$WRT_FILES/hiddify-core.prerm" "$WORK/control/prerm"
+install -m755 "$WRT_FILES/donutvpn-core.postinst" "$WORK/control/postinst"
+install -m755 "$WRT_FILES/donutvpn-core.prerm" "$WORK/control/prerm"
 
 tar_root "$WORK/control" "$WORK/control.tar.gz"
 tar_root "$WORK/data" "$WORK/data.tar.gz"

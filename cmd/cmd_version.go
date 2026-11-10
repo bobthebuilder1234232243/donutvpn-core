@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"runtime/debug"
 
-	HC "github.com/hiddify/hiddify-core/v2/hcommon/constants"
+	HC "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon/constants"
 	C "github.com/sagernet/sing-box/constant"
 
 	"github.com/spf13/cobra"

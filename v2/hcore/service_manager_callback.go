@@ -1,7 +1,7 @@
 package hcore
 
 import (
-	"github.com/hiddify/hiddify-core/v2/service_manager"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/service_manager"
 	"github.com/sagernet/sing-box/adapter"
 )
 

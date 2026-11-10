@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 )
 
 // ConnectRequest is the JSON file the macOS app writes before `Hiddify --tunnel connect`.

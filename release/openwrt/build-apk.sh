@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Builds the OpenWrt .apk (apk, OpenWrt 25.12 and later) of hiddify-core for one OpenWrt
+# Builds the OpenWrt .apk (apk, OpenWrt 25.12 and later) of donutvpn-core for one OpenWrt
 # architecture, from a cross-built binary, with `apk mkpkg` as OpenWrt's own build does. Needs the
 # static apk of apk-tools 3 on the PATH (CI takes it from the alpine:edge image).
 #
-#   release/openwrt/build-apk.sh x86_64 5.3.0 dist/hiddify-core dist/
+#   release/openwrt/build-apk.sh x86_64 5.3.0 dist/donutvpn-core dist/
 #
-# writes dist/hiddify-core-5.3.0-r0_x86_64.apk: apk fetches a package from a feed as
+# writes dist/donutvpn-core-5.3.0-r0_x86_64.apk: apk fetches a package from a feed as
 # <name>-<version>.apk, so the feed keeps the part before "_"; the architecture after it tells
 # the packages of one release apart.
 #
@@ -56,8 +56,8 @@ SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-0}" apk --root "$WORK/apkroot" mkpkg \
   --info "url:$PKG_URL" \
   --info "maintainer:$PKG_MAINTAINER" \
   --info "depends:$PKG_DEPENDS" \
-  --script "post-install:$WRT_FILES/hiddify-core.postinst" \
-  --script "pre-deinstall:$WRT_FILES/hiddify-core.prerm" \
+  --script "post-install:$WRT_FILES/donutvpn-core.postinst" \
+  --script "pre-deinstall:$WRT_FILES/donutvpn-core.prerm" \
   --files "$ROOT" \
   "${sign[@]}" \
   --output "$OUTPUT_PATH"

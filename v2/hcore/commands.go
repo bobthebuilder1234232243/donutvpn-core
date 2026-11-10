@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	"github.com/hiddify/hiddify-core/v2/db"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/db"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	"github.com/sagernet/sing-box/adapter"
 	"github.com/wlynxg/anet"
 

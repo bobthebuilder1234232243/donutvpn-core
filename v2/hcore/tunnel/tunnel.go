@@ -4,7 +4,7 @@
 package tunnel
 
 import (
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
 	_ "github.com/sagernet/gomobile"
 	"github.com/sagernet/sing-box/experimental/libbox"
 )

@@ -20,8 +20,8 @@ import (
 	M "github.com/sagernet/sing/common/metadata"
 	N "github.com/sagernet/sing/common/network"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 )
 
 // Speed test: how fast a proxy uploads and downloads, through Cloudflare's speed test. An upload

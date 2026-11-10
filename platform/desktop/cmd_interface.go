@@ -8,7 +8,7 @@ import "C"
 import (
 	"unsafe"
 
-	"github.com/hiddify/hiddify-core/cmd"
+	"github.com/bobthebuilder1234232243/donutvpn-core/cmd"
 )
 
 //export parseCli

@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	hcore "github.com/hiddify/hiddify-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	hcore "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 	"github.com/sagernet/sing-box/option"
 )
 

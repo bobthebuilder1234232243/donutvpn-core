@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hcommon"
-	"github.com/hiddify/hiddify-core/v2/hcore/buildid"
-	hutils "github.com/hiddify/hiddify-core/v2/hutils"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid"
+	hutils "github.com/bobthebuilder1234232243/donutvpn-core/v2/hutils"
 )
 
 const adminBgServicePort uint16 = 18020

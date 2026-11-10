@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/option"
 	tun "github.com/sagernet/sing-tun"

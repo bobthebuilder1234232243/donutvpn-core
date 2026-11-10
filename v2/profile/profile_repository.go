@@ -6,11 +6,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	"github.com/hiddify/hiddify-core/v2/db"
-	"github.com/hiddify/hiddify-core/v2/hcommon"
-	"github.com/hiddify/hiddify-core/v2/hcommon/request"
-	hcore "github.com/hiddify/hiddify-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/db"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon/request"
+	hcore "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 	"github.com/sagernet/sing-box/option"
 )
 

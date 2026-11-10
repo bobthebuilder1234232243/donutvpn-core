@@ -12,7 +12,7 @@ PKG_RELEASE:=1
 # replace/) that a GitHub tarball lacks and go.mod replaces into. No fixed hash: the tarball the
 # buildroot makes from the clone is not reproducible across its versions.
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/hiddify/hiddify-core.git
+PKG_SOURCE_URL:=https://github.com/bobthebuilder1234232243/donutvpn-core.git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_MIRROR_HASH:=skip
 
@@ -24,7 +24,7 @@ PKG_BUILD_DEPENDS:=golang/host
 PKG_BUILD_PARALLEL:=1
 PKG_BUILD_FLAGS:=no-mips16
 
-GO_PKG:=github.com/hiddify/hiddify-core
+GO_PKG:=github.com/bobthebuilder1234232243/donutvpn-core
 GO_PKG_BUILD_PKG:=$(GO_PKG)/cmd/main
 GO_PKG_LDFLAGS:=-s -w
 GO_PKG_LDFLAGS_X:= \

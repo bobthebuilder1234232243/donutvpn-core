@@ -6,7 +6,7 @@ import (
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing/common/auth"
 
-	"github.com/hiddify/hiddify-core/v2/hutils"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hutils"
 )
 
 // ProxyUser is the user name of the mixed port; its password is the proxy secret.

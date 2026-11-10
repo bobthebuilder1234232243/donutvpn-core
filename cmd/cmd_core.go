@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hcore"
-	"github.com/hiddify/hiddify-core/v2/hcore/hprocess"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/hprocess"
 
 	"github.com/spf13/cobra"
 )

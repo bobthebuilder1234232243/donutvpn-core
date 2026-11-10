@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
 )
 
 const controlSecretFileName = "control.secret"

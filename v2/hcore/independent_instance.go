@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	"golang.org/x/net/proxy"
 
 	"github.com/sagernet/sing-box/option"

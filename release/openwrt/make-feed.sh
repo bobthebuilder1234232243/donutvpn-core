@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Turns a directory of hiddify-core packages for one OpenWrt architecture into a package feed,
+# Turns a directory of donutvpn-core packages for one OpenWrt architecture into a package feed,
 # as OpenWrt's own package/Makefile does:
 #   opkg (24.10 and earlier): Packages, Packages.gz and, with a usign key, Packages.sig
 #   apk  (25.12 and later):   packages.adb, signed with the apk key when given (apk refuses an

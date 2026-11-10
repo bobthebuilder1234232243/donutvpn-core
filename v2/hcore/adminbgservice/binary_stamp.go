@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/hiddify/hiddify-core/v2/hcore/buildid"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid"
 )
 
 const buildStampFileName = "build.id"

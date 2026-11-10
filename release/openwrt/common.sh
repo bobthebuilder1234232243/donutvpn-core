@@ -5,16 +5,16 @@
 
 set -e -o pipefail
 
-PKG_NAME="hiddify-core"
+PKG_NAME="donutvpn-core"
 PKG_DESCRIPTION="Hiddify universal proxy platform: a sing-box core with Hiddify's protocols and subscription support."
 PKG_LICENSE="GPL-3.0-or-later"
-PKG_URL="https://hiddify.com/"
-PKG_MAINTAINER="Hiddify <wrt@hiddify.com>"
+PKG_URL="https://donutvpn.com/"
+PKG_MAINTAINER="Hiddify <wrt@donutvpn.com>"
 PKG_SECTION="net"
 # kmod-tun for TUN mode, kmod-inet-diag for the connection tracker, ca-bundle for TLS, firewall4
 # and kmod-nft-queue for the nftables rules the core installs in TUN mode (as sing-box's package).
 PKG_DEPENDS="ca-bundle kmod-inet-diag kmod-tun firewall4 kmod-nft-queue"
-PKG_CONFFILES="/etc/config/hiddify-core /etc/hiddify-core/config.json"
+PKG_CONFFILES="/etc/config/donutvpn-core /etc/donutvpn-core/config.json"
 
 # The repository root, from this file's place.
 PROJECT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -34,12 +34,12 @@ sha256() {
 # stage_payload <root> installs everything a package carries under root, as it lands on the router.
 stage_payload() {
   local root="$1"
-  install -d -m755 "$root/usr/bin" "$root/etc/hiddify-core" "$root/etc/config" "$root/etc/init.d" "$root/lib/upgrade/keep.d" "$root/usr/share/licenses/$PKG_NAME"
+  install -d -m755 "$root/usr/bin" "$root/etc/donutvpn-core" "$root/etc/config" "$root/etc/init.d" "$root/lib/upgrade/keep.d" "$root/usr/share/licenses/$PKG_NAME"
   install -m755 "$BINARY_PATH" "$root/usr/bin/$PKG_NAME"
-  install -m644 "$PROJECT/release/config/config.json" "$root/etc/hiddify-core/config.json"
-  install -m644 "$WRT_FILES/hiddify-core.conf" "$root/etc/config/hiddify-core"
-  install -m755 "$WRT_FILES/hiddify-core.init" "$root/etc/init.d/hiddify-core"
-  install -m644 "$WRT_FILES/hiddify-core.keep" "$root/lib/upgrade/keep.d/hiddify-core"
+  install -m644 "$PROJECT/release/config/config.json" "$root/etc/donutvpn-core/config.json"
+  install -m644 "$WRT_FILES/donutvpn-core.conf" "$root/etc/config/donutvpn-core"
+  install -m755 "$WRT_FILES/donutvpn-core.init" "$root/etc/init.d/donutvpn-core"
+  install -m644 "$WRT_FILES/donutvpn-core.keep" "$root/lib/upgrade/keep.d/donutvpn-core"
   install -m644 "$PROJECT/LICENSE.md" "$root/usr/share/licenses/$PKG_NAME/LICENSE.md"
 }
 

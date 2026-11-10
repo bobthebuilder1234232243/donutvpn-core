@@ -12,7 +12,7 @@ import (
 
 	"github.com/coder/websocket"
 	"github.com/coder/websocket/wsjson"
-	"github.com/hiddify/hiddify-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 	"google.golang.org/protobuf/proto"
 )
 

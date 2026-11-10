@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	sbox "github.com/sagernet/sing-box"
 	"github.com/sagernet/sing-box/adapter"
 	"github.com/sagernet/sing-box/common/monitoring"

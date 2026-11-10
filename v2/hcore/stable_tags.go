@@ -7,7 +7,7 @@ import (
 
 	"github.com/sagernet/sing-box/option"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 )
 
 // The profile's proxies keep their tags across its updates (see config.StableProxyTags), so a

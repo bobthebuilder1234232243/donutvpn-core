@@ -9,9 +9,9 @@ import (
 	"runtime"
 	"time"
 
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
-	hutils "github.com/hiddify/hiddify-core/v2/hutils"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
+	hutils "github.com/bobthebuilder1234232243/donutvpn-core/v2/hutils"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )

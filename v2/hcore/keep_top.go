@@ -15,7 +15,7 @@ import (
 	"github.com/sagernet/sing-box/option"
 	N "github.com/sagernet/sing/common/network"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 )
 
 // Keep chosen: with keep-tags set, the proxies of the profile the user chose run, and only them

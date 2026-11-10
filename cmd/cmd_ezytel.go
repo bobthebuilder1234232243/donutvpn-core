@@ -11,7 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/hiddify/hiddify-core/v2/ezytel"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/ezytel"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )

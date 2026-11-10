@@ -5,8 +5,8 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	"github.com/sagernet/sing-box/common/settings"
 	"github.com/sagernet/sing-box/option"
 	E "github.com/sagernet/sing/common/exceptions"

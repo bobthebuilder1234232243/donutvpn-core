@@ -55,7 +55,7 @@ Quickly deploy as a containerized service:
 docker pull ghcr.io/hiddify/hiddify-core:latest
 
 # Or using Docker Compose
-git clone https://github.com/hiddify/hiddify-core
+git clone https://github.com/bobthebuilder1234232243/donutvpn-core
 cd hiddify-core/docker
 docker-compose up -d
 ```
@@ -77,16 +77,16 @@ Features and Road map:
 
 - [x] Add Third Party Extension capability
 - [x] Test Extension from Browser without any dependency to android/mac/.... `./cmd.sh extension` the open browser `https://127.0.0.1:12346`
-- [x] Show Custom UI from Extension `github.com/hiddify/hiddify-core/extension.UpdateUI()` 
-- [x] Show Custom Dialog from Extension `github.com/hiddify/hiddify-core/extension.ShowDialog()`
-- [x] Show Alert Dialog from Extension `github.com/hiddify/hiddify-core/extension.ShowMessage()` 
-- [x] Get Data from UI `github.com/hiddify/hiddify-core/extension.SubmitData()` 
+- [x] Show Custom UI from Extension `github.com/bobthebuilder1234232243/donutvpn-core/extension.UpdateUI()` 
+- [x] Show Custom Dialog from Extension `github.com/bobthebuilder1234232243/donutvpn-core/extension.ShowDialog()`
+- [x] Show Alert Dialog from Extension `github.com/bobthebuilder1234232243/donutvpn-core/extension.ShowMessage()` 
+- [x] Get Data from UI `github.com/bobthebuilder1234232243/donutvpn-core/extension.SubmitData()` 
 - [x] Save Extension Data from `e.Base.Data`
 - [x] Load Extension Data to `e.Base.Data`
 - [x] Disable / Enable Extension 
-- [x] Update user proxies before connecting `github.com/hiddify/hiddify-core/extension.BeforeAppConnect()` 
-- [x] Run Tiny Independent Instance  `github.com/hiddify/hiddify-core/extension/sdk.RunInstance()` 
-- [x] Parse Any type of configs/url  `github.com/hiddify/hiddify-core/extension/sdk.ParseConfig()` 
+- [x] Update user proxies before connecting `github.com/bobthebuilder1234232243/donutvpn-core/extension.BeforeAppConnect()` 
+- [x] Run Tiny Independent Instance  `github.com/bobthebuilder1234232243/donutvpn-core/extension/sdk.RunInstance()` 
+- [x] Parse Any type of configs/url  `github.com/bobthebuilder1234232243/donutvpn-core/extension/sdk.ParseConfig()` 
 - [ ] ToDo: Add Support for MultiLanguage Interface
 - [ ] ToDo: Custom Extension Outbound
 - [ ] ToDo: Custom Extension Inbound

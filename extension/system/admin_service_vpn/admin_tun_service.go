@@ -3,7 +3,7 @@ package admin_service_vpn
 import (
 	"github.com/sagernet/sing-box/option"
 
-	ex "github.com/hiddify/hiddify-core/extension"
+	ex "github.com/bobthebuilder1234232243/donutvpn-core/extension"
 )
 
 // AdminServiceExtension is kept registered for older configs but no longer starts the
@@ -39,7 +39,7 @@ func NewAdminServiceExtension() ex.Extension {
 func init() {
 	ex.RegisterExtension(
 		ex.ExtensionFactory{
-			Id:          "github.com/hiddify/hiddify-core/extension/system/admin_service_vpn",
+			Id:          "github.com/bobthebuilder1234232243/donutvpn-core/extension/system/admin_service_vpn",
 			Title:       "Admin Service",
 			Description: "Deprecated: VPN runs in HiddifyTunnelService",
 			Builder:     NewAdminServiceExtension,

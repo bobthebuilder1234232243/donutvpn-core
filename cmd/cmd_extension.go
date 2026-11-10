@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	_ "github.com/hiddify/hiddify-core/extension/repository"
-	"github.com/hiddify/hiddify-core/extension/server"
+	_ "github.com/bobthebuilder1234232243/donutvpn-core/extension/repository"
+	"github.com/bobthebuilder1234232243/donutvpn-core/extension/server"
 	"github.com/spf13/cobra"
 )
 

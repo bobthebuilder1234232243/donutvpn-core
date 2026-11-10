@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	hcore "github.com/hiddify/hiddify-core/v2/hcore"
+	hcore "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
 )
 
 func main() {

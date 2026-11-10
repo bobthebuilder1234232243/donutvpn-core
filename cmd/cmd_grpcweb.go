@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hiddify/hiddify-core/cmd/grpcweb"
+	"github.com/bobthebuilder1234232243/donutvpn-core/cmd/grpcweb"
 	"github.com/spf13/cobra"
 )
 

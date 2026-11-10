@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 )
 
 // stoppable are the states a stop moves to STOPPING.

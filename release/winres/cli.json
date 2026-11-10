@@ -1,7 +1,7 @@
 {
   "RT_GROUP_ICON": {
     "APP": {
-      "0000": "../../assets/hiddify-cli.ico"
+      "0000": "../../assets/donutvpn-cli.ico"
     }
   },
   "RT_MANIFEST": {
@@ -37,7 +37,7 @@
             "LegalCopyright": "Copyright (C) Hiddify.com. All rights reserved.",
             "OriginalFilename": "HiddifyCli.exe",
             "ProductName": "Hiddify",
-            "Comments": "https://github.com/hiddify/hiddify-core"
+            "Comments": "https://github.com/donutvpn/donutvpn-core"
           }
         }
       }

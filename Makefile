@@ -1,5 +1,5 @@
 .ONESHELL:
-PRODUCT_NAME=hiddify-core
+PRODUCT_NAME=Donut-Core
 BASENAME=$(PRODUCT_NAME)
 BINDIR=bin
 LIBNAME=$(PRODUCT_NAME)
@@ -10,7 +10,7 @@ VERSION=$(shell git describe --tags || echo "unknown version")
 ifeq ($(OS),Windows_NT)
 Not available for Windows! use bash in WSL
 endif
-CRONET_GO_VERSION := $(shell cat hiddify-sing-box/.github/CRONET_GO_VERSION)
+CRONET_GO_VERSION := $(shell cat donutvpn-sing-box/.github/CRONET_GO_VERSION)
 # Build tags: single source of truth for every build, including CI (.github/workflows/build.yml
 # reads them with `make -s print-<VAR>`). Only add platform-specific tags in the *_ADD_TAGS vars.
 CORE_TAGS=with_gvisor,with_quic,with_wireguard,with_utls,with_clash_api,with_grpc,with_awg,tfogo_checklinkname0,with_conntrack
@@ -61,7 +61,7 @@ endif
 ifeq ($(strip $(HIDDIFY_BUILD_ID)),)
 HIDDIFY_BUILD_ID := $(shell (uuidgen 2>/dev/null || openssl rand -hex 16) | tr '[:upper:]' '[:lower:]' | tr -d '\n')
 endif
-EMBED_LDFLAGS+=-X github.com/hiddify/hiddify-core/v2/hcore/buildid.ID=$(strip $(HIDDIFY_BUILD_ID))
+EMBED_LDFLAGS+=-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid.ID=$(strip $(HIDDIFY_BUILD_ID))
 LDFLAGS=-w -s -checklinkname=0 -buildid= $${CODE_VERSION} $(EMBED_LDFLAGS)
 GOBUILDLIB=CGO_ENABLED=1 go build -trimpath -ldflags="$(LDFLAGS)" -buildmode=c-shared
 GOBUILDSRV=CGO_ENABLED=1 go build -ldflags="$(LDFLAGS)" -trimpath -tags $(TAGS)
@@ -272,7 +272,7 @@ macos-tunnel:
 	gomobile bind -v -target macos -macosversion 12.0 -libname HiddifyTunnelCore -tags $(TUNNEL_TAGS) \
 		-trimpath -ldflags "$(LDFLAGS)" \
 		-o $(BINDIR)/HiddifyTunnelCore.xcframework \
-		github.com/sagernet/sing-box/experimental/libbox github.com/hiddify/hiddify-core/v2/hcore/tunnel
+		github.com/sagernet/sing-box/experimental/libbox github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/tunnel
 
 macos: prepare macos-amd64 macos-arm64 macos-tunnel
 	

@@ -16,17 +16,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hcore/hprocess"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/hprocess"
 
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/daemon"
 	"github.com/sagernet/sing-box/experimental/libbox"
 	"github.com/sagernet/sing-box/option"
 
-	"github.com/hiddify/hiddify-core/v2/config"
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
-	"github.com/hiddify/hiddify-core/v2/hcore"
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
 )
 
 type hiddifyAdminBG struct {

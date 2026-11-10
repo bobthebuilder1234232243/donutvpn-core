@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/hiddify/hiddify-core/cmd"
+	"github.com/bobthebuilder1234232243/donutvpn-core/cmd"
 )
 
 // type UpdateRequest struct {

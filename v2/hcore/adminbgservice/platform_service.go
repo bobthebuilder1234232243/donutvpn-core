@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/hiddify/hiddify-core/v2/hcore"
-	"github.com/hiddify/hiddify-core/v2/hcore/adminbg"
-	"github.com/hiddify/hiddify-core/v2/hcore/hprocess"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/adminbg"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/hprocess"
 	"github.com/kardianos/service"
 	"google.golang.org/grpc"
 )

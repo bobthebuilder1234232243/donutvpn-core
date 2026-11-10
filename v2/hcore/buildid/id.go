@@ -4,7 +4,7 @@
 //
 // Set at link time in the hiddify-core repository (Makefile sets a random UUID when unset):
 //
-//	-X github.com/hiddify/hiddify-core/v2/hcore/buildid.ID=<uuid>
+//	-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid.ID=<uuid>
 package buildid
 
 // ID is overwritten by -ldflags -X. "unset" means the binary was linked without a build id.

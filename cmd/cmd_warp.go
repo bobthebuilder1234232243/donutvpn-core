@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/hiddify/hiddify-core/v2/config"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	T "github.com/sagernet/sing-box/option"
 	"github.com/sagernet/wireguard-go/hiddify"
 	"github.com/spf13/cobra"

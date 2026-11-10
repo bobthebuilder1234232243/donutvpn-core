@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/hiddify/hiddify-core/v2/hello"
+	"github.com/bobthebuilder1234232243/donutvpn-core/v2/hello"
 	"google.golang.org/grpc"
 )
 

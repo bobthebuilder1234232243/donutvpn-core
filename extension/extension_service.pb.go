@@ -7,7 +7,7 @@
 package extension
 
 import (
-	hcommon "github.com/hiddify/hiddify-core/v2/hcommon"
+	hcommon "github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
