@@ -1,70 +1,41 @@
 name: Build
 on:
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      upload-artifact:
-        type: boolean
-        default: true
-      tag-name:
-        type: string
-        default: "draft"
-      channel:
-        type: string
-        default: "dev"
 
 jobs:
-  calculate_version:
-    runs-on: ubuntu-latest
-    outputs:
-      hiddify_version: ${{ steps.outputs.outputs.hiddify_version }}
-      singbox_version: ${{ steps.outputs.outputs.singbox_version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: 'recursive'
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ^1.25.6
-      - name: Calculate version
-        run: echo "hiddify_version=$(git describe --tags 2>/dev/null || echo v1.0.0)" >> "$GITHUB_ENV"
-      - name: Calculate singbox version
-        run: |
-          cd donutvpn-sing-box
-          go mod tidy
-          go run -v ./cmd/internal/read_tag --ci --nightly
-      - name: Set outputs
-        id: outputs
-        run: |
-          echo "hiddify_version=${hiddify_version}" >> "$GITHUB_OUTPUT"
-          echo "singbox_version=$version" >> "$GITHUB_OUTPUT"
-
   build:
-    needs: [calculate_version]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: 'recursive'
+          
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: 'go.mod'
+          go-version: ^1.25.6
+          
+      - name: Update dependencies to latest commit
+        run: |
+          go get github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
+          cd donutvpn-sing-box
+          go get github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@latest
+          go mod tidy
+          cd ..
+          go mod tidy
+          
       - name: Build Linux amd64
-        run: go mod tidy
         run: make linux-amd64
-        env:
-          CODE_VERSION: "-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcommon/constants.Version=${{ needs.calculate_version.outputs.hiddify_version }} -X github.com/sagernet/sing-box/constant.Version=${{ needs.calculate_version.outputs.singbox_version }}"
+        
       - name: Package Artifact
         run: |
           mkdir -p out
           cp bin/donut-core.so out/donut-core.so || cp bin/hiddify-core.so out/donut-core.so
           cd out && tar -czvf donut-core-linux-amd64.tar.gz donut-core.so
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: donut-core-linux-amd64
+          name: donut-core
           path: out/donut-core-linux-amd64.tar.gz
