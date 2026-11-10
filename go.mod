@@ -129,7 +129,7 @@ require (
 	github.com/grafov/m3u8 v0.0.0-20171211212457-6ab8f28ed427 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/hdevalence/ed25519consensus v0.2.0 // indirect
-	github.com/hiddify/hmrd_multi_resolver_dns v0.0.0-20261102140835-72045bdb2631 // indirect
+	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261102140835-72045bdb2631 // indirect
 	github.com/huin/goupnp v1.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20260220084031-5adc3eb26f91 // indirect
@@ -352,9 +352,9 @@ replace github.com/Psiphon-Labs/quic-go => ./donutvpn-sing-box/replace/psiphon-q
 
 replace github.com/Psiphon-Labs/psiphon-tls => ./donutvpn-sing-box/replace/psiphon-tls
 
-replace github.com/net2share/vaydns => github.com/hiddify/vaydns v0.0.0-20260401180616-890dc987a6a9
+replace github.com/net2share/vaydns => github.com/bobthebuilder1234232243/donutvpn-vaydns v0.0.0-20260401180616-890dc987a6a9
 
-replace github.com/kianmhz/GooseRelayVPN => github.com/hiddify/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c
+replace github.com/kianmhz/GooseRelayVPN => github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c
 
 replace github.com/Diniboy1123/connect-ip-go => github.com/shtorm-7/connect-ip-go v1.0.0-extended-1.1.1
 
