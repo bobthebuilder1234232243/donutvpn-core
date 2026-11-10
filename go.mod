@@ -327,9 +327,9 @@ require (
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
 )
 
-// replace github.com/sagernet/sing-box => github.com/donutvpn/donutvpn-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
+// replace github.com/sagernet/sing-box => github.com/bobthebuilder1234232243/donutvpn-donutvpn-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
 
-// replace github.com/xtls/xray-core => github.com/donutvpn/xray-core v0.0.0-20260124181826-59e6569c13e9
+// replace github.com/xtls/xray-core => github.com/bobthebuilder1234232243/donutvpn-xray-core v0.0.0-20260124181826-59e6569c13e9
 
 
 replace github.com/sagernet/sing-dns => github.com/shtorm-7/sing-dns v0.4.6-extended-1.0.0
