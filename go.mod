@@ -1,11 +1,17 @@
+module github.com/bobthebuilder1234232243/donutvpn-core
+
 go 1.27.3
+
 // MPTCP only where tcp_multi_path asks for it: Go 1.24+ listens on MPTCP by default, and the
 // Linux kernel let a remote root listen on IPv4 MPTCP.
 godebug multipathtcp=0
+
 require (
+	github.com/bepass-org/warp-plus v1.2.6
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb
+	github.com/hiddify/ray2sing v0.0.0-20260209214534-63c82f8c23a6
 	github.com/improbable-eng/grpc-web v0.15.0
 	github.com/jellydator/validation v1.1.0
 	github.com/kardianos/service v1.2.2
@@ -30,6 +36,8 @@ require (
 	google.golang.org/grpc v1.85.0
 	google.golang.org/protobuf v1.36.12
 	gopkg.in/yaml.v3 v3.0.1
+)
+
 require (
 	filippo.io/bigmod v0.0.1 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
@@ -72,6 +80,7 @@ require (
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cheekybits/genny v0.0.0-20170328200008-9127e812e1e9 // indirect
 	github.com/cloudflare/circl v1.6.4 // indirect
+	github.com/cognusion/go-cache-lru v0.0.0-20170419142635-f73e2280ecea // indirect
 	github.com/coreos/go-iptables v0.7.1-0.20240112124308-65c67c9f46e6 // indirect
 	github.com/coreos/go-oidc/v3 v3.17.0 // indirect
 	github.com/cosmos/gorocksdb v1.2.0 // indirect
@@ -120,6 +129,7 @@ require (
 	github.com/grafov/m3u8 v0.0.0-20171211212457-6ab8f28ed427 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/hdevalence/ed25519consensus v0.2.0 // indirect
+	github.com/hiddify/hmrd_multi_resolver_dns v0.0.0-20261102140835-72045bdb2631 // indirect
 	github.com/huin/goupnp v1.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20260220084031-5adc3eb26f91 // indirect
@@ -130,6 +140,7 @@ require (
 	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/kamstrup/intmap v0.5.2 // indirect
 	github.com/keybase/go-keychain v0.0.1 // indirect
+	github.com/kianmhz/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c // indirect
 	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.2 // indirect
 	github.com/klauspost/reedsolomon v1.13.0 // indirect
@@ -157,6 +168,7 @@ require (
 	github.com/mitchellh/go-ps v1.0.0 // indirect
 	github.com/molecule-man/go-brrr v1.2.0 // indirect
 	github.com/mroth/weightedrand v1.0.0 // indirect
+	github.com/net2share/vaydns v0.2.8 // indirect
 	github.com/openai/openai-go/v3 v3.26.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.26 // indirect
@@ -310,12 +322,37 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20261026165753-2ffab32bce7e // indirect
 	layeh.com/gopher-luar v1.0.11 // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
+	masterdnsvpn-go v0.0.0 // indirect
 	nhooyr.io/websocket v1.8.7 // indirect
 	tailscale.com v1.58.2 // indirect
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
-	github.com/sagernet/sing-box => ./donutvpn-sing-box
-	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
 )
+
+// replace github.com/sagernet/sing-box => github.com/hiddify/hiddify-sing-box v1.13.0-rc.2.0.20260209222802-dd10a2129de7
+
+// replace github.com/xtls/xray-core => github.com/hiddify/xray-core v0.0.0-20260124181826-59e6569c13e9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 replace (
 	github.com/sagernet/sing-box => ./donutvpn-sing-box
 	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
