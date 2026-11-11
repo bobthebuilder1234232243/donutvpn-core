@@ -17,6 +17,8 @@ jobs:
           go-version: ^1.25.6
           
       - name: Update dependencies
+        env:
+          GOPROXY: direct
         run: |
           go clean -modcache
           cd donutvpn-sing-box
