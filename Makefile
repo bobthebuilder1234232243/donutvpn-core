@@ -33,6 +33,12 @@ comma := ,
 tags = $(subst $(space),$(comma),$(strip $(1)))
 COMMON_TAGS=$(call tags,$(CORE_TAGS) $(PROTOCOL_TAGS) $(SERVICE_TAGS))
 TAGS=$(call tags,$(COMMON_TAGS) $(NAIVE_TAGS))
+
+# cronet-go's cgo directives pass -l:libcronet.a, which Go only accepts when
+# explicitly allowed. cronet/cronet.env is generated locally, so set the
+# allowance here to keep clean checkouts (and CI) buildable.
+CGO_LDFLAGS_ALLOW ?= -l:.*
+export CGO_LDFLAGS_ALLOW
 # Standalone CLI binary (build-binary job).
 CLI_ADD_TAGS=with_dhcp
 CLI_TAGS=$(call tags,$(COMMON_TAGS) $(CLI_ADD_TAGS) $(NAIVE_TAGS))
