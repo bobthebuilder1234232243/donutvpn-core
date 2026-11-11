@@ -316,7 +316,6 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20261026165753-2ffab32bce7e // indirect
 	layeh.com/gopher-luar v1.0.11 // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
-	masterdnsvpn-go v0.0.0 // indirect
 	nhooyr.io/websocket v1.8.7 // indirect
 	tailscale.com v1.58.2 // indirect
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
