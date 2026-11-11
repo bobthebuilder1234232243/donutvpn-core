@@ -1,10 +1,7 @@
-
 go 1.27.3
-
 // MPTCP only where tcp_multi_path asks for it: Go 1.24+ listens on MPTCP by default, and the
 // Linux kernel let a remote root listen on IPv4 MPTCP.
 godebug multipathtcp=0
-
 require (
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
@@ -33,8 +30,6 @@ require (
 	google.golang.org/grpc v1.85.0
 	google.golang.org/protobuf v1.36.12
 	gopkg.in/yaml.v3 v3.0.1
-)
-
 require (
 	filippo.io/bigmod v0.0.1 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
@@ -318,39 +313,8 @@ require (
 	nhooyr.io/websocket v1.8.7 // indirect
 	tailscale.com v1.58.2 // indirect
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	github.com/sagernet/sing-box => ./donutvpn-sing-box
 	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
-)
-
 replace (
 	github.com/sagernet/sing-box => ./donutvpn-sing-box
 	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
-)
