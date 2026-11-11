@@ -136,7 +136,6 @@ require (
 	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/kamstrup/intmap v0.5.2 // indirect
 	github.com/keybase/go-keychain v0.0.1 // indirect
-	github.com/kianmhz/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c // indirect
 	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.2 // indirect
 	github.com/klauspost/reedsolomon v1.13.0 // indirect
@@ -363,3 +362,7 @@ replace github.com/getlantern/soar => ./donutvpn-sing-box/replace/soar
 
 replace github.com/sagernet/sing => ./donutvpn-sing-box/replace/sing
 
+
+replace github.com/net2share/vaydns => github.com/bobthebuilder1234232243/donutvpn-vaydns main
+replace github.com/kianmhz/GooseRelayVPN => github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN main
+replace github.com/bepass-org/warp-plus => github.com/bobthebuilder1234232243/donutvpn-warp-plus main

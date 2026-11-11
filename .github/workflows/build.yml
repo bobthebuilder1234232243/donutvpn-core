@@ -20,8 +20,14 @@ jobs:
         run: |
           go clean -modcache
           cd donutvpn-sing-box
+          go get -u github.com/bobthebuilder1234232243/donutvpn-vaydns@main
+          go get -u github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN@main
+          go get -u github.com/bobthebuilder1234232243/donutvpn-warp-plus@main
           go mod tidy
           cd ..
+          go get -u github.com/bobthebuilder1234232243/donutvpn-vaydns@main
+          go get -u github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN@main
+          go get -u github.com/bobthebuilder1234232243/donutvpn-warp-plus@main
           go mod tidy
           
       - name: Build Linux amd64
