@@ -20,6 +20,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lld clang
+          sudo update-alternatives --install /usr/bin/ld ld /usr/bin/ld.lld 100
+          sudo update-alternatives --set ld /usr/bin/ld.lld
 
       - name: Create missing cronet env
         run: |
@@ -34,6 +36,8 @@ jobs:
           go mod tidy
 
       - name: Build Linux amd64
+        env:
+          CGO_LDFLAGS: "-fuse-ld=lld"
         run: make linux-amd64
 
       - name: Package Artifact
