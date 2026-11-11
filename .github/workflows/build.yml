@@ -10,28 +10,38 @@ jobs:
         with:
           fetch-depth: 0
           submodules: 'recursive'
-          
+
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: ^1.25.6
-          
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lld clang
+
+      - name: Create missing cronet env
+        run: |
+          mkdir -p cronet
+          touch cronet/cronet.env
+
       - name: Update dependencies
         run: |
           cd donutvpn-sing-box
           go mod tidy
           cd ..
           go mod tidy
-          
+
       - name: Build Linux amd64
         run: make linux-amd64
-        
+
       - name: Package Artifact
         run: |
           mkdir -p out
           cp bin/lib/Donut-Core.so out/donut-core.so
           cd out && tar -czvf donut-core-linux-amd64.tar.gz donut-core.so
-          
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
