@@ -16,18 +16,12 @@ jobs:
         with:
           go-version: ^1.25.6
           
-      - name: Update dependencies to latest commits
+      - name: Update dependencies
         run: |
           go clean -modcache
           cd donutvpn-sing-box
-          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latest
-          go get github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN@latest
-          go get github.com/bobthebuilder1234232243/donutvpn-warp-plus@latest
-          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           cd ..
-          go get github.com/bobthebuilder1234232243/donutvpn-vaydns@latest
-          go get -u github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns@c5fc975e975c
           go mod tidy
           
       - name: Build Linux amd64
