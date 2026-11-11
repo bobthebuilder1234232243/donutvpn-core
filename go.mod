@@ -346,6 +346,10 @@ require (
 
 
 
+	github.com/sagernet/sing-box => ./donutvpn-sing-box
+	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
+)
+
 replace (
 	github.com/sagernet/sing-box => ./donutvpn-sing-box
 	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
