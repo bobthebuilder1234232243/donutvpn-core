@@ -18,7 +18,6 @@ jobs:
           
       - name: Update dependencies
         run: |
-          go clean -modcache
           cd donutvpn-sing-box
           go mod tidy
           cd ..
