@@ -9,7 +9,7 @@ import (
 
 	"github.com/bepass-org/warp-plus/warp"
 	C "github.com/sagernet/sing-box/constant"
-	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn"
+	"github.com/sagernet/wireguard-go/donutvpn"
 
 	// "github.com/bepass-org/wireguard-go/warp"
 	"github.com/bobthebuilder1234232243/donutvpn-core/v2/db"

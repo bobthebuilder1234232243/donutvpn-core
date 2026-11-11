@@ -11,7 +11,7 @@ import (
 
 	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	"github.com/sagernet/sing-box/adapter"
-	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn/ipinfo"
+	"github.com/sagernet/sing-box/donutvpn/ipinfo"
 	"github.com/stretchr/testify/require"
 )
 

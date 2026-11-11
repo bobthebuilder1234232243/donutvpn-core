@@ -11,7 +11,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn/secret"
+	"github.com/sagernet/sing-box/donutvpn/secret"
 )
 
 func main() {

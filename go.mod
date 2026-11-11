@@ -8,10 +8,10 @@ godebug multipathtcp=0
 
 require (
 	github.com/bepass-org/warp-plus v1.2.6
+	github.com/bobthebuilder1234232243/donutvpn-ray2sing v0.0.0-00010101000000-000000000000
 	github.com/coder/websocket v1.8.14
 	github.com/google/uuid v1.6.0
 	github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb
-	github.com/hiddify/ray2sing v0.0.0-20260209214534-63c82f8c23a6
 	github.com/improbable-eng/grpc-web v0.15.0
 	github.com/jellydator/validation v1.1.0
 	github.com/kardianos/service v1.2.2
@@ -30,7 +30,6 @@ require (
 	github.com/xmdhs/clash2singbox v0.2.0
 	github.com/xtls/libxray v1.261031.0
 	github.com/xtls/xray-core v1.260327.1-0.20261109052709-676eaf66f8f0
-	golang.org/x/crypto v0.58.0
 	golang.org/x/net v0.62.0
 	golang.org/x/sys v0.49.0
 	google.golang.org/grpc v1.85.0
@@ -74,6 +73,9 @@ require (
 	github.com/biter777/countries v1.7.5 // indirect
 	github.com/bits-and-blooms/bitset v1.10.0 // indirect
 	github.com/bits-and-blooms/bloom/v3 v3.6.0 // indirect
+	github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN v0.0.0-20261111044016-e5a932c41b2a // indirect
+	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261111044122-2c0a75d3909f // indirect
+	github.com/bobthebuilder1234232243/donutvpn-vaydns v0.0.0-20261111044039-eb6f3f8ab190 // indirect
 	github.com/caddyserver/certmagic v0.25.3-0.20260421143802-60d9d8b415d6 // indirect
 	github.com/caddyserver/zerossl v0.1.5 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
@@ -129,7 +131,6 @@ require (
 	github.com/grafov/m3u8 v0.0.0-20171211212457-6ab8f28ed427 // indirect
 	github.com/hashicorp/yamux v0.1.2 // indirect
 	github.com/hdevalence/ed25519consensus v0.2.0 // indirect
-	github.com/hiddify/hmrd_multi_resolver_dns v0.0.0-20261102140835-72045bdb2631 // indirect
 	github.com/huin/goupnp v1.3.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20260220084031-5adc3eb26f91 // indirect
@@ -140,7 +141,6 @@ require (
 	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/kamstrup/intmap v0.5.2 // indirect
 	github.com/keybase/go-keychain v0.0.1 // indirect
-	github.com/kianmhz/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c // indirect
 	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.2 // indirect
 	github.com/klauspost/reedsolomon v1.13.0 // indirect
@@ -168,7 +168,6 @@ require (
 	github.com/mitchellh/go-ps v1.0.0 // indirect
 	github.com/molecule-man/go-brrr v1.2.0 // indirect
 	github.com/mroth/weightedrand v1.0.0 // indirect
-	github.com/net2share/vaydns v0.2.8 // indirect
 	github.com/openai/openai-go/v3 v3.26.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.26 // indirect
@@ -305,6 +304,7 @@ require (
 	go.yaml.in/yaml/v3 v3.0.6 // indirect
 	go4.org/mem v0.0.0-20240501181205-ae6ca9944745 // indirect
 	go4.org/netipx v0.0.0-20260823151212-3075585bcbeb // indirect
+	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/crypto/x509roots/fallback v0.0.0-20261030153154-30a33513ff6d // indirect
 	golang.org/x/exp v0.0.0-20261014143641-f0251eb4aa3e // indirect
 	golang.org/x/image v0.47.0 // indirect
@@ -332,28 +332,50 @@ require (
 
 // replace github.com/xtls/xray-core => github.com/hiddify/xray-core v0.0.0-20260124181826-59e6569c13e9
 
+replace github.com/bepass-org/warp-plus => github.com/hiddify/warp-plus v0.0.0-20240717223357-4f3122e0d11d
 
+replace github.com/sagernet/sing-dns => github.com/shtorm-7/sing-dns v0.4.6-extended-1.0.0
 
+replace github.com/ameshkov/dnscrypt/v2 => github.com/shtorm-7/dnscrypt/v2 v2.4.0-extended-1.0.0
 
+replace github.com/net2share/vaydns => github.com/hiddify/vaydns v0.0.0-20260401180616-890dc987a6a9
 
+replace github.com/kianmhz/GooseRelayVPN => github.com/hiddify/GooseRelayVPN v0.0.0-20260429125124-0e68c2a3ae4c
 
+replace github.com/Diniboy1123/connect-ip-go => github.com/shtorm-7/connect-ip-go v1.0.0-extended-1.1.1
 
+replace github.com/metacubex/utls => github.com/Leadaxe/utls-lx v1.8.8-0.20261011005638-ad69b191e2f8
 
+replace github.com/sagernet/sing-box => ./donutvpn-sing-box
 
+replace github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
 
+replace github.com/sagernet/wireguard-go => ./donutvpn-sing-box/replace/wireguard-go
 
+replace github.com/sagernet/sing => ./donutvpn-sing-box/replace/sing
 
+replace github.com/sagernet/sing-tun => ./donutvpn-sing-box/replace/sing-tun
 
+replace github.com/sagernet/sing-mux => ./donutvpn-sing-box/replace/sing-mux
 
+replace github.com/sagernet/sing-vmess => ./donutvpn-sing-box/replace/sing-vmess
 
+replace github.com/sagernet/tailscale => ./donutvpn-sing-box/replace/tailscale
 
+replace github.com/sagernet/gvisor => ./donutvpn-sing-box/replace/gvisor
 
+replace github.com/Psiphon-Labs/psiphon-tls => ./donutvpn-sing-box/replace/psiphon-tls
 
+replace github.com/Psiphon-Labs/quic-go => ./donutvpn-sing-box/replace/psiphon-quic-go
 
+replace github.com/amnezia-vpn/amneziawg-go/v3 => ./donutvpn-sing-box/replace/amneziawg-go
 
+replace github.com/getlantern/soar => ./donutvpn-sing-box/replace/soar
 
+replace masterdnsvpn-go => ./donutvpn-sing-box/replace/MasterDnsVPN
 
-replace (
-	github.com/sagernet/sing-box => ./donutvpn-sing-box
-	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
-)
+replace github.com/bobthebuilder1234232243/donutvpn-vaydns => ./donutvpn-sing-box/replace/vaydns
+
+replace github.com/bobthebuilder1234232243/donutvpn-GooseRelayVPN => ./donutvpn-sing-box/replace/GooseRelayVPN
+
+replace github.com/bobthebuilder1234232243/donutvpn-ray2sing => ./donutvpn-ray2sing

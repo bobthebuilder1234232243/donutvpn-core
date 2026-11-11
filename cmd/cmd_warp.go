@@ -9,7 +9,7 @@ import (
 
 	"github.com/bobthebuilder1234232243/donutvpn-core/v2/config"
 	T "github.com/sagernet/sing-box/option"
-	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn"
+	"github.com/sagernet/wireguard-go/donutvpn"
 	"github.com/spf13/cobra"
 )
 

@@ -10,7 +10,7 @@ import (
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/option"
 	"github.com/sagernet/sing/common/json/badoption"
-	"github.com/bobthebuilder1234232243/donutvpn-sing-box/donutvpn"
+	"github.com/sagernet/wireguard-go/donutvpn"
 )
 
 // Chain hops ("extra security" / "unblocker") configured in the app settings.
