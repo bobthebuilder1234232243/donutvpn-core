@@ -77,7 +77,6 @@ require (
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cheekybits/genny v0.0.0-20170328200008-9127e812e1e9 // indirect
 	github.com/cloudflare/circl v1.6.4 // indirect
-	github.com/cognusion/go-cache-lru v0.0.0-20170419142635-f73e2280ecea // indirect
 	github.com/coreos/go-iptables v0.7.1-0.20240112124308-65c67c9f46e6 // indirect
 	github.com/coreos/go-oidc/v3 v3.17.0 // indirect
 	github.com/cosmos/gorocksdb v1.2.0 // indirect
@@ -346,3 +345,8 @@ require (
 
 
 
+
+replace (
+	github.com/sagernet/sing-box => ./donutvpn-sing-box
+	github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns => github.com/bobthebuilder1234232243/donutvpn-hmrd_multi_resolver_dns v0.0.0-20261110051929-c5fc975e975c
+)
