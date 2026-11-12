@@ -18,8 +18,8 @@ PROTOCOL_TAGS=with_embedded_tor,with_openvpn,with_openconnect,with_masque,with_k
 # Services in every build too. Left out on purpose: with_acme, with_cloudflared, with_tailcat,
 # with_usbip, with_tailscale, with_ccm and with_ocm.
 SERVICE_TAGS=with_v2ray_api
-# Naive (cronet) is part of every build unless disabled explicitly: `make NAIVE=0 <target>`
-# (targets with no cronet library, e.g. CLI for mips/s390x and purego variants).
+# Naive (cronet) is enabled for non-Linux builds. Linux omits it (see LINUX_TAGS)
+# because cronet's static library crashes the Go c-shared runtime at startup.
 NAIVE ?= 1
 ifeq ($(NAIVE),0)
 NAIVE_TAGS=
@@ -33,10 +33,14 @@ comma := ,
 tags = $(subst $(space),$(comma),$(strip $(1)))
 COMMON_TAGS=$(call tags,$(CORE_TAGS) $(PROTOCOL_TAGS) $(SERVICE_TAGS))
 TAGS=$(call tags,$(COMMON_TAGS) $(NAIVE_TAGS))
+# Linux builds deliberately omit Naive/cronet. cronet-go links libcronet.a into the Go
+# c-shared runtime, which crashes at startup with SIGSEGV in runtime.malg/newm
+# (TLS/thread-creation conflict). Keep Naive for platforms that ship a compatible cronet.
+LINUX_TAGS=$(call tags,$(COMMON_TAGS))
 
 # cronet-go's cgo directives pass -l:libcronet.a, which Go only accepts when
-# explicitly allowed. cronet/cronet.env is generated locally, so set the
-# allowance here to keep clean checkouts (and CI) buildable.
+# explicitly allowed. Linux does not build Naive, but Windows/macOS/Android still do,
+# so keep the allowance for those targets.
 CGO_LDFLAGS_ALLOW ?= -l:.*
 export CGO_LDFLAGS_ALLOW
 # Standalone CLI binary (build-binary job).
@@ -70,7 +74,7 @@ endif
 EMBED_LDFLAGS+=-X github.com/bobthebuilder1234232243/donutvpn-core/v2/hcore/buildid.ID=$(strip $(DONUT_BUILD_ID))
 LDFLAGS=-w -s -checklinkname=0 -buildid= $${CODE_VERSION} $(EMBED_LDFLAGS)
 GOBUILDLIB=CGO_ENABLED=1 go build -trimpath -ldflags="$(LDFLAGS)" -buildmode=c-shared
-GOBUILDSRV=CGO_ENABLED=1 go build -ldflags="$(LDFLAGS)" -trimpath -tags $(TAGS)
+GOBUILDSRV=CGO_ENABLED=1 go build -ldflags="$(LDFLAGS)" -trimpath
 
 # Windows PE files: keep the Go symbol table (no -s), drop only DWARF (-w).
 # Symbol-less, fully stripped Go PE files are a classic feature of ML/heuristic AV
@@ -225,8 +229,7 @@ endef
 build-linux: prepare
 	mkdir -p $(BINDIR)/lib
 
-	$(load_cronet_env)
-	FINAL_TAGS=$(TAGS); \
+	FINAL_TAGS=$(LINUX_TAGS); \
 	if [ "$${VARIANT}" = "musl" ]; then \
 		FINAL_TAGS=$${FINAL_TAGS},with_musl; \
 	elif [ "$${VARIANT}" = "purego" ]; then \
@@ -236,13 +239,13 @@ build-linux: prepare
 	GOOS=linux GOARCH=$(ARCH) $(GOBUILDLIB) -tags $${FINAL_TAGS} -o $(BINDIR)/lib/$(LIBNAME).so ./platform/desktop ;\
 	
 	echo "Core library built, now building CLI with CGO linking to core library"
-	mkdir lib
+	mkdir -p lib
 	cp $(BINDIR)/lib/$(LIBNAME).so ./lib/$(LIBNAME).so
 
 	# Linked by name, not as ./lib/...: a path in DT_NEEDED is resolved against the working directory,
 	# so the CLI failed to start anywhere but its own folder (the root VPN service runs it from its data
 	# directory). By name, the $$ORIGIN/lib runpath finds the library wherever it is started.
-	GOOS=linux GOARCH=$(ARCH) CGO_LDFLAGS="-L./lib -l:$(LIBNAME).so -Wl,-rpath,\$$ORIGIN/lib -fuse-ld=lld" $(GOBUILDSRV) -o $(BINDIR)/$(CLINAME) ./cmd/bydll
+	GOOS=linux GOARCH=$(ARCH) CGO_LDFLAGS="-L./lib -l:$(LIBNAME).so -Wl,-rpath,\$$ORIGIN/lib -fuse-ld=lld" $(GOBUILDSRV) -tags $(LINUX_TAGS) -o $(BINDIR)/$(CLINAME) ./cmd/bydll
 	
 	rm -rf ./lib/*.so
 	chmod +x $(BINDIR)/$(CLINAME)

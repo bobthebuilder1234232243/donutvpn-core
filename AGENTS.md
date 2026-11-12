@@ -80,8 +80,8 @@ above it. Use this table before writing code:
   per-platform `*_ADD_TAGS`. `TAGS` (libraries), `CLI_TAGS` (the CLI) and `TUNNEL_TAGS` (the macOS
   system extension) are composed with `$(call tags,...)`. CI and `cmd.sh` read them with
   `make -s print-<VAR>`. Never copy a tag list into a workflow, script or doc.
-- Naive (cronet) is part of every build unless disabled with `make NAIVE=0 <target>`, for targets
-  that have no cronet library.
+- Naive (cronet) is enabled for non-Linux builds. Linux omits it (see `LINUX_TAGS`) because
+  cronet's static library crashes the Go c-shared runtime at startup.
 - Targets: `make android`, `make ios`, `make macos`, `make linux-amd64`, `make windows-amd64`,
   `make cli`. After a `.proto` change run `make protos` (Go stubs and `docs/donutvpnrpc.md`); the
   app regenerates its Dart stubs from the same files.
