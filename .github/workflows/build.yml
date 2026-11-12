@@ -45,9 +45,10 @@ jobs:
 
       - name: Package Artifact
         run: |
-          mkdir -p out
-          cp bin/lib/Donut-Core.so out/donut-core.so
-          cd out && tar -czvf donut-core-linux-amd64.tar.gz donut-core.so
+          mkdir -p out/lib
+          cp bin/lib/Donut-Core.so out/lib/
+          cp bin/DonutCli out/
+          cd out && tar -czvf donut-core-linux-amd64.tar.gz lib/Donut-Core.so DonutCli
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
