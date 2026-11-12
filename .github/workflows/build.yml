@@ -51,3 +51,13 @@ jobs:
         with:
           name: donut-core
           path: out/donut-core-linux-amd64.tar.gz
+
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: draft
+          name: draft
+          prerelease: true
+          files: out/donut-core-linux-amd64.tar.gz
