@@ -116,8 +116,18 @@ lib_install: prepare
 headers:
 	go build -buildmode=c-archive -o $(BINDIR)/ ./platform/desktop2
 
+# Release-matrix targets for per-ABI Android and device-only iOS artifacts.
+.PHONY: android-arm64 android-arm ios-arm64
 android: lib_install
 	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME).aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
+
+# Per-ABI Android bindings. gomobile accepts android/<abi> so CI can build
+# the device architectures separately without producing a fat AAR.
+android-arm64: lib_install
+	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android/arm64 -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME)-arm64.aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
+
+android-arm: lib_install
+	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android/arm -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME)-arm.aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
 
 ios-full: lib_install
 	gomobile bind -v  -target ios,iossimulator,tvos,tvossimulator,macos -libname=donut-core -tags=$(TAGS),$(IOS_ADD_TAGS) -trimpath -ldflags="$(LDFLAGS)" -o $(BINDIR)/$(PRODUCT_NAME).xcframework github.com/sagernet/sing-box/experimental/libbox ./platform/mobile 
@@ -127,6 +137,11 @@ ios-full: lib_install
 ios: lib_install
 	gomobile bind -v  -target ios -libname=donut-core -tags=$(TAGS),$(IOS_ADD_TAGS) -trimpath -ldflags="$(LDFLAGS)" -o $(BINDIR)/DonutVpnCore.xcframework github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
 	cp Info.plist $(BINDIR)/DonutVpnCore.xcframework/
+
+# Device-only iOS framework used by the unsigned IPA build (no simulator slices).
+ios-arm64: lib_install
+	gomobile bind -v -target=ios/arm64 -libname=donut-core -tags=$(TAGS),$(IOS_ADD_TAGS) -trimpath -ldflags="$(LDFLAGS)" -o $(BINDIR)/DonutCore.xcframework github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
+	cp Info.plist $(BINDIR)/DonutCore.xcframework/
 
 
 webui:
@@ -269,6 +284,12 @@ macos-amd64:
 	env GOOS=darwin GOARCH=amd64 CGO_CFLAGS="-mmacosx-version-min=10.11 -O2" CGO_LDFLAGS="-mmacosx-version-min=10.11 -O2 -lpthread" CGO_ENABLED=1 go build -trimpath -ldflags="$(EMBED_LDFLAGS)" -tags $(call tags,$(TAGS) $(MACOS_ADD_TAGS)) -buildmode=c-shared -o $(BINDIR)/$(LIBNAME)-amd64.dylib ./platform/desktop
 macos-arm64:
 	env GOOS=darwin GOARCH=arm64 CGO_CFLAGS="-mmacosx-version-min=10.11 -O2" CGO_LDFLAGS="-mmacosx-version-min=10.11 -O2 -lpthread" CGO_ENABLED=1 go build -trimpath -ldflags="$(EMBED_LDFLAGS)" -tags $(call tags,$(TAGS) $(MACOS_ADD_TAGS)) -buildmode=c-shared -o $(BINDIR)/$(LIBNAME)-arm64.dylib ./platform/desktop
+
+# Stable architecture-specific names used by the release matrix.
+.PHONY: darwin-amd64 darwin-arm64
+# macOS is Darwin; these aliases keep the release target names explicit.
+darwin-amd64: macos-amd64
+darwin-arm64: macos-arm64
 
 # Packet-tunnel / system-extension bind: the macOS VPN mode, so the same tags as the macOS dylib.
 TUNNEL_TAGS=$(call tags,$(TAGS) $(MACOS_ADD_TAGS))

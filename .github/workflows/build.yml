@@ -1,32 +1,106 @@
-name: Build
+name: Build core
+
 on:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      upload-artifact:
+        type: boolean
+        default: true
+      tag-name:
+        type: string
+        default: "draft"
+      channel:
+        type: string
+        default: "dev"
 
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-amd64
+            os: ubuntu-22.04
+          - target: windows-amd64
+            os: windows-latest
+          - target: darwin-amd64
+            os: macos-latest
+          - target: darwin-arm64
+            os: macos-latest
+          - target: android-arm64
+            os: ubuntu-22.04
+          - target: android-arm
+            os: ubuntu-22.04
+          - target: ios-arm64
+            os: macos-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: 'recursive'
+          submodules: recursive
 
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.27.3'
 
-      - name: Install build dependencies
+      - name: Setup Java
+        if: startsWith(matrix.target, 'android-')
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        if: startsWith(matrix.target, 'android-')
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        if: startsWith(matrix.target, 'android-')
+        run: |
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager --install "ndk;28.2.13676358"
+          echo "ANDROID_NDK_HOME=${ANDROID_SDK_ROOT:-$ANDROID_HOME}/ndk/28.2.13676358" >> "$GITHUB_ENV"
+
+      - name: Setup Node
+        if: startsWith(matrix.target, 'android-') || matrix.target == 'ios-arm64'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Linux build dependencies
+        if: matrix.target == 'linux-amd64'
         run: |
           sudo apt-get update
           sudo apt-get install -y lld clang
           sudo update-alternatives --install /usr/bin/ld ld /usr/bin/ld.lld 100
           sudo update-alternatives --set ld /usr/bin/ld.lld
 
+      - name: Install Windows build tools
+        if: matrix.target == 'windows-amd64'
+        run: |
+          choco install make mingw -y --no-progress
+          echo "C:\\ProgramData\\chocolatey\\bin" >> "$GITHUB_PATH"
+          echo "C:\\Program Files\\Git\\bin" >> "$GITHUB_PATH"
+
+      - name: Select Xcode
+        if: startsWith(matrix.target, 'darwin-') || matrix.target == 'ios-arm64'
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
       - name: Create missing cronet env
+        if: matrix.target == 'linux-amd64'
         run: |
           mkdir -p cronet
           touch cronet/cronet.env
@@ -39,24 +113,101 @@ jobs:
           go mod tidy
 
       - name: Build Linux amd64
+        if: matrix.target == 'linux-amd64'
         env:
           CGO_LDFLAGS: "-fuse-ld=lld"
         run: make linux-amd64
 
-      - name: Package Artifact
+      - name: Build Windows amd64
+        if: matrix.target == 'windows-amd64'
         run: |
-          mkdir -p out/lib
-          cp bin/lib/Donut-Core.so out/lib/
-          cp bin/DonutCli out/
-          cd out && tar -czvf donut-core-linux-amd64.tar.gz lib/Donut-Core.so DonutCli
+          export PATH="/c/Program Files/Git/bin:/c/ProgramData/chocolatey/bin:$PATH"
+          make windows-amd64 SHELL="$(command -v bash)"
 
-      - name: Upload Artifact
+      - name: Build ${{ matrix.target }}
+        if: matrix.target != 'linux-amd64' && matrix.target != 'windows-amd64'
+        run: make ${{ matrix.target }}
+
+      - name: Package ${{ matrix.target }}
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          mkdir -p dist
+
+          case "${{ matrix.target }}" in
+            linux-amd64)
+              mkdir -p dist/lib
+              cp bin/lib/Donut-Core.so dist/lib/
+              cp bin/DonutCli dist/
+              (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" lib/Donut-Core.so DonutCli)
+              ;;
+            windows-amd64)
+              mkdir -p dist/core
+              cp bin/Donut-Core.dll dist/donutvpn-core.dll
+              cp bin/Donut-Core.dll dist/Donut-Core.dll
+              cp bin/DonutCli.exe dist/DonutVpnCli.exe
+              cp bin/DonutCli.exe dist/DonutCli.exe
+              cp bin/DonutAdmin.exe dist/
+              cp bin/libcronet.dll dist/
+              cp bin/core/DonutVpn.exe dist/core/
+              (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" \
+                donutvpn-core.dll Donut-Core.dll DonutVpnCli.exe DonutCli.exe \
+                DonutAdmin.exe libcronet.dll core/DonutVpn.exe)
+              ;;
+            darwin-amd64|darwin-arm64)
+              arch="${TARGET#darwin-}"
+              cp "bin/Donut-Core-${arch}.dylib" dist/donut-core.dylib
+              cp "bin/Donut-Core-${arch}.dylib" dist/Donut-Core.dylib
+              if [ -f "bin/Donut-Core-${arch}.h" ]; then
+                cp "bin/Donut-Core-${arch}.h" dist/Donut-Core.h
+                cp "bin/Donut-Core-${arch}.h" dist/desktop.h
+                (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" \
+                  donut-core.dylib Donut-Core.dylib Donut-Core.h desktop.h)
+              else
+                (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" \
+                  donut-core.dylib Donut-Core.dylib)
+              fi
+              ;;
+            android-arm64|android-arm)
+              arch="${TARGET#android-}"
+              cp "bin/Donut-Core-${arch}.aar" dist/donut-core.aar
+              (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" donut-core.aar)
+              ;;
+            ios-arm64)
+              cp -R bin/DonutCore.xcframework dist/
+              (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" DonutCore.xcframework)
+              ;;
+            *)
+              echo "Unknown target: ${TARGET}" >&2
+              exit 1
+              ;;
+          esac
+        env:
+          TARGET: ${{ matrix.target }}
+
+      - name: Upload ${{ matrix.target }} artifact
         uses: actions/upload-artifact@v4
         with:
-          name: donut-core
-          path: out/donut-core-linux-amd64.tar.gz
+          name: donut-core-${{ matrix.target }}
+          path: dist/donut-core-${{ matrix.target }}.tar.gz
+          if-no-files-found: error
+          retention-days: 14
 
-      - name: Create Draft Release
+  # Every matrix job uploads its own tarball as an Actions artifact. This single
+  # dependent job publishes all of them together, avoiding concurrent updates
+  # to the same draft release.
+  release:
+    name: Upload draft release assets
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all core artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Upload every core tarball to draft release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -64,4 +215,4 @@ jobs:
           tag_name: draft
           name: draft
           prerelease: true
-          files: out/donut-core-linux-amd64.tar.gz
+          files: artifacts/*.tar.gz
