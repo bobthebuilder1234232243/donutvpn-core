@@ -194,13 +194,13 @@ windows-amd64: prepare windows-winres
 # Prebuilt libcronet from cronet-go's lib/<os>_<arch>/ (same as upstream sing-box CI).
 # Usage: make fetch-libcronet-windows_amd64.dll
 fetch-libcronet-%:
+	set -e
 	rm -rf $(BINDIR)/.cronet-go-lib
 	git init -q $(BINDIR)/.cronet-go-lib
 	git -C $(BINDIR)/.cronet-go-lib remote add origin https://github.com/sagernet/cronet-go.git
-	git -C $(BINDIR)/.cronet-go-lib sparse-checkout set --no-cone "/lib/$(basename $*)/libcronet$(suffix $*)"
 	git -C $(BINDIR)/.cronet-go-lib fetch -q --depth=1 --filter=blob:none origin $(CRONET_GO_VERSION)
-	git -C $(BINDIR)/.cronet-go-lib checkout -q FETCH_HEAD
-	cp $(BINDIR)/.cronet-go-lib/lib/$(basename $*)/libcronet$(suffix $*) $(BINDIR)/
+	git -C $(BINDIR)/.cronet-go-lib show "FETCH_HEAD:lib/$(basename $*)/libcronet$(suffix $*)" > $(BINDIR)/libcronet$(suffix $*)
+	test -s $(BINDIR)/libcronet$(suffix $*)
 	rm -rf $(BINDIR)/.cronet-go-lib
 
 cronet-%:
