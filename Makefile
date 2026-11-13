@@ -231,9 +231,9 @@ linux-%:
 define load_cronet_env
 set -a; \
 while IFS= read -r line; do \
-    key=$${line%%=*}; \
-    value=$${line#*=}; \
-    export "$$key=$$value"; \
+	key=$${line%%=*}; \
+	value=$${line#*=}; \
+	export "$$key=$$value"; \
 	echo "$$key=$$value"; \
 done < $(CRONET_DIR)/cronet.env; \
 set +a;
