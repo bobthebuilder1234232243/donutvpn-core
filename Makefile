@@ -7,9 +7,7 @@ CLINAME=DonutCli
 
 BRANCH=$(shell git branch --show-current)
 VERSION=$(shell git describe --tags || echo "unknown version")
-ifeq ($(OS),Windows_NT)
-Not available for Windows! use bash in WSL
-endif
+# Windows builds run under Git Bash; see the windows-amd64 target.
 CRONET_GO_VERSION := $(shell cat donutvpn-sing-box/.github/CRONET_GO_VERSION)
 # Build tags: single source of truth for every build, including CI (.github/workflows/build.yml
 # reads them with `make -s print-<VAR>`). Only add platform-specific tags in the *_ADD_TAGS vars.
