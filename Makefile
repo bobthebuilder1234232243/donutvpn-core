@@ -115,7 +115,7 @@ headers:
 	go build -buildmode=c-archive -o $(BINDIR)/ ./platform/desktop2
 
 # Release-matrix targets for per-ABI Android and device-only iOS artifacts.
-.PHONY: android-arm64 android-arm ios-arm64
+.PHONY: android-arm64 android-arm android-amd64 ios-arm64
 android: lib_install
 	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME).aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
 
@@ -126,6 +126,9 @@ android-arm64: lib_install
 
 android-arm: lib_install
 	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android/arm -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME)-arm.aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
+
+android-amd64: lib_install
+	CGO_LDFLAGS="-O2 -g -s -w -Wl,-z,max-page-size=16384" gomobile bind -v -androidapi=21 -javapkg=com.donutvpn.core -libname=donut-core -tags=$(TAGS) -trimpath -ldflags="$(LDFLAGS)" -target=android/amd64 -gcflags "all=-N -l" -o $(BINDIR)/$(LIBNAME)-amd64.aar github.com/sagernet/sing-box/experimental/libbox ./platform/mobile
 
 ios-full: lib_install
 	gomobile bind -v  -target ios,iossimulator,tvos,tvossimulator,macos -libname=donut-core -tags=$(TAGS),$(IOS_ADD_TAGS) -trimpath -ldflags="$(LDFLAGS)" -o $(BINDIR)/$(PRODUCT_NAME).xcframework github.com/sagernet/sing-box/experimental/libbox ./platform/mobile 

@@ -41,6 +41,8 @@ jobs:
             os: ubuntu-22.04
           - target: android-arm
             os: ubuntu-22.04
+          - target: android-amd64
+            os: ubuntu-22.04
           - target: ios-arm64
             os: macos-latest
 
@@ -170,7 +172,7 @@ jobs:
                   donut-core.dylib Donut-Core.dylib)
               fi
               ;;
-            android-arm64|android-arm)
+            android-arm64|android-arm|android-amd64)
               arch="${TARGET#android-}"
               cp "bin/Donut-Core-${arch}.aar" dist/donut-core.aar
               (cd dist && tar -czf "donut-core-${TARGET}.tar.gz" donut-core.aar)
